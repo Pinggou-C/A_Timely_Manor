@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Objects/Player/chearecter.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Audio_Assets/step.mp3" type="AudioStream" id=2]
+[ext_resource path="res://testmiror/PlayerCam.gd" type="Script" id=4]
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 0.4
+
+[sub_resource type="CapsuleMesh" id=2]
+radius = 0.4
+
+[node name="KinematicBody" type="KinematicBody" groups=[
+"player",
+"weighted",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.05, 0 )
+collision_layer = 2
+collision_mask = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Head" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="." groups=[
+"player",
+]]
+transform = Transform( 1, 0, 0, 0, -2.18557e-08, -1, 0, 0.5, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -0.192089 )
+current = true
+size = 1.28
+script = ExtResource( 4 )
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0897, 0 )
+stream = ExtResource( 2 )
+unit_db = 5.0
+autoplay = true
+stream_paused = true
+
+[node name="RayCast" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2 )
+enabled = true
+cast_to = Vector3( 0, 0, -3 )
+collision_mask = 524288
+
+[node name="Position3D" type="Position3D" parent="RayCast"]
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -2.18557e-08, -1, 0, 0.5, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = null

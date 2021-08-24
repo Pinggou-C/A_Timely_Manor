@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Objects/3D_Objects/Entities/ridgidbody.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Materials/truepillar.tres" type="Material" id=2]
+
+[sub_resource type="PhysicsMaterial" id=1]
+
+[sub_resource type="CylinderShape" id=2]
+margin = 0.001
+
+[sub_resource type="CylinderMesh" id=3]
+
+[node name="RigidBody" type="RigidBody" groups=[
+"effected",
+"movable",
+]]
+collision_layer = 7
+mass = 10.0
+physics_material_override = SubResource( 1 )
+continuous_cd = true
+contact_monitor = true
+linear_damp = 0.333
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 2 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 3 )
+material/0 = ExtResource( 2 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Tween2" type="Tween" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_RigidBody_body_entered"]

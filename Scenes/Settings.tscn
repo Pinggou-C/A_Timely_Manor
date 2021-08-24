@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scenes/Settings.gd" type="Script" id=1]
+
+[node name="Settings" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OptionButton" type="OptionButton" parent="."]
+margin_left = 482.55
+margin_top = 211.667
+margin_right = 645.55
+margin_bottom = 268.667
+text = "Lowest"
+items = [ "Lowest", null, false, 0, null, "Low", null, false, 1, null, "Medium", null, false, 2, null, "High", null, false, 3, null, "Insane", null, false, 5, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="item_selected" from="OptionButton" to="." method="_on_OptionButton_item_selected"]

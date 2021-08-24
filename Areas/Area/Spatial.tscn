@@ -1,0 +1,274 @@
+[gd_scene load_steps=24 format=2]
+
+[ext_resource path="res://Objects/3D_Objects/cube/cubephysics.tres" type="PhysicsMaterial" id=1]
+[ext_resource path="res://Objects/3D_Objects/Doors/Door.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Objects/3D_Objects/cube/ridgidbody.gd" type="Script" id=3]
+[ext_resource path="res://Areas/Area_Script/Spatial.gd" type="Script" id=4]
+[ext_resource path="res://Objects/3D_Objects/Buttons/button.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Objects/3D_Objects/cube/RigidBody.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/Materials/truepillar.tres" type="Material" id=7]
+[ext_resource path="res://Objects/3D_Objects/Buttons/reversebutton.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Objects/Player/chearecter.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Objects/3D_Objects/Doors/reverseDoor.tscn" type="PackedScene" id=10]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec2 center;
+uniform float force;
+uniform float size;
+uniform float thickness;
+uniform vec3 colour;
+
+void fragment() {
+  float ratio = SCREEN_PIXEL_SIZE.x / SCREEN_PIXEL_SIZE.y;
+  vec2 scaledUV = (SCREEN_UV - vec2(0.5, 0.0))/vec2(ratio, 0.6) + vec2(0.5, -0.3);
+  float mask = ( 1.0 - smoothstep(size - 0.2 ,size , length(scaledUV - center))) * smoothstep(size - thickness - 0.2 ,size - thickness , length(scaledUV - center));
+  vec2 disp = normalize(scaledUV - center) * force * mask;
+  COLOR = texture(SCREEN_TEXTURE, SCREEN_UV - disp);
+  COLOR.rgb -= vec3(mask*force*5.0, mask*force*5.0, mask*force*5.0);
+  float ratio2 = SCREEN_PIXEL_SIZE.x / SCREEN_PIXEL_SIZE.y;
+  vec2 scaledUV2 = (SCREEN_UV - vec2(0.5, 0.0))/vec2(ratio, 0.6) + vec2(0.5, -0.3);
+  float mask2 = ( 1.0 - smoothstep(1.1  ,1.4 , length(scaledUV2 - center))) * smoothstep(0.8 ,1.2, length(scaledUV - center));
+  float bla = mask2* 0.25*(pow(cos(3.0* TIME), 2)+0.4);
+  COLOR.rgb += vec3(bla+0.2,bla+0.2, bla+0.2)*colour;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/center = Vector2( 0.5, 0.5 )
+shader_param/force = 0.038
+shader_param/size = 0.05
+shader_param/thickness = 0.18
+shader_param/colour = Vector3( -0.7, -0.7, -0.7 )
+
+[sub_resource type="CubeMesh" id=3]
+size = Vector3( 100, 1, 100 )
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 50, 0.5, 50 )
+
+[sub_resource type="ProceduralSky" id=5]
+ground_bottom_color = Color( 1, 1, 1, 1 )
+ground_energy = 0.0
+sun_energy = 0.0
+
+[sub_resource type="Environment" id=6]
+background_mode = 2
+background_sky = SubResource( 5 )
+background_color = Color( 0.152941, 0.152941, 0.152941, 1 )
+ambient_light_color = Color( 1, 1, 1, 1 )
+fog_color = Color( 0.262745, 0.262745, 0.262745, 1 )
+fog_sun_color = Color( 0, 0, 0, 1 )
+dof_blur_far_distance = 25.0
+dof_blur_far_transition = 25.0
+dof_blur_far_amount = 0.05
+dof_blur_far_quality = 2
+dof_blur_near_distance = 1.0
+dof_blur_near_amount = 0.2
+glow_enabled = true
+glow_levels/1 = true
+glow_levels/2 = true
+glow_levels/4 = true
+glow_levels/6 = true
+glow_levels/7 = true
+glow_blend_mode = 0
+glow_bicubic_upscale = true
+
+[sub_resource type="BoxShape" id=7]
+extents = Vector3( 0.515, 0.515, 0.515 )
+
+[sub_resource type="CubeMesh" id=8]
+size = Vector3( 1, 1, 1 )
+
+[sub_resource type="ArrayMesh" id=9]
+surfaces/0 = {
+"aabb": AABB( -0.511547, -0.511547, -0.511547, 1.02309, 1.0231, 1.0231 ),
+"array_data": PoolByteArray( 191, 244, 2, 191, 191, 244, 2, 63, 191, 244, 2, 63, 0, 0, 127, 0, 127, 0, 0, 127, 0, 0, 0, 0, 191, 244, 2, 63, 191, 244, 2, 63, 191, 244, 2, 191, 0, 0, 129, 0, 129, 0, 0, 127, 85, 57, 0, 0, 191, 244, 2, 63, 191, 244, 2, 63, 191, 244, 2, 63, 0, 0, 127, 0, 127, 0, 0, 127, 85, 53, 0, 0, 191, 244, 2, 191, 191, 244, 2, 63, 191, 244, 2, 191, 0, 0, 129, 0, 129, 0, 0, 127, 0, 60, 0, 0, 191, 244, 2, 191, 191, 244, 2, 191, 191, 244, 2, 63, 0, 0, 127, 0, 127, 0, 0, 127, 0, 0, 0, 56, 191, 244, 2, 63, 191, 244, 2, 191, 191, 244, 2, 191, 0, 0, 129, 0, 129, 0, 0, 127, 85, 57, 0, 56, 191, 244, 2, 63, 191, 244, 2, 191, 191, 244, 2, 63, 0, 0, 127, 0, 127, 0, 0, 127, 85, 53, 0, 56, 191, 244, 2, 191, 191, 244, 2, 191, 191, 244, 2, 191, 0, 0, 129, 0, 129, 0, 0, 127, 0, 60, 0, 56, 191, 244, 2, 63, 191, 244, 2, 63, 191, 244, 2, 63, 127, 0, 0, 0, 0, 0, 129, 127, 85, 53, 0, 0, 191, 244, 2, 191, 191, 244, 2, 63, 191, 244, 2, 191, 129, 0, 0, 0, 0, 0, 127, 127, 0, 0, 0, 56, 191, 244, 2, 63, 191, 244, 2, 63, 191, 244, 2, 191, 127, 0, 0, 0, 0, 0, 129, 127, 85, 57, 0, 0, 191, 244, 2, 191, 191, 244, 2, 63, 191, 244, 2, 63, 129, 0, 0, 0, 0, 0, 127, 127, 85, 53, 0, 56, 191, 244, 2, 63, 191, 244, 2, 191, 191, 244, 2, 63, 127, 0, 0, 0, 0, 0, 129, 127, 85, 53, 0, 56, 191, 244, 2, 191, 191, 244, 2, 191, 191, 244, 2, 191, 129, 0, 0, 0, 0, 0, 127, 127, 0, 0, 0, 60, 191, 244, 2, 63, 191, 244, 2, 191, 191, 244, 2, 191, 127, 0, 0, 0, 0, 0, 129, 127, 85, 57, 0, 56, 191, 244, 2, 191, 191, 244, 2, 191, 191, 244, 2, 63, 129, 0, 0, 0, 0, 0, 127, 127, 85, 53, 0, 60, 191, 244, 2, 63, 191, 244, 2, 63, 191, 244, 2, 63, 0, 127, 0, 0, 129, 0, 0, 127, 85, 53, 0, 56, 191, 244, 2, 191, 191, 244, 2, 191, 191, 244, 2, 63, 0, 129, 0, 0, 127, 0, 0, 127, 85, 57, 0, 56, 191, 244, 2, 191, 191, 244, 2, 63, 191, 244, 2, 63, 0, 127, 0, 0, 129, 0, 0, 127, 85, 57, 0, 56, 191, 244, 2, 63, 191, 244, 2, 191, 191, 244, 2, 63, 0, 129, 0, 0, 127, 0, 0, 127, 0, 60, 0, 56, 191, 244, 2, 63, 191, 244, 2, 63, 191, 244, 2, 191, 0, 127, 0, 0, 129, 0, 0, 127, 85, 53, 0, 60, 191, 244, 2, 191, 191, 244, 2, 191, 191, 244, 2, 191, 0, 129, 0, 0, 127, 0, 0, 127, 85, 57, 0, 60, 191, 244, 2, 191, 191, 244, 2, 63, 191, 244, 2, 191, 0, 127, 0, 0, 129, 0, 0, 127, 85, 57, 0, 60, 191, 244, 2, 63, 191, 244, 2, 191, 191, 244, 2, 191, 0, 129, 0, 0, 127, 0, 0, 127, 0, 60, 0, 60 ),
+"array_index_data": PoolByteArray( 0, 0, 4, 0, 2, 0, 2, 0, 4, 0, 6, 0, 1, 0, 5, 0, 3, 0, 3, 0, 5, 0, 7, 0, 8, 0, 12, 0, 10, 0, 10, 0, 12, 0, 14, 0, 9, 0, 13, 0, 11, 0, 11, 0, 13, 0, 15, 0, 16, 0, 20, 0, 18, 0, 18, 0, 20, 0, 22, 0, 17, 0, 21, 0, 19, 0, 19, 0, 21, 0, 23, 0 ),
+"blend_shape_data": [  ],
+"format": 97559,
+"index_count": 36,
+"primitive": 4,
+"skeleton_aabb": [  ],
+"vertex_count": 24
+}
+
+[sub_resource type="SpatialMaterial" id=10]
+flags_unshaded = true
+albedo_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="BoxShape" id=11]
+extents = Vector3( 50, 50, 0.05 )
+
+[sub_resource type="CubeMesh" id=12]
+size = Vector3( 100, 100, 0.1 )
+
+[sub_resource type="Animation" id=13]
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("ColorRect:material:shader_param/size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.75 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1.75, 0.9 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ColorRect:material:shader_param/thickness")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.7, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.3, 0.0, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ColorRect:material:shader_param/force")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5, 0.7, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.06, 0.02, 0.0, 0.0 ]
+}
+
+[node name="Spatial" type="Spatial" groups=[
+"effected",
+]]
+script = ExtResource( 4 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource( 2 )
+margin_right = 1920.0
+margin_bottom = 1080.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StaticBody" type="StaticBody" parent="ColorRect" groups=[
+"floor",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.354153, 4.56716, -0.677385 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ColorRect/StaticBody" groups=[
+"floor",
+]]
+layers = 1048575
+mesh = SubResource( 3 )
+material/0 = ExtResource( 7 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ColorRect/StaticBody"]
+shape = SubResource( 4 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="ColorRect"]
+environment = SubResource( 6 )
+
+[node name="KinematicBody" parent="ColorRect" instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.012, 0 )
+
+[node name="RigidBody13" type="RigidBody" parent="ColorRect" groups=[
+"weighted",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2655, 18.5077, 10.3284 )
+collision_layer = 524291
+mass = 100.0
+physics_material_override = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ColorRect/RigidBody13"]
+shape = SubResource( 7 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ColorRect/RigidBody13"]
+mesh = SubResource( 8 )
+material/0 = ExtResource( 7 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ColorRect/RigidBody13/MeshInstance"]
+mesh = SubResource( 9 )
+material/0 = SubResource( 10 )
+
+[node name="Spatial" type="Spatial" parent="ColorRect/RigidBody13" groups=[
+"effected",
+]]
+script = ExtResource( 3 )
+
+[node name="Tween" type="Tween" parent="ColorRect/RigidBody13/Spatial"]
+
+[node name="Tween2" type="Tween" parent="ColorRect/RigidBody13/Spatial"]
+
+[node name="RigidBody" parent="ColorRect" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.72766, 23.8758, -24.6561 )
+
+[node name="Door" parent="ColorRect" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.85413, 8.48149, -26.2228 )
+
+[node name="Door2" parent="ColorRect" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.34036, 9.04274, -26.9718 )
+
+[node name="RigidBody2" parent="ColorRect" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.90218, 16.0532, -24.1449 )
+
+[node name="StaticBody2" type="StaticBody" parent="ColorRect"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -45.5682 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ColorRect/StaticBody2"]
+shape = SubResource( 11 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ColorRect/StaticBody2"]
+mesh = SubResource( 12 )
+material/0 = ExtResource( 7 )
+
+[node name="StaticBody3" type="StaticBody" parent="ColorRect"]
+transform = Transform( -4.36241e-08, 0.0631737, 0.998003, 2.76141e-09, 0.998003, -0.0631737, -1, 0, -4.37114e-08, 47.5258, 0, 3.73935 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ColorRect/StaticBody3"]
+shape = SubResource( 11 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ColorRect/StaticBody3"]
+transform = Transform( 1, 0, 0, -2.11758e-22, 1, 7.45058e-09, 0, -7.45058e-09, 1, 0, 0, 0 )
+mesh = SubResource( 12 )
+material/0 = ExtResource( 7 )
+
+[node name="Tween2" type="Tween" parent="ColorRect"]
+
+[node name="Tween" type="Tween" parent="ColorRect"]
+
+[node name="Tween3" type="Tween" parent="ColorRect"]
+
+[node name="Tween4" type="Tween" parent="ColorRect"]
+
+[node name="Button" parent="ColorRect" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.53678, 5.20045, -8.03959 )
+connected1 = NodePath("../Door")
+
+[node name="Button2" parent="ColorRect" instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.13778, 5.4387, -5.19356 )
+connected1 = NodePath("../Door2")
+
+[node name="DirectionalLight" type="DirectionalLight" parent="ColorRect"]
+transform = Transform( 0.908494, 8.12257e-08, 0.417898, -0.121812, 0.956575, 0.264814, -0.399751, -0.291487, 0.869042, 0, 27.4039, 0 )
+light_energy = 0.5
+shadow_enabled = true
+shadow_color = Color( 0.333333, 0.333333, 0.333333, 1 )
+directional_shadow_mode = 1
+directional_shadow_blend_splits = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+"anims/New Anim" = SubResource( 13 )
+
+[node name="Timer" type="Timer" parent="." groups=[
+"globaltimer",
+]]
+wait_time = 0.2
+one_shot = true
