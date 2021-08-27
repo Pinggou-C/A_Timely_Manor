@@ -35,7 +35,7 @@ surfaces/0 = {
 flags_unshaded = true
 
 [node name="RigidBody" type="RigidBody"]
-collision_layer = 7
+collision_layer = 524295
 physics_material_override = SubResource( 1 )
 gravity_scale = 2.0
 continuous_cd = true

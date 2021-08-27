@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Objects/3D_Objects/cube/cubephysics.tres" type="PhysicsMaterial" id=1]
 [ext_resource path="res://Objects/3D_Objects/Doors/Door.tscn" type="PackedScene" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://Objects/3D_Objects/Buttons/reversebutton.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Objects/Player/chearecter.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Objects/3D_Objects/Doors/reverseDoor.tscn" type="PackedScene" id=10]
+[ext_resource path="res://addons/SIsilicon.vfx.godrays/GodRays.gd" type="Script" id=11]
+[ext_resource path="res://Objects/3D_Objects/World/truepillar.tscn" type="PackedScene" id=12]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -244,6 +246,18 @@ material/0 = ExtResource( 7 )
 
 [node name="Tween" type="Tween" parent="ColorRect"]
 
+[node name="StaticBody4" parent="ColorRect" instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.82892, 6.05223, 11.6621 )
+
+[node name="StaticBody5" parent="ColorRect" instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.64254, 6.03707, 14.4209 )
+
+[node name="StaticBody6" parent="ColorRect" instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.82892, 6.05223, 11.6621 )
+
+[node name="StaticBody7" parent="ColorRect" instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.64254, 6.03707, 14.4209 )
+
 [node name="Tween3" type="Tween" parent="ColorRect"]
 
 [node name="Tween4" type="Tween" parent="ColorRect"]
@@ -258,11 +272,15 @@ connected1 = NodePath("../Door2")
 
 [node name="DirectionalLight" type="DirectionalLight" parent="ColorRect"]
 transform = Transform( 0.908494, 8.12257e-08, 0.417898, -0.121812, 0.956575, 0.264814, -0.399751, -0.291487, 0.869042, 0, 27.4039, 0 )
-light_energy = 0.5
+light_energy = 0.6
 shadow_enabled = true
 shadow_color = Color( 0.333333, 0.333333, 0.333333, 1 )
-directional_shadow_mode = 1
 directional_shadow_blend_splits = true
+
+[node name="GodRays" type="Spatial" parent="ColorRect/DirectionalLight"]
+script = ExtResource( 11 )
+exposure = 1.0
+light_size = 1.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 "anims/New Anim" = SubResource( 13 )
