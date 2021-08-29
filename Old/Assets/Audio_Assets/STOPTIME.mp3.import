@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/STOPTIME.mp3-968f60a849a872367ed595a7bd57ef09.mp3str"
+
+[deps]
+
+source_file="res://Assets/Audio_Assets/STOPTIME.mp3"
+dest_files=[ "res://.import/STOPTIME.mp3-968f60a849a872367ed595a7bd57ef09.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

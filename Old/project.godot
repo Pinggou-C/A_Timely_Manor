@@ -86,16 +86,10 @@ grab={
 
 2d/options/use_nvidia_rect_flicker_workaround=true
 2d/snapping/use_gpu_pixel_snap=true
-quality/directional_shadow/size=2048
-quality/shadow_atlas/size=2048
-quality/filters/anisotropic_filter_level=2
-quality/spatial_partitioning/render_tree_balance=1.0
 quality/subsurface_scattering/quality=0
-quality/reflections/atlas_size=512
-quality/reflections/atlas_subdiv=4
 quality/filters/msaa=2
 quality/filters/use_debanding=true
 environment/default_environment="res://Assets/Environment/default_env.tres"
-quality/godrays/dither_amount=1.0
 quality/godrays/sample_number=50
 quality/godrays/use_pcf5=false
+quality/godrays/dither_amount=1.0
