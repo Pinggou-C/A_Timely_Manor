@@ -1,0 +1,63 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Objects/Battery.gd" type="Script" id=1]
+
+[sub_resource type="BoxShape" id=1]
+
+[sub_resource type="CubeMesh" id=2]
+
+[sub_resource type="SpatialMaterial" id=3]
+metallic = 1.0
+metallic_specular = 1.0
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 0.1, 0.1, 0.1 )
+
+[sub_resource type="CubeMesh" id=5]
+size = Vector3( 0.4, 0.4, 0.4 )
+
+[sub_resource type="SpatialMaterial" id=6]
+resource_local_to_scene = true
+albedo_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=7]
+albedo_color = Color( 0, 0, 0, 1 )
+
+[node name="StaticBody" type="StaticBody"]
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="Pos" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.8, 0 )
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape" type="CollisionShape" parent="Pos"]
+shape = SubResource( 4 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Pos"]
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="Neg" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.8, 0 )
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape" type="CollisionShape" parent="Neg"]
+shape = SubResource( 4 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Neg"]
+mesh = SubResource( 5 )
+material/0 = SubResource( 7 )
+
+[connection signal="body_entered" from="Pos" to="." method="poscon"]
+[connection signal="body_exited" from="Pos" to="." method="posdiscon"]
+[connection signal="body_entered" from="Neg" to="." method="negcon"]
+[connection signal="body_exited" from="Neg" to="." method="negdiscon"]
