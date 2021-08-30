@@ -37,3 +37,8 @@ collision_mask = 8
 
 [node name="CollisionShape" type="CollisionShape" parent="neg"]
 shape = SubResource( 3 )
+
+[connection signal="body_entered" from="pos" to="." method="positive_connect"]
+[connection signal="body_exited" from="pos" to="." method="positive_disconnect"]
+[connection signal="body_entered" from="neg" to="." method="negative_connect"]
+[connection signal="body_exited" from="neg" to="." method="negative_disconnect"]

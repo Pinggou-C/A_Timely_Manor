@@ -9,14 +9,8 @@ var flowing = false
 func _ready():
 	pass # Replace with function body.
 
-func check(body):
-	var good = true
-	if conns.size > 0:
-		for i in conns:
-			if i != body:
-				var g = i.check(self)
-				if g == false:
-					good = false
+func connecting(path, resistance, split):
+	pass
 	
 
 func positive_connect(body):
