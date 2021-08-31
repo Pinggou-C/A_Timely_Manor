@@ -6,24 +6,48 @@ var negcon = false
 var flowing = false
 var connected = false
 
+var volts
+var amps
+var path0
+var resistance0
+var oldresistance0
+var splits0
+
 func _ready():
 	pass # Replace with function body.
 
-func connecting(path, resistance, split, body):
+func connecting(path, resistance, split, body, oldresistances):
 	if connected == true:
-		return
-	var paths = path.append(self)
-	var splits = split
-	if conns > 2:
-		splits.append(self)
-	if conns.size > 1:
-		for i in conns:
-			if i != body:
-				i.connecting(paths, resistance, splits, self)
-		connected = true
+		var which = -1
+		for i in oldresistances:
+			var g = resistance0.find_last(i)
+			if g != -1:
+				which = g
+		if oldresistance0[which] == 0 && oldresistances[which] != 0:
+			Global_Variables.dead_routes.append(path0)
+			return
+		elif oldresistances[which] == 0 && oldresistance0[which] != 0:
+			path0 = path
+			splits0 = split
+			resistance0 = resistance
+			oldresistance0 = resistance
 	else:
-		Global_Variables.dead_routes.append(paths)
-		return
+		var paths = path.append(self)
+		path0 = path
+		oldresistance0 = oldresistances
+		splits0 = split
+		resistance0 = resistance
+		var splits = split
+		if conns > 2:
+			splits.append(self)
+		if conns.size > 1:
+			for i in conns:
+				if i != body:
+					i.connecting(paths, resistance, splits, self, oldresistances)
+			connected = true
+		else:
+			Global_Variables.dead_routes.append(paths)
+			return
 
 func middle_connect(body):
 	conns.append(body)
