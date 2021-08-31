@@ -13,10 +13,13 @@ var wires = []
 var splits = []
 export(float) var volts = 1
 export(float) var amps = 1
+
+
 func _ready():
-	pass 
+	Global_Variables.batteries.append(self)
 
-
+func start_connecting():
+	posconnect.connecting([], 0, [], self)
 #gets called when a sygnal returns
 func connecting(path, resistance, split):
 	if resistance_l != 1 || resistance == 0:
@@ -29,11 +32,11 @@ func connecting(path, resistance, split):
 		for j in split:
 			if splits.has(j) == false:
 				splits.append(j)
-		if resistance == 0:
-			for h in paths:
-				if h[0] != 0:
-					paths.remove(paths.find(h))
-			resistance = resistance
+#		if resistance == 0:
+#			for h in paths:
+#				if h[0] != 0:
+#					paths.remove(paths.find(h))
+#			resistance = resistance
 
 func posdiscon(body):
 	posconnect = null
@@ -43,7 +46,7 @@ func posdiscon(body):
 func negcon(body):
 	negconnect = body
 	if posconnect != null:
-		posconnect.connecting([], 0, [])
+		posconnect.connecting([], 0, [], self)
 	#var group = get_tree().get_nodes_in_group('special')
 	#for i in group:
 	#	if i.posconnect == null || i.negconnect == null:
@@ -61,7 +64,7 @@ func negdiscon(_body):
 func poscon(body):
 	posconnect = body
 	if negconnect != null:
-		posconnect.connecting([], 0, [])
+		posconnect.connecting([], 0, [], self)
 	#gets all nodes which need to be connected properly and checks if they are
 	#var group = get_tree().get_nodes_in_group('special')
 	#for i in group:
