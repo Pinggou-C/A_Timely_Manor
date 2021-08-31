@@ -5,6 +5,7 @@ var batteries = []
 var connected_wires = []
 var dead_routes = []
 var routes = []
+var all_routes = []
 var splits = []
 
 #can be -1, 0 & 1

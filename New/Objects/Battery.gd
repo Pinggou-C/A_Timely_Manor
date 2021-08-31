@@ -7,8 +7,6 @@ var flowing = false
 
 var paths = []
 # paths = [ [id, resistance, [wires], [splits]], []]
-var pathnr = 0
-var resistance_l = 1000
 var wires = []
 var splits = []
 export(float) var volts = 1
@@ -22,21 +20,24 @@ func start_connecting():
 	posconnect.connecting([], 0, [], self)
 #gets called when a sygnal returns
 func connecting(path, resistance, split):
-	if resistance_l != 1 || resistance == 0:
-		for i in path:
-			if wires.has(i) == false:
-				wires.append(i)
-		pathnr += 1
-		path.insert(0, resistance)
-		paths.append(path)
-		for j in split:
-			if splits.has(j) == false:
-				splits.append(j)
-#		if resistance == 0:
-#			for h in paths:
-#				if h[0] != 0:
-#					paths.remove(paths.find(h))
-#			resistance = resistance
+	for i in path:
+		if wires.has(i) == false:
+			wires.append(i)
+	paths.append(path)
+	path.insert(0, resistance)
+	Global_Variables.routes.append(path)
+	Global_Variables.all_routes.append(path)
+	for i in split:
+		if !Global_Variables.splits.has(i):
+			Global_Variables.splits.append(i)
+	for j in split:
+		if splits.has(j) == false:
+			splits.append(j)
+	if resistance == 0:
+		for h in Global_Variables.routes:
+			if h[0] != 0:
+				Global_Variables.dead_routes.append(h)
+				Global_Variables.routes.remove(Global_Variables.routes.find(h))
 
 func posdiscon(body):
 	posconnect = null
