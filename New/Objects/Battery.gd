@@ -21,7 +21,12 @@ func start_connecting():
 	posconnect.connecting([], 0, [], self)
 #gets called when a sygnal returns
 func connecting(path, resistance, split, body, oldresistance):
-	
+	var which = -1
+	var rev = oldresistances.invert()
+	for i in rev:
+		var g = oldresistances.find_last(i)
+		if g != -1:
+			which = g
 	for i in path:
 		if wires.has(i) == false:
 			wires.append(i)

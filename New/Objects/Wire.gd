@@ -9,10 +9,10 @@ var connected = false
 var powered_by = []
 var volts
 var amps
-var path0
-var resistance0
-var oldresistance0
-var splits0
+var path0 =[]
+var resistance0 =0
+var oldresistance0 =[]
+var splits0 =[]
 
 func _ready():
 	pass # Replace with function body.
