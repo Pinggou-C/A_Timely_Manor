@@ -8,6 +8,7 @@ var flowing = false
 var paths = []
 # paths = [ [id, resistance, [wires], [splits]], []]
 var wires = []
+var oldresistances = []
 var splits = []
 export(float) var volts = 1
 export(float) var amps = 1
@@ -19,7 +20,8 @@ func _ready():
 func start_connecting():
 	posconnect.connecting([], 0, [], self)
 #gets called when a sygnal returns
-func connecting(path, resistance, split):
+func connecting(path, resistance, split, body, oldresistance):
+	
 	for i in path:
 		if wires.has(i) == false:
 			wires.append(i)
