@@ -57,6 +57,8 @@ shape = SubResource( 4 )
 mesh = SubResource( 5 )
 material/0 = SubResource( 7 )
 
+[node name="Timer" type="Timer" parent="."]
+
 [connection signal="body_entered" from="Pos" to="." method="poscon"]
 [connection signal="body_exited" from="Pos" to="." method="posdiscon"]
 [connection signal="body_entered" from="Neg" to="." method="negcon"]

@@ -23,15 +23,19 @@ func connecting(path, resistance, split, body, oldresistances):
 			return
 		else:
 			var which = -1
-			var rev = oldresistances.invert()
+			var which2 = -1
+			var rev = split.invert()
 			for i in rev:
-				var g = resistance0.find_last(i)
+				var g = splits0.find(i)
 				if g != -1:
 					which = g
-			if oldresistance0[which] == 0 && oldresistances[which] != 0:
+				var h = split.find(i)
+				if h != -1:
+					which2 = h
+			if oldresistance0[which] == 0 && oldresistances[which2] != 0:
 				Global_Variables.dead_routes.append(path0)
 				return
-			elif oldresistances[which] == 0 && oldresistance0[which] != 0:
+			elif oldresistances[which2] == 0 && oldresistance0[which] != 0:
 				path0 = path
 				splits0 = split
 				resistance0 = resistance

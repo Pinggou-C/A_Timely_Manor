@@ -19,27 +19,39 @@ func _ready():
 
 func start_connecting():
 	posconnect.connecting([], 0, [], self)
+	$Timer.start(0.5)
 #gets called when a sygnal returns
 func connecting(path, resistance, split, body, oldresistance):
-	var which = -1
-	var rev = oldresistances.invert()
-	for i in rev:
-		var g = oldresistances.find_last(i)
-		if g != -1:
-			which = g
+	if splits.size() > 0:
+		for splitt in splits:
+			var which = -1
+			var which2 = -1
+			var rev = split.invert()
+			for i in rev:
+				var g = splitt.find(i)
+				if g != -1:
+					which = g
+					var h = split.find(i)
+					if h != -1:
+						which2 = h
+					if oldresistance[which] == 0 && oldresistances[which2] != 0:
+						Global_Variables.routes.remove(Global_Variables.routes.find(splitt))
+					elif oldresistances[which2] == 0 && oldresistance[which] != 0:
+						return
 	for i in path:
 		if wires.has(i) == false:
 			wires.append(i)
 	paths.append(path)
+	splits.append(split)
 	path.insert(0, resistance)
 	Global_Variables.routes.append(path)
 	Global_Variables.all_routes.append(path)
 	for i in split:
 		if !Global_Variables.splits.has(i):
 			Global_Variables.splits.append(i)
-	for j in split:
-		if splits.has(j) == false:
-			splits.append(j)
+#	for j in split:
+#		if splits.has(j) == false:
+#			splits.append(j)
 	if resistance == 0:
 		for h in Global_Variables.routes:
 			if h[0] != 0:
