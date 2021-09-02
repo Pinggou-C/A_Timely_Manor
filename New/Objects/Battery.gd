@@ -92,3 +92,7 @@ func poscon(body):
 	#		return
 	#posconnect.connecting([], 0, [])
 		
+
+
+func _on_Timer_timeout():
+	var rev = Global_Variables.routes

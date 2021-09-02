@@ -1,5 +1,7 @@
 extends RigidBody
 
+export(String, "straight", "corner", "Tri" ,"Quad", "Quad_Overpass", "Quad_Cornerpass") var type
+
 var conns = []
 var poscon = false
 var negcon = false

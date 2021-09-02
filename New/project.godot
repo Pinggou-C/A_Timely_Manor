@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "GridMap",
+"class": "AutoGridMap",
+"language": "GDScript",
+"path": "res://shader+addons/3d tilemap/Godot_Auto_GridMap-main/Auto_GridMap.gd"
+} ]
+_global_script_class_icons={
+"AutoGridMap": ""
+}
+
 [application]
 
 config/name="A Timely Manor"
