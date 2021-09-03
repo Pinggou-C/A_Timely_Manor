@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Objects/3D_Objects/Entities/ridgidbody.gd" type="Script" id=1]
+[ext_resource path="res://Objects/3D_Objects/cube/ridgidbody.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Materials/truepillar.tres" type="Material" id=2]
 
 [sub_resource type="PhysicsMaterial" id=1]

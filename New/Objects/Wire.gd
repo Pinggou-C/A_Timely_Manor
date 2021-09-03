@@ -63,39 +63,45 @@ func connecting(path, resistance, split, body, oldresistances):
 			return
 
 func middle_connect(body):
-	conns.append(body)
-	if conns>1:
-		Global_Variables.batteries[0].start_connecting()
+	if body.is_in_group("wires") && body != self:
+		conns.append(body)
+		if conns>1:
+			Global_Variables.batteries[0].start_connecting()
 
 func middle_disconnect(body):
-	if conns.has(body):
-		conns.remove(conns.find(body))
+	if body.is_in_group("wires") && body != self:
+		if conns.has(body):
+			conns.remove(conns.find(body))
 
 
 func positive_connect(body):
-	poscon = body
-	conns.append(body)
-	if conns>1:
-		Global_Variables.batteries[0].start_connecting()
+	if body.is_in_group("wires") && body != self:
+		poscon = body
+		conns.append(body)
+		if conns.size()>1:
+			Global_Variables.batteries[0].start_connecting()
 
 
 func positive_disconnect(body):
-	poscon = null
-	conns.remove(conns.find(body))
-	if flowing == true:
-		Global_Variables.batteries[0].start_connecting()
+	if body.is_in_group("wires") && body != self:
+		poscon = null
+		conns.remove(conns.find(body))
+		if flowing == true:
+			Global_Variables.batteries[0].start_connecting()
 
 
 func negative_connect(body):
-	negcon =  body
-	conns.append(body)
-	if conns>1:
-		Global_Variables.batteries[0].start_connecting()
+	if body.is_in_group("wires") && body != self:
+		negcon =  body
+		conns.append(body)
+		if conns.size()>1:
+			Global_Variables.batteries[0].start_connecting()
 
 
 func negative_disconnect(body):
-	negcon = null
-	conns.remove(conns.find(body))
-	if flowing == true:
-		Global_Variables.batteries[0].start_connecting()
+	if body.is_in_group("wires") && body != self:
+		negcon = null
+		conns.remove(conns.find(body))
+		if flowing == true:
+			Global_Variables.batteries[0].start_connecting()
 

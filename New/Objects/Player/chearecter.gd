@@ -46,6 +46,13 @@ func _physics_process(delta):
 	var vel = (pos_next - pos_cur) / delta
 	pickvel = pick.move_and_slide(vel, Vector3.UP, false, 4, PI/4, false)
 func get_input():
+	if picked == true:
+		if Input.is_action_just_pressed("mouse_r"):
+			$Tween.interpolate_property(pick, "rotation_degrees", pick.rotation_degrees, Vector3(pick.rotation_degrees.x,pick.rotation_degrees.y + 90, pick.rotation_degrees.z) , 0.15, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			$Tween.start()
+		elif Input.is_action_just_pressed("mouse_l"):
+			$Tween.interpolate_property(pick, "rotation_degrees", pick.rotation_degrees, Vector3(pick.rotation_degrees.x,pick.rotation_degrees.y, pick.rotation_degrees.z+90) , 0.15, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			$Tween.start()
 	var vc = velocety.y
 	velocety = lerp(velocety, Vector3(), 0.15)
 	if Input.is_action_pressed("ui_left"):
@@ -65,22 +72,26 @@ func get_input():
 			if $RayCast.is_colliding():
 				var coll = $RayCast.get_collider()
 				pick = coll
+				var gooo = pick.rotation_degrees
 				rel_pos = get_rel_pos(pick)
-				if pick.is_in_group("weighted"):
-					pickgroups.append("weighted")
-					pick.get_child(2).pickup()
+				if pick.is_in_group("wire"):
+					pickgroups.append("wire")
+					pick.get_child(4).pickup()
 				var body := rigid_to_kinem(pick)
 				pick = body
 				picked = true
+				var gii = Vector3(stepify(gooo.x, 90),stepify(gooo.y, 90),stepify(gooo.z, 90))
+				print(gii)
+				$Tween.interpolate_property(pick, "rotation_degrees", gooo, gii, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+				$Tween.start()
 		elif picked == true:
 			var body := kinem_to_rigid(pick)
 			body.linear_velocity = pickvel * 0.75
 			body.set_collision_layer_bit(19, true)
-			body.get_child(2).drop(pickvel * 0.75)
+			body.get_child(4).drop(pickvel * 0.75)
 			print(pickvel * 0.75)
 			pick = null
 			picked = false
-			print('hiwa')
 			for i in pickgroups:
 				body.add_to_group(i)
 			

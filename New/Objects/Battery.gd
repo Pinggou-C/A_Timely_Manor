@@ -5,6 +5,7 @@ var negconnect = false
 
 var flowing = false
 
+var all_paths = []
 var paths = []
 # paths = [ [id, resistance, [wires], [splits]], []]
 var wires = []
@@ -22,8 +23,9 @@ func start_connecting():
 	$Timer.start(0.5)
 #gets called when a sygnal returns
 func connecting(path, resistance, split, body, oldresistance):
-	if splits.size() > 0:
-		for splitt in splits:
+	if Global_Variables.paths.size() > 0:
+		for j in Global_Variables.paths:
+			var splitt = j['splits']
 			var which = -1
 			var which2 = -1
 			var rev = split.invert()
@@ -34,18 +36,17 @@ func connecting(path, resistance, split, body, oldresistance):
 					var h = split.find(i)
 					if h != -1:
 						which2 = h
-					if oldresistance[which] == 0 && oldresistances[which2] != 0:
-						Global_Variables.routes.remove(Global_Variables.routes.find(splitt))
-					elif oldresistances[which2] == 0 && oldresistance[which] != 0:
+					if oldresistance[which] == 0 && j["oldresistances"][which2] != 0:
+						Global_Variables.paths.remove(Global_Variables.paths.find(j))
+						Global_Variables.dead_paths.append(j)
+					elif j["oldresistances"][which2] == 0 && oldresistance[which] != 0:
 						return
 	for i in path:
 		if wires.has(i) == false:
 			wires.append(i)
-	paths.append(path)
-	splits.append(split)
-	path.insert(0, resistance)
-	Global_Variables.routes.append(path)
-	Global_Variables.all_routes.append(path)
+	all_paths.append({"path":path, 'resistance':resistance, 'splits':split,'oldresitance':oldresistance})
+	Global_Variables.paths.append({"path":path, 'resistance':resistance, 'splits':split,'oldresitance':oldresistance})
+	#Global_Variables.all_routes.append(path)
 	for i in split:
 		if !Global_Variables.splits.has(i):
 			Global_Variables.splits.append(i)
@@ -53,10 +54,10 @@ func connecting(path, resistance, split, body, oldresistance):
 #		if splits.has(j) == false:
 #			splits.append(j)
 	if resistance == 0:
-		for h in Global_Variables.routes:
-			if h[0] != 0:
+		for h in Global_Variables.paths:
+			if h['resistance'] != 0:
 				Global_Variables.dead_routes.append(h)
-				Global_Variables.routes.remove(Global_Variables.routes.find(h))
+				Global_Variables.paths.remove(Global_Variables.paths.find(h))
 
 func posdiscon(body):
 	posconnect = null
