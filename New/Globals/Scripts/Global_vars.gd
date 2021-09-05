@@ -1,12 +1,12 @@
 extends Node
 
 #var Time_Scale = 1
-var batteries = [0]
-var connected_wires = [0]
-var dead_paths = [0]
-var paths = [0]
-var all_routes = [0]
-var splits = [0]
+var batteries = []
+var connected_wires = []
+var dead_paths = []
+var paths = []
+var all_routes = []
+var splits = []
 
 #can be -1, 0 & 1
 func _physics_process(delta):

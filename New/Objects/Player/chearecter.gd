@@ -74,9 +74,9 @@ func get_input():
 				pick = coll
 				var gooo = pick.rotation_degrees
 				rel_pos = get_rel_pos(pick)
-				if pick.is_in_group("wire"):
-					pickgroups.append("wire")
-					pick.get_child(4).pickup()
+				if pick.is_in_group("wires"):
+					pickgroups.append("wires")
+					pick.get_child(0).pickup()
 				var body := rigid_to_kinem(pick)
 				pick = body
 				picked = true
@@ -84,11 +84,13 @@ func get_input():
 				print(gii)
 				$Tween.interpolate_property(pick, "rotation_degrees", gooo, gii, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 				$Tween.start()
+				for i in pickgroups:
+					body.add_to_group(i)
 		elif picked == true:
 			var body := kinem_to_rigid(pick)
 			body.linear_velocity = pickvel * 0.75
 			body.set_collision_layer_bit(19, true)
-			body.get_child(4).drop(pickvel * 0.75)
+			body.get_child(0).drop(pickvel * 0.75)
 			print(pickvel * 0.75)
 			pick = null
 			picked = false

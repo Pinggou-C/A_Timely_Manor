@@ -1,7 +1,7 @@
 extends StaticBody
 
-var posconnect = false
-var negconnect = false
+var posconnect = null
+var negconnect = null
 
 var flowing = false
 
@@ -19,8 +19,9 @@ func _ready():
 	Global_Variables.batteries.append(self)
 
 func start_connecting():
-	posconnect.connecting([], 0, [], self)
-	$Timer.start(0.5)
+	if posconnect != null && negconnect != null:
+		posconnect.connecting([], 0, [], self)
+		$Timer.start(0.5)
 #gets called when a sygnal returns
 func connecting(path, resistance, split, body, oldresistance):
 	if Global_Variables.paths.size() > 0:
@@ -60,14 +61,18 @@ func connecting(path, resistance, split, body, oldresistance):
 				Global_Variables.paths.remove(Global_Variables.paths.find(h))
 
 func posdiscon(body):
-	posconnect = null
-	if flowing == true:
-		flowing = false
+	if body.is_in_group('wires'):
+		print("hii")
+		posconnect = null
+		if flowing == true:
+			flowing = false
 
 func negcon(body):
-	negconnect = body
-	if posconnect != null:
-		posconnect.connecting([], 0, [], self)
+	if body.is_in_group('wires'):
+		print("hii")
+		negconnect = body
+		if posconnect != null:
+			posconnect.get_child(0).connecting([], 0, [], self)
 	#var group = get_tree().get_nodes_in_group('special')
 	#for i in group:
 	#	if i.posconnect == null || i.negconnect == null:
@@ -75,17 +80,21 @@ func negcon(body):
 	#posconnect.connecting([], 0, [])
 
 
-func negdiscon(_body):
-	negconnect = null
-	if flowing == true:
-		flowing = false
+func negdiscon(body):
+	if body.is_in_group('wires'):
+		print("hii")
+		negconnect = null
+		if flowing == true:
+			flowing = false
 
 
 
 func poscon(body):
-	posconnect = body
-	if negconnect != null:
-		posconnect.connecting([], 0, [], self)
+	if body.is_in_group('wires'):
+		print("hii")
+		posconnect = body
+		if negconnect != null:
+			posconnect.get_child(0).connecting([], 0, [], self)
 	#gets all nodes which need to be connected properly and checks if they are
 	#var group = get_tree().get_nodes_in_group('special')
 	#for i in group:

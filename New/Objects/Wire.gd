@@ -56,7 +56,7 @@ func connecting(path, resistance, split, body, oldresistances):
 		if conns.size > 1:
 			for i in conns:
 				if i != body:
-					i.connecting(paths, resistance, splits, self, oldresistances)
+					i.get_child(0).connecting(paths, resistance, splits, self, oldresistances)
 			connected = true
 		else:
 			Global_Variables.dead_routes.append(paths)

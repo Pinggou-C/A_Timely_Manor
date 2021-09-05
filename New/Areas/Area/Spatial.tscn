@@ -1,7 +1,9 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Objects/Wire.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Areas/Area/Spatial.gd" type="Script" id=2]
+[ext_resource path="res://Objects/Battery.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/pause/pausefilter.gd" type="Script" id=4]
 [ext_resource path="res://Assets/Materials/truepillar.tres" type="Material" id=7]
 [ext_resource path="res://Objects/Player/chearecter.tscn" type="PackedScene" id=9]
 
@@ -47,11 +49,29 @@ size = Vector3( 100, 100, 0.1 )
 [node name="Spatial" type="Spatial" groups=[
 "effected",
 ]]
+pause_mode = 2
 script = ExtResource( 2 )
+
+[node name="Spatial" type="Spatial" parent="."]
+pause_mode = 2
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="." groups=[
+"paused",
+]]
+visible = false
+margin_right = 1366.0
+margin_bottom = 768.0
+color = Color( 0, 0, 0, 0.294118 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="StaticBody" type="StaticBody" parent="." groups=[
 "floor",
 ]]
+pause_mode = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.354153, 4.56716, -0.677385 )
 
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody" groups=[
@@ -65,12 +85,15 @@ material/0 = ExtResource( 7 )
 shape = SubResource( 2 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+pause_mode = 1
 environment = SubResource( 4 )
 
 [node name="KinematicBody" parent="." instance=ExtResource( 9 )]
+pause_mode = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.012, 0 )
 
 [node name="StaticBody2" type="StaticBody" parent="."]
+pause_mode = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -45.5682 )
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody2"]
@@ -81,6 +104,7 @@ mesh = SubResource( 6 )
 material/0 = ExtResource( 7 )
 
 [node name="StaticBody3" type="StaticBody" parent="."]
+pause_mode = 1
 transform = Transform( -4.36241e-08, 0.0631737, 0.998003, 2.76141e-09, 0.998003, -0.0631737, -1, 0, -4.37114e-08, 47.5258, 0, 3.73935 )
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody3"]
@@ -92,8 +116,10 @@ mesh = SubResource( 6 )
 material/0 = ExtResource( 7 )
 
 [node name="Tween" type="Tween" parent="."]
+pause_mode = 1
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
+pause_mode = 1
 transform = Transform( 0.908494, 9.47633e-08, 0.417898, -0.121812, 0.956575, 0.264814, -0.399751, -0.291487, 0.869042, 0, 27.4039, 0 )
 light_energy = 0.3
 shadow_enabled = true
@@ -103,14 +129,22 @@ directional_shadow_blend_splits = true
 [node name="Timer" type="Timer" parent="." groups=[
 "globaltimer",
 ]]
+pause_mode = 1
 wait_time = 0.2
 one_shot = true
 
 [node name="RigidBody3" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.58904, 12.8719, 14.9915 )
+pause_mode = 1
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.58904, 12.8719, 1.82633 )
 
 [node name="RigidBody4" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.54051, 12.8719, 14.9915 )
+pause_mode = 1
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.54051, 12.8719, 1.82633 )
 
 [node name="RigidBody5" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.849, 12.8719, 14.9915 )
+pause_mode = 1
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.849, 12.8719, 1.82633 )
+
+[node name="StaticBody4" parent="." instance=ExtResource( 3 )]
+pause_mode = 1
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.30693, 5.96804, -0.907063 )
