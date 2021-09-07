@@ -49,27 +49,7 @@ collision_mask = 8
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.051, 0, 0 )
 shape = SubResource( 4 )
 
-[node name="poscoll" type="StaticBody" parent="." groups=[
-"wires",
-]]
-collision_layer = 8
-collision_mask = 0
-
-[node name="CollisionShape2" type="CollisionShape" parent="poscoll"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.510701, 0, 0 )
-shape = SubResource( 4 )
-
-[node name="negcoll" type="StaticBody" parent="." groups=[
-"wires",
-]]
-collision_layer = 8
-collision_mask = 0
-
-[node name="CollisionShape2" type="CollisionShape" parent="negcoll"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.511, 0, 0 )
-shape = SubResource( 4 )
-
-[connection signal="body_entered" from="pos" to="Spatial" method="positive_connect"]
-[connection signal="body_exited" from="pos" to="Spatial" method="positive_disconnect"]
-[connection signal="body_entered" from="neg" to="Spatial" method="negative_connect"]
-[connection signal="body_exited" from="neg" to="Spatial" method="negative_disconnect"]
+[connection signal="body_shape_entered" from="pos" to="Spatial" method="positive_connect"]
+[connection signal="body_shape_exited" from="pos" to="Spatial" method="positive_disconnect"]
+[connection signal="body_shape_entered" from="neg" to="Spatial" method="negative_connect"]
+[connection signal="body_shape_exited" from="neg" to="Spatial" method="negative_disconnect"]

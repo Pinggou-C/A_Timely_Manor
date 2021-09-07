@@ -48,7 +48,13 @@ func _physics_process(delta):
 func get_input():
 	if picked == true:
 		if Input.is_action_just_pressed("mouse_r"):
-			$Tween.interpolate_property(pick, "rotation_degrees", pick.rotation_degrees, Vector3(pick.rotation_degrees.x,pick.rotation_degrees.y + 90, pick.rotation_degrees.z) , 0.15, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			var gg = floor(pick.rotation_degrees.y)
+			if gg > 0:
+				var i = 0
+				while i < gg:
+					gg-=1
+					pick.rotation_degrees.y -= 360
+			$Tween.interpolate_property(pick, "rotation_degrees:y", pick.rotation_degrees.y, pick.rotation_degrees.y + 90 , 0.15, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 			$Tween.start()
 		elif Input.is_action_just_pressed("mouse_l"):
 			$Tween.interpolate_property(pick, "rotation_degrees", pick.rotation_degrees, Vector3(pick.rotation_degrees.x,pick.rotation_degrees.y, pick.rotation_degrees.z+90) , 0.15, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
@@ -78,10 +84,11 @@ func get_input():
 					pickgroups.append("wires")
 					pick.get_child(0).pickup()
 				var body := rigid_to_kinem(pick)
-				pick = body
+				pick = body 
 				picked = true
 				var gii = Vector3(stepify(gooo.x, 90),stepify(gooo.y, 90),stepify(gooo.z, 90))
 				print(gii)
+				pick.set_collision_layer_bit(3, true)
 				$Tween.interpolate_property(pick, "rotation_degrees", gooo, gii, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 				$Tween.start()
 				for i in pickgroups:
@@ -95,6 +102,8 @@ func get_input():
 			pick = null
 			picked = false
 			for i in pickgroups:
+				if i == "wires":
+					body.set_collision_layer_bit(3, true)
 				body.add_to_group(i)
 			
 

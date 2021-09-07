@@ -11,6 +11,8 @@ var negcon = false
 var flowing = false
 var connected = false
 
+var pickedup = false
+
 var powered_by = []
 var volts
 var amps
@@ -59,56 +61,54 @@ func connecting(path, resistance, split, body, oldresistances):
 		if conns.size > 1:
 			for i in conns:
 				if i != body:
-					i.get_child(0).connecting(paths, resistance, splits, self, oldresistances)
+					i.connecting(paths, resistance, splits, self, oldresistances)
 			connected = true
 		else:
 			Global_Variables.dead_routes.append(paths)
 			return
 
-func middle_connect(body):
-	if (body.is_in_group("wires")||body.is_in_group("wires2")) && (body != self||(body != $poscoll || body != $negcoll)):
-		conns.append(body)
+func middle_connect(id, body, shape, localshape):
+	if (body.is_in_group("wires")||body.is_in_group("wires2")) && body != get_parent():
+		conns.append(body.get_child(0))
 		if conns>1:
 			Global_Variables.batteries[0].start_connecting()
 
-func middle_disconnect(body):
-	if (body.is_in_group("wires")||body.is_in_group("wires2")) && (body != self||(body != $poscoll || body != $negcoll)):
-		if conns.has(body):
-			conns.remove(conns.find(body))
+func middle_disconnect(id, body, shape, localshape):
+	if (body.is_in_group("wires")||body.is_in_group("wires2")) && body != get_parent():
+		if conns.has(body.get_child(0)):
+			conns.remove(conns.find(body.get_child(0)))
 
 
-func positive_connect(body):
-	if (body.is_in_group("wires")||body.is_in_group("wires2")) && (body != self||(body != $poscoll || body != $negcoll)):
-		print("hello")
-		poscon = body
-		conns.append(body)
+func positive_connect(id, body, shape, localshape):
+	if (body.is_in_group("wires")||body.is_in_group("wires2")) && body != get_parent():
+		print(body.get_child(0))
+		poscon = body.get_child(0)
+		conns.append(body.get_child(0))
 		if conns.size()>1:
 			Global_Variables.batteries[0].start_connecting()
 
 
-func positive_disconnect(body):
-	if (body.is_in_group("wires")||body.is_in_group("wires2")) && (body != self||(body != $poscoll || body != $negcoll)):
-		print("hello")
+func positive_disconnect(id, body, shape, localshape):
+	if (body.is_in_group("wires")||body.is_in_group("wires2")) && body != get_parent():
 		poscon = null
-		conns.remove(conns.find(body))
+		conns.remove(conns.find(body.get_child(0)))
 		if flowing == true:
 			Global_Variables.batteries[0].start_connecting()
 
 
-func negative_connect(body):
-	if (body.is_in_group("wires")||body.is_in_group("wires2")) && body != self:
-		print("hello")
-		negcon =  body
-		conns.append(body)
+func negative_connect(id, body, shape, localshape):
+	if (body.is_in_group("wires")||body.is_in_group("wires2"))  && body != get_parent():
+		print(body.get_child(0))
+		negcon =  body.get_child(0)
+		conns.append(body.get_child(0))
 		if conns.size()>1:
 			Global_Variables.batteries[0].start_connecting()
 
 
-func negative_disconnect(body):
-	if (body.is_in_group("wires")||body.is_in_group("wires2")) && body != self:
-		print("hello")
+func negative_disconnect(id, body, shape, localshape):
+	if (body.is_in_group("wires")||body.is_in_group("wires2")) && body != get_parent():
 		negcon = null
-		conns.remove(conns.find(body))
+		conns.remove(conns.find(body.get_child(0)))
 		if flowing == true:
 			Global_Variables.batteries[0].start_connecting()
 
@@ -118,6 +118,7 @@ func negative_disconnect(body):
 
 func drop(sped):
 	rng.randomize()
+	pickedup = false
 	var parent = get_parent()
 	parent.friction = 1
 	#get_parent().set_rough(true)
@@ -131,7 +132,45 @@ func drop(sped):
 	var z = sqrt(sqrt(sped.z * sped.z))/2
 	parent.angular_velocity = Vector3(rng.randfn(0, y),rng.randfn(0, z),rng.randfn(0, x))
 func pickup():
-	pass
+	pickedup = true
+
+func trans_body(to: PhysicsBody, from: PhysicsBody) -> void:
+	to.transform = from.transform
+	from.replace_by(to)
+	from.queue_free()
+
+# Convert a `RigidBody` scene node to `KinematicBody`
+func rigid_to_stat(rigid: RigidBody) -> StaticBody:
+	var stat := StaticBody.new()
+	trans_body(stat, rigid)
+	return stat
+
+# Convert a `KinematicBody` scene node to `RigidBody`
+func stat_to_rigid(stat: StaticBody) -> RigidBody:
+	var rigid := RigidBody.new()
+	trans_body(rigid, stat)
+	return rigid
+
+func rigid_to_kinem(rigid: RigidBody) -> KinematicBody:
+	var kinem := KinematicBody.new()
+	trans_body(kinem ,rigid)
+	return kinem
+
+# Convert a `KinematicBody` scene node to `RigidBody`
+func kinem_to_rigid(kinem: KinematicBody) -> RigidBody:
+	var rigid := RigidBody.new()
+	trans_body(rigid, kinem)
+	return rigid
+
+func kinem_to_stat(kinem: KinematicBody) -> StaticBody:
+	var stat := StaticBody.new()
+	trans_body(stat, kinem)
+	return stat
+
+func stat_to_kinem(stat: StaticBody) -> KinematicBody:
+	var kinem := KinematicBody.new()
+	trans_body(kinem, stat)
+	return kinem
 
 
 

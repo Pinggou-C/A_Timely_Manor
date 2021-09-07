@@ -61,7 +61,13 @@ material/0 = null
 
 [node name="Tween" type="Tween" parent="."]
 
+[node name="Tween2" type="Tween" parent="."]
+
 [node name="device_astralis_preview" type="Sprite" parent="."]
 position = Vector2( 683, 384 )
 texture = ExtResource( 3 )
 script = ExtResource( 5 )
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Timer2" type="Timer" parent="."]
