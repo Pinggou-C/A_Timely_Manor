@@ -57,8 +57,14 @@ func get_input():
 			$Tween.interpolate_property(pick, "rotation_degrees:y", pick.rotation_degrees.y, pick.rotation_degrees.y + 90 , 0.15, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 			$Tween.start()
 		elif Input.is_action_just_pressed("mouse_l"):
-			$Tween.interpolate_property(pick, "rotation_degrees", pick.rotation_degrees, Vector3(pick.rotation_degrees.x,pick.rotation_degrees.y, pick.rotation_degrees.z+90) , 0.15, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-			$Tween.start()
+			var gd = floor(pick.rotation_degrees.y)
+			if gd > 0:
+				var j = 0
+				while j < gd:
+					gd-=1
+					pick.rotation_degrees.z -= 360
+			$Tween2.interpolate_property(pick, "rotation_degrees:z", pick.rotation_degrees.z, pick.rotation_degrees.z+90 , 0.15, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			$Tween2.start()
 	var vc = velocety.y
 	velocety = lerp(velocety, Vector3(), 0.15)
 	if Input.is_action_pressed("ui_left"):
