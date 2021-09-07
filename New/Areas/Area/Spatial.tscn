@@ -135,15 +135,35 @@ one_shot = true
 
 [node name="RigidBody3" parent="." instance=ExtResource( 1 )]
 pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.58904, 12.8719, 1.82633 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.51887, 12.8719, -2.77939 )
+
+[node name="RigidBody6" parent="." instance=ExtResource( 1 )]
+pause_mode = 1
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.51887, 12.8719, -3.81748 )
 
 [node name="RigidBody4" parent="." instance=ExtResource( 1 )]
 pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.54051, 12.8719, 1.82633 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.47034, 12.8719, -2.77939 )
 
 [node name="RigidBody5" parent="." instance=ExtResource( 1 )]
 pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.849, 12.8719, 1.82633 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.77883, 12.8719, -2.77939 )
+
+[node name="RigidBody7" parent="." instance=ExtResource( 1 )]
+pause_mode = 1
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.51887, 12.8719, -2.46088 )
+
+[node name="RigidBody8" parent="." instance=ExtResource( 1 )]
+pause_mode = 1
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.51887, 12.8719, -3.49897 )
+
+[node name="RigidBody9" parent="." instance=ExtResource( 1 )]
+pause_mode = 1
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.47034, 12.8719, -2.46088 )
+
+[node name="RigidBody10" parent="." instance=ExtResource( 1 )]
+pause_mode = 1
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.77883, 12.8719, -2.46088 )
 
 [node name="StaticBody4" parent="." instance=ExtResource( 3 )]
 pause_mode = 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Objects/Battery.gd" type="Script" id=1]
 
@@ -11,7 +11,7 @@ metallic = 1.0
 metallic_specular = 1.0
 
 [sub_resource type="BoxShape" id=4]
-extents = Vector3( 0.2, 0.2, 0.2 )
+extents = Vector3( 0.25, 0.25, 0.25 )
 
 [sub_resource type="CubeMesh" id=5]
 size = Vector3( 0.4, 0.4, 0.4 )
@@ -22,6 +22,12 @@ albedo_color = Color( 1, 0, 0, 1 )
 
 [sub_resource type="SpatialMaterial" id=7]
 albedo_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="BoxShape" id=9]
+extents = Vector3( 0.25, 0.25, 0.25 )
+
+[sub_resource type="BoxShape" id=8]
+extents = Vector3( 0.2, 0.2, 0.2 )
 
 [node name="StaticBody" type="StaticBody"]
 script = ExtResource( 1 )
@@ -50,12 +56,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.8, 0 )
 collision_layer = 0
 collision_mask = 8
 
-[node name="CollisionShape" type="CollisionShape" parent="Neg"]
-shape = SubResource( 4 )
-
 [node name="MeshInstance2" type="MeshInstance" parent="Neg"]
 mesh = SubResource( 5 )
 material/0 = SubResource( 7 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="Neg"]
+shape = SubResource( 9 )
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
@@ -65,18 +71,22 @@ one_shot = true
 ]]
 collision_layer = 9
 
-[node name="CollisionShape2" type="CollisionShape" parent="StaticBody"]
+[node name="CollisionShape3" type="CollisionShape" parent="StaticBody" groups=[
+"bat",
+]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.8, 0 )
-shape = SubResource( 4 )
+shape = SubResource( 8 )
 
 [node name="StaticBody2" type="StaticBody" parent="." groups=[
 "wires2",
 ]]
 collision_layer = 9
 
-[node name="CollisionShape3" type="CollisionShape" parent="StaticBody2"]
+[node name="CollisionShape2" type="CollisionShape" parent="StaticBody2" groups=[
+"bat",
+]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.8, 0 )
-shape = SubResource( 4 )
+shape = SubResource( 8 )
 
 [connection signal="body_entered" from="Pos" to="." method="poscon"]
 [connection signal="body_exited" from="Pos" to="." method="posdiscon"]

@@ -19,11 +19,14 @@ func _ready():
 	Global_Variables.batteries.append(self)
 
 func start_connecting():
+	print("print")
 	if posconnect != null && negconnect != null:
-		posconnect.connecting([], 0, [], self)
+		print("print2")
+		posconnect.connecting([], 0, [], self, [])
 		$Timer.start(0.5)
 #gets called when a sygnal returns
 func connecting(path, resistance, split, body, oldresistance):
+	print("print5")
 	if Global_Variables.paths.size() > 0:
 		for j in Global_Variables.paths:
 			var splitt = j['splits']
@@ -62,17 +65,16 @@ func connecting(path, resistance, split, body, oldresistance):
 
 func posdiscon(body):
 	if body.is_in_group('wires'):
-		print("hii")
 		posconnect = null
 		if flowing == true:
 			flowing = false
 
 func negcon(body):
 	if body.is_in_group('wires'):
-		print("hii")
-		negconnect = body
+		negconnect = body.get_child(0)
 		if posconnect != null:
-			posconnect.get_child(0).connecting([], 0, [], self)
+			posconnect.connecting([], 0, [], self, [])
+			$Timer.start(0.5)
 	#var group = get_tree().get_nodes_in_group('special')
 	#for i in group:
 	#	if i.posconnect == null || i.negconnect == null:
@@ -82,7 +84,6 @@ func negcon(body):
 
 func negdiscon(body):
 	if body.is_in_group('wires'):
-		print("hii")
 		negconnect = null
 		if flowing == true:
 			flowing = false
@@ -91,10 +92,10 @@ func negdiscon(body):
 
 func poscon(body):
 	if body.is_in_group('wires'):
-		print("hii")
-		posconnect = body
+		posconnect = body.get_child(0)
 		if negconnect != null:
-			posconnect.get_child(0).connecting([], 0, [], self)
+			posconnect.connecting([], 0, [], self, [])
+			$Timer.start(0.5)
 	#gets all nodes which need to be connected properly and checks if they are
 	#var group = get_tree().get_nodes_in_group('special')
 	#for i in group:
@@ -105,4 +106,5 @@ func poscon(body):
 
 
 func _on_Timer_timeout():
-	var rev = Global_Variables.routes
+	var rev = Global_Variables.paths
+	print("print3")
