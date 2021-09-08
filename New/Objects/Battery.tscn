@@ -23,10 +23,10 @@ albedo_color = Color( 1, 0, 0, 1 )
 [sub_resource type="SpatialMaterial" id=7]
 albedo_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="BoxShape" id=9]
+[sub_resource type="BoxShape" id=8]
 extents = Vector3( 0.25, 0.25, 0.25 )
 
-[sub_resource type="BoxShape" id=8]
+[sub_resource type="BoxShape" id=9]
 extents = Vector3( 0.2, 0.2, 0.2 )
 
 [node name="StaticBody" type="StaticBody"]
@@ -61,7 +61,7 @@ mesh = SubResource( 5 )
 material/0 = SubResource( 7 )
 
 [node name="CollisionShape2" type="CollisionShape" parent="Neg"]
-shape = SubResource( 9 )
+shape = SubResource( 8 )
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
@@ -75,7 +75,7 @@ collision_layer = 9
 "bat",
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.8, 0 )
-shape = SubResource( 8 )
+shape = SubResource( 9 )
 
 [node name="StaticBody2" type="StaticBody" parent="." groups=[
 "wires2",
@@ -86,7 +86,7 @@ collision_layer = 9
 "bat",
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.8, 0 )
-shape = SubResource( 8 )
+shape = SubResource( 9 )
 
 [connection signal="body_entered" from="Pos" to="." method="poscon"]
 [connection signal="body_exited" from="Pos" to="." method="posdiscon"]

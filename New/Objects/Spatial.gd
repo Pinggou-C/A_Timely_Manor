@@ -26,8 +26,10 @@ func _ready():
 
 func connecting(path, resistance, split, body, oldresistances):
 	print("print4")
+	print(path)
 	if connected == true:
 		if path.has(self):
+			print('dead')
 			return
 		else:
 			var which = -1
@@ -44,6 +46,7 @@ func connecting(path, resistance, split, body, oldresistances):
 						which2 = h
 				if oldresistance0[which] == 0 && oldresistances[which2] != 0:
 					Global_Variables.dead_routes.append(path0)
+					print("dead")
 					return
 				elif oldresistances[which2] == 0 && oldresistance0[which] != 0:
 					path0 = path
@@ -51,13 +54,11 @@ func connecting(path, resistance, split, body, oldresistances):
 					resistance0 = resistance
 					oldresistance0 = resistance
 				powered_by.append(body)
-	else:
+	#else:
 		print(path)
 		var paths = path
 		paths.append(self)
-		print(self)
 		print(paths)
-		print('gg')
 		path0 = path
 		oldresistance0 = oldresistances
 		splits0 = split
