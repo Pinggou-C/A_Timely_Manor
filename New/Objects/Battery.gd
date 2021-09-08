@@ -19,9 +19,7 @@ func _ready():
 	Global_Variables.batteries.append(self)
 
 func start_connecting():
-	print("print")
 	if posconnect != null && negconnect != null:
-		print("print2")
 		posconnect.connecting([], 0, [], self, [])
 		$Timer.start(0.5)
 #gets called when a sygnal returns
@@ -32,24 +30,28 @@ func connecting(path, resistance, split, body, oldresistance):
 			var splitt = j['splits']
 			var which = -1
 			var which2 = -1
-			var rev = split.invert()
-			for i in rev:
-				var g = splitt.find(i)
-				if g != -1:
-					which = g
-					var h = split.find(i)
-					if h != -1:
-						which2 = h
-					if oldresistance[which] == 0 && j["oldresistances"][which2] != 0:
-						Global_Variables.paths.remove(Global_Variables.paths.find(j))
-						Global_Variables.dead_paths.append(j)
-					elif j["oldresistances"][which2] == 0 && oldresistance[which] != 0:
-						return
+			if split.size() > 0:
+				print(split)
+				var rev = split
+				rev.invert()
+				print(rev)
+				for i in rev:
+					var g = splitt.find(i)
+					if g != -1:
+						which = g
+						var h = split.find(i)
+						if h != -1:
+							which2 = h
+						if oldresistance[which] == 0 && j["oldresistances"][which2] != 0:
+							Global_Variables.paths.remove(Global_Variables.paths.find(j))
+							Global_Variables.dead_paths.append(j)
+						elif j["oldresistances"][which2] == 0 && oldresistance[which] != 0:
+							return
 	for i in path:
 		if wires.has(i) == false:
 			wires.append(i)
-	all_paths.append({"path":path, 'resistance':resistance, 'splits':split,'oldresitance':oldresistance})
-	Global_Variables.paths.append({"path":path, 'resistance':resistance, 'splits':split,'oldresitance':oldresistance})
+	all_paths.append({"path":path, 'resistance':resistance, 'splits':split,'oldresistances':oldresistance})
+	Global_Variables.paths.append({"path":path, 'resistance':resistance, 'splits':split,'oldresistances':oldresistance})
 	#Global_Variables.all_routes.append(path)
 	for i in split:
 		if !Global_Variables.splits.has(i):

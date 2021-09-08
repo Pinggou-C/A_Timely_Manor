@@ -25,18 +25,16 @@ func _ready():
 	pass 
 
 func connecting(path, resistance, split, body, oldresistances):
-	print("print4")
-	print(path)
 	if connected == true:
 		if path.has(self):
-			print('dead')
+			print("hello")
 			return
 		else:
 			var which = -1
 			var which2 = -1
-			print(split)
 			if split.size()> 0:
-				var rev = split.invert()
+				var rev = split
+				rev.invert()
 				for i in rev:
 					var g = splits0.find(i)
 					if g != -1:
@@ -46,7 +44,6 @@ func connecting(path, resistance, split, body, oldresistances):
 						which2 = h
 				if oldresistance0[which] == 0 && oldresistances[which2] != 0:
 					Global_Variables.dead_routes.append(path0)
-					print("dead")
 					return
 				elif oldresistances[which2] == 0 && oldresistance0[which] != 0:
 					path0 = path
@@ -55,10 +52,8 @@ func connecting(path, resistance, split, body, oldresistances):
 					oldresistance0 = resistance
 				powered_by.append(body)
 	#else:
-		print(path)
 		var paths = path
 		paths.append(self)
-		print(paths)
 		path0 = path
 		oldresistance0 = oldresistances
 		splits0 = split
@@ -77,6 +72,38 @@ func connecting(path, resistance, split, body, oldresistances):
 			connected = true
 		else:
 			Global_Variables.dead_paths.append(paths)
+			if path.size() > 0:
+				for i in path:
+					i.connected = false
+			return
+	else:
+		if path.has(self):
+			print("hello")
+			return
+		var paths = path
+		paths.append(self)
+		path0 = path
+		oldresistance0 = oldresistances
+		splits0 = split
+		resistance0 = resistance
+		powered_by.append(body)
+		var splits = split
+		if conns.size() > 2:
+			splits.append(self)
+			oldresistances.append(0)
+		if conns.size() > 1:
+			for i in conns:
+				if !i.is_in_group("bat"):
+					if i != body:
+						i.connecting(paths, resistance, splits, self, oldresistances)
+				elif i.get_parent().get_parent() != body:
+					i.get_parent().get_parent().connecting(paths, resistance, splits, self, oldresistances)
+			connected = true
+		else:
+			Global_Variables.dead_paths.append(paths)
+			if path.size() > 0:
+				for i in path:
+					i.connected = false
 			return
 
 func middle_connect(id, body, shape, localshape):
