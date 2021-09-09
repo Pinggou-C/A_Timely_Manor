@@ -34,7 +34,6 @@ func connecting(path, resistance, split, body, oldresistance):
 				print(split)
 				var rev = split
 				rev.invert()
-				print(rev)
 				for i in rev:
 					var g = splitt.find(i)
 					if g != -1:
@@ -42,11 +41,11 @@ func connecting(path, resistance, split, body, oldresistance):
 						var h = split.find(i)
 						if h != -1:
 							which2 = h
-						if oldresistance[which] == 0 && j["oldresistances"][which2] != 0:
-							Global_Variables.paths.remove(Global_Variables.paths.find(j))
-							Global_Variables.dead_paths.append(j)
-						elif j["oldresistances"][which2] == 0 && oldresistance[which] != 0:
-							return
+						#if oldresistance[which] == 0 && j["oldresistances"][which2] != 0:
+							#Global_Variables.paths.remove(Global_Variables.paths.find(j))
+							#Global_Variables.dead_paths.append(j)
+						#elif j["oldresistances"][which2] == 0 && oldresistance[which] != 0:
+							#return
 	for i in path:
 		if wires.has(i) == false:
 			wires.append(i)
