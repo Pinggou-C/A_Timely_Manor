@@ -13,9 +13,21 @@ _global_script_classes=[ {
 "class": "AutoGridMap",
 "language": "GDScript",
 "path": "res://shader+addons/3d tilemap/Godot_Auto_GridMap-main/Auto_GridMap.gd"
+}, {
+"base": "ResourceFormatLoader",
+"class": "HTerrainDataLoader",
+"language": "GDScript",
+"path": "res://addons/zylann.hterrain/hterrain_resource_loader.gd"
+}, {
+"base": "ResourceFormatSaver",
+"class": "HTerrainDataSaver",
+"language": "GDScript",
+"path": "res://addons/zylann.hterrain/hterrain_resource_saver.gd"
 } ]
 _global_script_class_icons={
-"AutoGridMap": ""
+"AutoGridMap": "",
+"HTerrainDataLoader": "",
+"HTerrainDataSaver": ""
 }
 
 [application]
@@ -44,7 +56,7 @@ window/stretch/mode="viewport"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/SIsilicon.vfx.godrays/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/SIsilicon.vfx.godrays/plugin.cfg", "res://addons/decals/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg" )
 
 [input]
 
