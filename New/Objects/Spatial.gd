@@ -25,9 +25,11 @@ func _ready():
 	pass 
 
 func connecting(path, resistance, split, body, oldresistances):
+	print(" not dead")
 	var stop = false
 	if connected == true:
 		if path.has(self):
+			print("dead")
 			stop = true
 			return
 		else:
@@ -57,7 +59,7 @@ func connecting(path, resistance, split, body, oldresistances):
 							#	oldresistance0 = resistance
 							#powered_by.append(body)
 	#else:
-		if stop == true:
+		if stop == false:
 			var paths = path
 			paths.append(self)
 			path0 = path
@@ -81,13 +83,16 @@ func connecting(path, resistance, split, body, oldresistances):
 				if path.size() > 0:
 					for i in path:
 						i.connected = false
-				stop = true
+				#stop = true
+				print("dead2")
+				print(self)
 				return
 	else:
 		if path.has(self):
 			stop = true
+			print("dead")
 			return
-		if stop == true:
+		if stop == false:
 			var paths = path
 			paths.append(self)
 			path0 = path
@@ -112,7 +117,9 @@ func connecting(path, resistance, split, body, oldresistances):
 				if path.size() > 0:
 					for i in path:
 						i.connected = false
-				stop = true
+				#stop = true
+				print("dead2")
+				print(self)
 				return
 
 func middle_connect(id, body, shape, localshape):
