@@ -10,6 +10,7 @@ var splits = []
 
 #can be -1, 0 & 1
 func _physics_process(delta):
+	#print(paths)
 #	if Input.is_action_just_pressed("mouse_l"):
 #		if Time_Scale != -1:
 #			yield(get_tree().create_timer(0.1), "timeout")

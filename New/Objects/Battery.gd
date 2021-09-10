@@ -26,12 +26,12 @@ func start_connecting():
 func connecting(path, resistance, split, body, oldresistance):
 	print("print5")
 	if Global_Variables.paths.size() > 0:
+		print(Global_Variables.paths.size())
 		for j in Global_Variables.paths:
 			var splitt = j['splits']
 			var which = -1
 			var which2 = -1
 			if split.size() > 0:
-				print(split)
 				var rev = split
 				rev.invert()
 				for i in rev:
@@ -50,7 +50,8 @@ func connecting(path, resistance, split, body, oldresistance):
 		if wires.has(i) == false:
 			wires.append(i)
 	all_paths.append({"path":path, 'resistance':resistance, 'splits':split,'oldresistances':oldresistance})
-	Global_Variables.paths.append({"path":path, 'resistance':resistance, 'splits':split,'oldresistances':oldresistance})
+	var dict = {"path":path, 'resistance':resistance, 'splits':split,'oldresistances':oldresistance}
+	Global_Variables.paths.append(dict)
 	#Global_Variables.all_routes.append(path)
 	for i in split:
 		if !Global_Variables.splits.has(i):
