@@ -37,7 +37,7 @@ shape = SubResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -0.192089 )
 current = true
 size = 1.28
-far = 500.0
+far = 700.0
 script = ExtResource( 4 )
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
