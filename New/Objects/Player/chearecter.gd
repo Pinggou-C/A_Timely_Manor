@@ -97,8 +97,6 @@ func get_input():
 				pick.set_collision_layer_bit(3, true)
 				$Tween.interpolate_property(pick, "rotation_degrees", gooo, gii, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 				$Tween.start()
-				for i in pickgroups:
-					body.add_to_group(i)
 		elif picked == true:
 			var body := kinem_to_rigid(pick)
 			body.linear_velocity = pickvel * 0.75

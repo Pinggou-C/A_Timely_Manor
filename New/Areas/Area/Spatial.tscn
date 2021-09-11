@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Objects/Wire.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Areas/Area/Spatial.gd" type="Script" id=2]
 [ext_resource path="res://Objects/Battery.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/pause/pausefilter.gd" type="Script" id=4]
+[ext_resource path="res://terrain/HTerrain.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Materials/truepillar.tres" type="Material" id=7]
 [ext_resource path="res://Objects/Player/chearecter.tscn" type="PackedScene" id=9]
 
@@ -14,31 +15,15 @@ size = Vector3( 100, 1, 100 )
 extents = Vector3( 50, 0.5, 50 )
 
 [sub_resource type="ProceduralSky" id=3]
-ground_bottom_color = Color( 1, 1, 1, 1 )
-ground_energy = 0.0
-sun_energy = 0.0
 
 [sub_resource type="Environment" id=4]
 background_mode = 2
 background_sky = SubResource( 3 )
-background_color = Color( 0.152941, 0.152941, 0.152941, 1 )
-ambient_light_color = Color( 1, 1, 1, 1 )
-fog_color = Color( 0.262745, 0.262745, 0.262745, 1 )
-fog_sun_color = Color( 0, 0, 0, 1 )
-dof_blur_far_distance = 25.0
-dof_blur_far_transition = 25.0
-dof_blur_far_amount = 0.05
-dof_blur_far_quality = 2
-dof_blur_near_distance = 1.0
-dof_blur_near_amount = 0.2
-glow_enabled = true
-glow_levels/1 = true
-glow_levels/2 = true
-glow_levels/4 = true
-glow_levels/6 = true
-glow_levels/7 = true
-glow_blend_mode = 0
-glow_bicubic_upscale = true
+background_color = Color( 0.572549, 0.568627, 0.603922, 1 )
+fog_enabled = true
+fog_color = Color( 0.501961, 0.6, 0.701961, 0.780392 )
+fog_depth_begin = 75.0
+fog_depth_end = 200.0
 
 [sub_resource type="BoxShape" id=5]
 extents = Vector3( 50, 50, 0.05 )
@@ -54,7 +39,6 @@ script = ExtResource( 2 )
 
 [node name="Spatial" type="Spatial" parent="."]
 pause_mode = 2
-script = ExtResource( 2 )
 
 [node name="ColorRect" type="ColorRect" parent="." groups=[
 "paused",
@@ -72,7 +56,7 @@ __meta__ = {
 "floor",
 ]]
 pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.354153, 4.56716, -0.677385 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.354, -61.8752, -0.677 )
 
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody" groups=[
 "floor",
@@ -80,6 +64,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.354153, 4.56716, -0.677385 )
 layers = 1048575
 mesh = SubResource( 1 )
 material/0 = ExtResource( 7 )
+__meta__ = {
+"apply_volumetrics": false
+}
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
 shape = SubResource( 2 )
@@ -90,11 +77,12 @@ environment = SubResource( 4 )
 
 [node name="KinematicBody" parent="." instance=ExtResource( 9 )]
 pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.012, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.8872, 0 )
 
 [node name="StaticBody2" type="StaticBody" parent="."]
 pause_mode = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -45.5682 )
+visible = false
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody2"]
 shape = SubResource( 5 )
@@ -102,18 +90,25 @@ shape = SubResource( 5 )
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody2"]
 mesh = SubResource( 6 )
 material/0 = ExtResource( 7 )
+__meta__ = {
+"apply_volumetrics": false
+}
 
 [node name="StaticBody3" type="StaticBody" parent="."]
 pause_mode = 1
 transform = Transform( -4.36241e-08, 0.0631737, 0.998003, 2.76141e-09, 0.998003, -0.0631737, -1, 0, -4.37114e-08, 47.5258, 0, 3.73935 )
+visible = false
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody3"]
 shape = SubResource( 5 )
 
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody3"]
-transform = Transform( 1, 0, 0, -2.11758e-22, 1, 7.45058e-09, 0, -7.45058e-09, 1, 0, 0, 0 )
+transform = Transform( 1, 1.47832e-17, 0, -2.11758e-22, 1, 1.49012e-08, 0, -1.49012e-08, 1, -0.0230894, -0.0815132, -0.0349007 )
 mesh = SubResource( 6 )
 material/0 = ExtResource( 7 )
+__meta__ = {
+"apply_volumetrics": false
+}
 
 [node name="Tween" type="Tween" parent="."]
 pause_mode = 1
@@ -122,9 +117,11 @@ pause_mode = 1
 pause_mode = 1
 transform = Transform( 0.908494, 9.47633e-08, 0.417898, -0.121812, 0.956575, 0.264814, -0.399751, -0.291487, 0.869042, 0, 27.4039, 0 )
 light_energy = 0.3
-shadow_enabled = true
 shadow_color = Color( 0.333333, 0.333333, 0.333333, 1 )
 directional_shadow_blend_splits = true
+__meta__ = {
+"volumetric": 0.0
+}
 
 [node name="Timer" type="Timer" parent="." groups=[
 "globaltimer",
@@ -132,18 +129,6 @@ directional_shadow_blend_splits = true
 pause_mode = 1
 wait_time = 0.2
 one_shot = true
-
-[node name="RigidBody3" parent="." instance=ExtResource( 1 )]
-pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.51887, 12.8719, -2.77939 )
-
-[node name="RigidBody6" parent="." instance=ExtResource( 1 )]
-pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.51887, 12.8719, -3.81748 )
-
-[node name="RigidBody4" parent="." instance=ExtResource( 1 )]
-pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.47034, 12.8719, -2.77939 )
 
 [node name="RigidBody5" parent="." instance=ExtResource( 1 )]
 pause_mode = 1
@@ -167,4 +152,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.77883, 12.8719, -2.46088 )
 
 [node name="StaticBody4" parent="." instance=ExtResource( 3 )]
 pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.30693, 5.96804, -0.907063 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.30693, -60.4087, -0.907063 )
+
+[node name="HTerrain" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -500, -90, -500 )

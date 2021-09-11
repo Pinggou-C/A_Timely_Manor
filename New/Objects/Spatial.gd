@@ -5,6 +5,7 @@ var rng = RandomNumberGenerator.new()
 
 export(String, "straight", "corner", "Tri" ,"Quad", "Quad_Overpass", "Quad_Cornerpass") var type
 
+var printtt = 0
 var conns = []
 var poscon = false
 var negcon = false
@@ -25,7 +26,6 @@ func _ready():
 	pass 
 
 func connecting(path, resistance, split, body, oldresistances):
-	print(" not dead")
 	var stop = false
 	if connected == true:
 		if path.has(self):
@@ -83,10 +83,9 @@ func connecting(path, resistance, split, body, oldresistances):
 				if path.size() > 0:
 					for i in path:
 						i.connected = false
-				#stop = true
+				stop = true
 				print("dead2")
-				print(self)
-				return
+				#return
 	else:
 		if path.has(self):
 			stop = true
@@ -117,16 +116,16 @@ func connecting(path, resistance, split, body, oldresistances):
 				if path.size() > 0:
 					for i in path:
 						i.connected = false
-				#stop = true
+				stop = true
 				print("dead2")
-				print(self)
-				return
+				#return
 
 func middle_connect(id, body, shape, localshape):
 	if (body.is_in_group("wires")||body.is_in_group("wires2")) && body != get_parent():
 		conns.append(body.get_child(0))
 		if conns.size()>1:
-			Global_Variables.batteries[0].start_connecting()
+			if pickedup != true:
+				Global_Variables.batteries[0].start_connecting(self)
 
 func middle_disconnect(id, body, shape, localshape):
 	if (body.is_in_group("wires")||body.is_in_group("wires2")) && body != get_parent():
@@ -136,36 +135,44 @@ func middle_disconnect(id, body, shape, localshape):
 
 func positive_connect(id, body, shape, localshape):
 	if (body.is_in_group("wires")||body.is_in_group("wires2")) && body != get_parent():
-		print(body.get_child(0))
 		poscon = body.get_child(0)
+		print("hi")
 		conns.append(body.get_child(0))
 		if conns.size()>1:
-			Global_Variables.batteries[0].start_connecting()
+			if pickedup != true:
+				print(body.get_child(0))
+				Global_Variables.batteries[0].start_connecting(self)
 
 
 func positive_disconnect(id, body, shape, localshape):
 	if (body.is_in_group("wires")||body.is_in_group("wires2")) && body != get_parent():
 		poscon = null
+		print("disc")
 		conns.remove(conns.find(body.get_child(0)))
 		if flowing == true:
-			Global_Variables.batteries[0].start_connecting()
+			if pickedup != true:
+				Global_Variables.batteries[0].start_connecting(self)
 
 
 func negative_connect(id, body, shape, localshape):
 	if (body.is_in_group("wires")||body.is_in_group("wires2"))  && body != get_parent():
-		print(body.get_child(0))
 		negcon =  body.get_child(0)
+		print("hi")
 		conns.append(body.get_child(0))
 		if conns.size()>1:
-			Global_Variables.batteries[0].start_connecting()
+			if pickedup != true:
+				print(body.get_child(0))
+				Global_Variables.batteries[0].start_connecting(self)
 
 
 func negative_disconnect(id, body, shape, localshape):
 	if (body.is_in_group("wires")||body.is_in_group("wires2")) && body != get_parent():
 		negcon = null
+		print("disc")
 		conns.remove(conns.find(body.get_child(0)))
 		if flowing == true:
-			Global_Variables.batteries[0].start_connecting()
+			if pickedup != true:
+				Global_Variables.batteries[0].start_connecting(self)
 
 
 
@@ -226,6 +233,5 @@ func stat_to_kinem(stat: StaticBody) -> KinematicBody:
 	var kinem := KinematicBody.new()
 	trans_body(kinem, stat)
 	return kinem
-
 
 
