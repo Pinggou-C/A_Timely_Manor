@@ -22,15 +22,19 @@ background_mode = 2
 background_sky = SubResource( 3 )
 background_color = Color( 0.572549, 0.568627, 0.603922, 1 )
 fog_enabled = true
-fog_color = Color( 0.501961, 0.6, 0.701961, 0.792157 )
+fog_color = Color( 0.501961, 0.6, 0.701961, 0.721569 )
 fog_sun_amount = 0.2
 fog_depth_begin = 75.0
-fog_depth_end = 511.1
-fog_depth_curve = 0.5
-fog_transmit_curve = -0.5
+fog_depth_end = 450.0
+fog_depth_curve = 0.594604
+fog_transmit_curve = 1e-05
 fog_height_enabled = true
-fog_height_max = -110.0
-fog_height_curve = 0.406126
+fog_height_min = -10.0
+fog_height_max = -100.0
+fog_height_curve = 0.366021
+auto_exposure_speed = 55.79
+adjustment_enabled = true
+adjustment_contrast = 1.1
 
 [sub_resource type="BoxShape" id=5]
 extents = Vector3( 50, 50, 0.05 )
@@ -98,6 +102,7 @@ shape = SubResource( 5 )
 mesh = SubResource( 6 )
 material/0 = ExtResource( 7 )
 __meta__ = {
+"_vol_id": 30,
 "apply_volumetrics": false
 }
 
@@ -114,6 +119,7 @@ transform = Transform( 1, 1.47832e-17, 0, -2.11758e-22, 1, 1.49012e-08, 0, -1.49
 mesh = SubResource( 6 )
 material/0 = ExtResource( 7 )
 __meta__ = {
+"_vol_id": 31,
 "apply_volumetrics": false
 }
 

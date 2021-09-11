@@ -82,7 +82,6 @@ run/low_processor_mode=true
 
 Global_Settings="*res://Globals/Scripts/Global_settings.gd"
 Global_Variables="*res://Globals/Scripts/Global_vars.gd"
-VolumetricServer="*res://addons/silicon.vfx.volumetrics/volumetric_server.gd"
 
 [debug]
 
@@ -99,7 +98,7 @@ window/stretch/mode="viewport"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/SIsilicon.vfx.godrays/plugin.cfg", "res://addons/cloud/plugin.cfg", "res://addons/decals/plugin.cfg", "res://addons/silicon.vfx.volumetrics/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/decals/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg" )
 
 [input]
 
