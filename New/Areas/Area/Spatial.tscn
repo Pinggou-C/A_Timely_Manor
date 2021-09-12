@@ -94,7 +94,8 @@ pause_mode = 1
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 pause_mode = 1
 transform = Transform( 0.908494, 9.47633e-08, 0.417898, -0.121812, 0.956575, 0.264814, -0.399751, -0.291487, 0.869042, 0, 27.4039, 0 )
-light_energy = 1.25
+light_energy = 1.69
+light_bake_mode = 2
 shadow_enabled = true
 shadow_color = Color( 0.333333, 0.333333, 0.333333, 1 )
 directional_shadow_blend_splits = true
