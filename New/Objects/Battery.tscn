@@ -3,18 +3,20 @@
 [ext_resource path="res://Objects/Battery.gd" type="Script" id=1]
 
 [sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.4, 0.4, 0.4 )
 
 [sub_resource type="CubeMesh" id=2]
+size = Vector3( 0.8, 0.8, 0.8 )
 
 [sub_resource type="SpatialMaterial" id=3]
 metallic = 1.0
 metallic_specular = 1.0
 
 [sub_resource type="BoxShape" id=4]
-extents = Vector3( 0.225, 0.225, 0.225 )
+extents = Vector3( 0.065, 0.065, 0.065 )
 
 [sub_resource type="CubeMesh" id=5]
-size = Vector3( 0.4, 0.4, 0.4 )
+size = Vector3( 0.1, 0.1, 0.1 )
 
 [sub_resource type="SpatialMaterial" id=6]
 resource_local_to_scene = true
@@ -24,10 +26,10 @@ albedo_color = Color( 1, 0, 0, 1 )
 albedo_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="BoxShape" id=8]
-extents = Vector3( 0.225, 0.225, 0.225 )
+extents = Vector3( 0.065, 0.065, 0.065 )
 
 [sub_resource type="BoxShape" id=9]
-extents = Vector3( 0.2, 0.2, 0.2 )
+extents = Vector3( 0.05, 0.05, 0.05 )
 
 [node name="StaticBody" type="StaticBody"]
 script = ExtResource( 1 )
@@ -40,7 +42,7 @@ mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 
 [node name="Pos" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.8, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, -0.35, 0 )
 collision_layer = 0
 collision_mask = 8
 
@@ -52,7 +54,7 @@ mesh = SubResource( 5 )
 material/0 = SubResource( 6 )
 
 [node name="Neg" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.8, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, -0.35, 0 )
 collision_layer = 0
 collision_mask = 8
 
@@ -61,31 +63,35 @@ mesh = SubResource( 5 )
 material/0 = SubResource( 7 )
 
 [node name="CollisionShape2" type="CollisionShape" parent="Neg"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000796318, 0.00278926, -0.00616896 )
 shape = SubResource( 8 )
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 
+[node name="Timer2" type="Timer" parent="."]
+one_shot = true
+
 [node name="StaticBody" type="StaticBody" parent="." groups=[
 "wires2",
 ]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, -0.35, 0 )
 collision_layer = 9
 
 [node name="CollisionShape3" type="CollisionShape" parent="StaticBody" groups=[
 "bat",
 ]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.8, 0 )
 shape = SubResource( 9 )
 
 [node name="StaticBody2" type="StaticBody" parent="." groups=[
 "wires2",
 ]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, -0.35, 0 )
 collision_layer = 9
 
 [node name="CollisionShape2" type="CollisionShape" parent="StaticBody2" groups=[
 "bat",
 ]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.8, 0 )
 shape = SubResource( 9 )
 
 [connection signal="body_entered" from="Pos" to="." method="poscon"]
@@ -93,3 +99,4 @@ shape = SubResource( 9 )
 [connection signal="body_entered" from="Neg" to="." method="negcon"]
 [connection signal="body_exited" from="Neg" to="." method="negdiscon"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="Timer2" to="." method="_on_Timer_timeout"]

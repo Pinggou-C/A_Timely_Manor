@@ -11,7 +11,7 @@ var poscon = false
 var negcon = false
 var flowing = false
 var connected = false
-
+var modee = "rigid"
 var pickedup = false
 
 var powered_by = []
@@ -85,6 +85,9 @@ func connecting(path, resistance, split, body, oldresistances):
 						i.connected = false
 				stop = true
 				print("dead2")
+				get_parent().visible = false
+				get_parent().get_child(5).start(0.2)
+				print(self)
 				#return
 	else:
 		if path.has(self):
@@ -118,13 +121,16 @@ func connecting(path, resistance, split, body, oldresistances):
 						i.connected = false
 				stop = true
 				print("dead2")
+				print(self)
+				get_parent().visible = false
+				get_parent().get_child(5).start(0.2)
 				#return
 
 func middle_connect(id, body, shape, localshape):
 	if (body.is_in_group("wires")||body.is_in_group("wires2")) && body != get_parent():
 		conns.append(body.get_child(0))
 		if conns.size()>1:
-			if pickedup != true:
+			#if pickedup != true:
 				Global_Variables.batteries[0].start_connecting(self)
 
 func middle_disconnect(id, body, shape, localshape):
@@ -138,8 +144,9 @@ func positive_connect(id, body, shape, localshape):
 		poscon = body.get_child(0)
 		print("hi")
 		conns.append(body.get_child(0))
+		print(conns.size())
 		if conns.size()>1:
-			if pickedup != true:
+			#if pickedup != true:
 				print(body.get_child(0))
 				Global_Variables.batteries[0].start_connecting(self)
 
@@ -150,7 +157,7 @@ func positive_disconnect(id, body, shape, localshape):
 		print("disc")
 		conns.remove(conns.find(body.get_child(0)))
 		if flowing == true:
-			if pickedup != true:
+			#if pickedup != true:
 				Global_Variables.batteries[0].start_connecting(self)
 
 
@@ -159,8 +166,9 @@ func negative_connect(id, body, shape, localshape):
 		negcon =  body.get_child(0)
 		print("hi")
 		conns.append(body.get_child(0))
+		print(conns.size())
 		if conns.size()>1:
-			if pickedup != true:
+			#if pickedup != true:
 				print(body.get_child(0))
 				Global_Variables.batteries[0].start_connecting(self)
 
@@ -171,67 +179,31 @@ func negative_disconnect(id, body, shape, localshape):
 		print("disc")
 		conns.remove(conns.find(body.get_child(0)))
 		if flowing == true:
-			if pickedup != true:
+			#if pickedup != true:
 				Global_Variables.batteries[0].start_connecting(self)
 
 
 
 
 
-func drop(sped):
-	rng.randomize()
+func drop(sped, wiresnap):
 	pickedup = false
-	var parent = get_parent()
-	parent.friction = 1
-	#get_parent().set_rough(true)
-	#get_parent().bounce = 1
-	#get_parent().set_absorbent(true)
-	parent.linear_damp = 1
-	parent.gravity_scale = 2
-	parent.linear_velocity = sped
-	var x = sqrt(sqrt(sped.x * sped.x))/2
-	var y = sqrt(sqrt(sped.y * sped.y))/2
-	var z = sqrt(sqrt(sped.z * sped.z))/2
-	parent.angular_velocity = Vector3(rng.randfn(0, y),rng.randfn(0, z),rng.randfn(0, x))
+	if wiresnap == true:
+		modee = "static"
+	else:
+		modee = "rigid"
+		rng.randomize()
+		var parent = get_parent()
+		parent.friction = 1
+		parent.linear_damp = 1
+		parent.gravity_scale = 2
+		parent.linear_velocity = sped
+		var x = sqrt(sqrt(sped.x * sped.x))/2
+		var y = sqrt(sqrt(sped.y * sped.y))/2
+		var z = sqrt(sqrt(sped.z * sped.z))/2
+		parent.angular_velocity = Vector3(rng.randfn(0, y),rng.randfn(0, z),rng.randfn(0, x))
 func pickup():
 	pickedup = true
 
-func trans_body(to: PhysicsBody, from: PhysicsBody) -> void:
-	to.transform = from.transform
-	from.replace_by(to)
-	from.queue_free()
-
-# Convert a `RigidBody` scene node to `KinematicBody`
-func rigid_to_stat(rigid: RigidBody) -> StaticBody:
-	var stat := StaticBody.new()
-	trans_body(stat, rigid)
-	return stat
-
-# Convert a `KinematicBody` scene node to `RigidBody`
-func stat_to_rigid(stat: StaticBody) -> RigidBody:
-	var rigid := RigidBody.new()
-	trans_body(rigid, stat)
-	return rigid
-
-func rigid_to_kinem(rigid: RigidBody) -> KinematicBody:
-	var kinem := KinematicBody.new()
-	trans_body(kinem ,rigid)
-	return kinem
-
-# Convert a `KinematicBody` scene node to `RigidBody`
-func kinem_to_rigid(kinem: KinematicBody) -> RigidBody:
-	var rigid := RigidBody.new()
-	trans_body(rigid, kinem)
-	return rigid
-
-func kinem_to_stat(kinem: KinematicBody) -> StaticBody:
-	var stat := StaticBody.new()
-	trans_body(stat, kinem)
-	return stat
-
-func stat_to_kinem(stat: StaticBody) -> KinematicBody:
-	var kinem := KinematicBody.new()
-	trans_body(kinem, stat)
-	return kinem
-
-
+func _on_Timer_timeout():
+	get_parent().visible = true

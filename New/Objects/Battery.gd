@@ -21,7 +21,6 @@ func _ready():
 func start_connecting(body):
 	if posconnect != null && negconnect != null:
 		print("print1")
-		print(body)
 		posconnect.connecting([], 0, [], self, [])
 		$Timer.start(0.5)
 #gets called when a sygnal returns
@@ -79,9 +78,10 @@ func posdiscon(body):
 func negcon(body):
 	if body.is_in_group('wires'):
 		negconnect = body.get_child(0)
-		if posconnect != null:
-			posconnect.connecting([], 0, [], self, [])
-			$Timer.start(0.5)
+		print("wi")
+#		if posconnect != null:
+	#		posconnect.connecting([], 0, [], self, [])
+	#		$Timer.start(0.5)
 	#var group = get_tree().get_nodes_in_group('special')
 	#for i in group:
 	#	if i.posconnect == null || i.negconnect == null:
@@ -100,9 +100,10 @@ func negdiscon(body):
 func poscon(body):
 	if body.is_in_group('wires'):
 		posconnect = body.get_child(0)
-		if negconnect != null:
-			posconnect.connecting([], 0, [], self, [])
-			$Timer.start(0.5)
+		print("wi")
+	#	if negconnect != null:
+	#		posconnect.connecting([], 0, [], self, [])
+	#		$Timer.start(0.5)
 	#gets all nodes which need to be connected properly and checks if they are
 	#var group = get_tree().get_nodes_in_group('special')
 	#for i in group:
