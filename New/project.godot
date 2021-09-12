@@ -89,12 +89,11 @@ settings/stdout/print_fps=true
 
 [display]
 
-window/size/width=2560
-window/size/height=1600
+window/size/width=1920
+window/size/height=1080
 window/size/resizable=false
 window/size/fullscreen=true
 window/per_pixel_transparency/enabled=true
-window/stretch/mode="viewport"
 
 [editor_plugins]
 
@@ -155,20 +154,14 @@ wiresnap={
 3d_physics/layer_3="non-player"
 3d_physics/layer_4="wires"
 
-[physics]
-
-common/physics_fps=145
-
 [rendering]
 
 2d/options/use_nvidia_rect_flicker_workaround=true
 2d/snapping/use_gpu_pixel_snap=true
 threads/thread_model=2
 quality/shadows/filter_mode=2
-quality/filters/anisotropic_filter_level=16
 quality/spatial_partitioning/render_tree_balance=1.0
-quality/filters/msaa=4
-quality/filters/use_debanding=true
+quality/filters/msaa=2
 environment/default_environment="res://Assets/Environment/default_env.tres"
 quality/godrays/sample_number=50
 quality/godrays/use_pcf5=false

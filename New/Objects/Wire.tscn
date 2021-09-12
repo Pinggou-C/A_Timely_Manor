@@ -1,12 +1,19 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Objects/Spatial.gd" type="Script" id=2]
+
+[sub_resource type="PhysicsMaterial" id=5]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 1, 0.1, 0.1 )
 
 [sub_resource type="SpatialMaterial" id=2]
 albedo_color = Color( 1, 0, 0, 1 )
+emission_enabled = true
+emission = Color( 1, 0, 0, 1 )
+emission_energy = 0.05
+emission_operator = 0
+emission_on_uv2 = false
 
 [sub_resource type="BoxShape" id=3]
 extents = Vector3( 0.5, 0.05, 0.05 )
@@ -19,6 +26,7 @@ extents = Vector3( 0.025, 0.07, 0.07 )
 "wires",
 ]]
 collision_layer = 786440
+physics_material_override = SubResource( 5 )
 continuous_cd = true
 
 [node name="Spatial" type="Spatial" parent="."]
