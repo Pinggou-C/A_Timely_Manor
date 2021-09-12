@@ -1,0 +1,8 @@
+{
+	"contains_albedo": true,
+	"resolution": 512,
+	"src": {
+		"a": "res://Assets/2d/images.jpg",
+		"rgb": "res://Assets/2d/images.jpg"
+	}
+}

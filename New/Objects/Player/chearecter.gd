@@ -1,5 +1,7 @@
 extends KinematicBody
 
+var wiresnap = false
+
 var gravity = Vector3.DOWN * 18
 var speed  = 6
 var jump_speed  = 9
@@ -43,6 +45,8 @@ func _physics_process(delta):
 		return
 	var pos_cur = pick.get_global_transform().origin
 	var pos_next = ($Head.get_global_transform() * rel_pos).origin
+	if wiresnap == true:
+		pos_next = Vector3(stepify(pos_next.x, 0.5),stepify(pos_next.y, 0.5),stepify(pos_next.z, 0.5))
 	var vel = (pos_next - pos_cur) / delta
 	pickvel = pick.move_and_slide(vel, Vector3.UP, false, 4, PI/4, false)
 func get_input():
@@ -75,6 +79,12 @@ func get_input():
 		velocety = lerp(velocety, transform.basis.z * speed, 0.15)
 	elif Input.is_action_pressed("ui_up"):
 		velocety = lerp(velocety, -transform.basis.z * speed, 0.15)
+	if Input.is_action_just_pressed("wiresnap"):
+		if wiresnap == true:
+			wiresnap = false
+		elif wiresnap == false:
+			wiresnap = true
+		
 	velocety.y = vc
 	jump = false
 	if Input.is_action_just_pressed("jump"):
@@ -89,28 +99,47 @@ func get_input():
 				if pick.is_in_group("wires"):
 					pickgroups.append("wires")
 					pick.get_child(0).pickup()
-				var body := rigid_to_kinem(pick)
-				pick = body 
-				picked = true
-				var gii = Vector3(stepify(gooo.x, 90),stepify(gooo.y, 90),stepify(gooo.z, 90))
-				print(gii)
-				pick.set_collision_layer_bit(3, true)
-				$Tween.interpolate_property(pick, "rotation_degrees", gooo, gii, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-				$Tween.start()
-				for i in pickgroups:
-					body.add_to_group(i)
+				if pick.get_child(0).modee == "rigid":
+					var body := rigid_to_kinem(pick)
+					pick = body 
+					picked = true
+					var gii = Vector3(stepify(gooo.x, 90),stepify(gooo.y, 90),stepify(gooo.z, 90))
+					print(gii)
+					pick.set_collision_layer_bit(3, true)
+					$Tween.interpolate_property(pick, "rotation_degrees", gooo, gii, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+					$Tween.start()
+				elif pick.get_child(0).modee == "static":
+					var body := stat_to_kinem(pick)
+					pick = body 
+					picked = true
+					var gii = Vector3(stepify(gooo.x, 90),stepify(gooo.y, 90),stepify(gooo.z, 90))
+					print(gii)
+					pick.set_collision_layer_bit(3, true)
+					$Tween.interpolate_property(pick, "rotation_degrees", gooo, gii, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+					$Tween.start()
 		elif picked == true:
-			var body := kinem_to_rigid(pick)
-			body.linear_velocity = pickvel * 0.75
-			body.set_collision_layer_bit(19, true)
-			body.get_child(0).drop(pickvel * 0.75)
-			print(pickvel * 0.75)
-			pick = null
-			picked = false
-			for i in pickgroups:
-				if i == "wires":
-					body.set_collision_layer_bit(3, true)
-				body.add_to_group(i)
+			if wiresnap == true:
+				var body := kinem_to_stat(pick)
+				body.set_collision_layer_bit(19, true)
+				body.get_child(0).drop(pickvel * 0.75, wiresnap)
+				pick = null
+				picked = false
+				for i in pickgroups:
+					if i == "wires":
+						body.set_collision_layer_bit(3, true)
+					body.add_to_group(i)
+			else:
+				var body := kinem_to_rigid(pick)
+				body.linear_velocity = pickvel * 0.75
+				body.set_collision_layer_bit(19, true)
+				body.get_child(0).drop(pickvel * 0.75, wiresnap)
+				pick = null
+				picked = false
+				for i in pickgroups:
+					if i == "wires":
+						body.set_collision_layer_bit(3, true)
+					body.add_to_group(i)
+
 			
 
 
@@ -137,14 +166,32 @@ func trans_body(to: PhysicsBody, from: PhysicsBody) -> void:
 	from.replace_by(to)
 	from.queue_free()
 
-# Convert a `RigidBody` scene node to `KinematicBody`
 func rigid_to_kinem(rigid: RigidBody) -> KinematicBody:
 	var kinem := KinematicBody.new()
 	trans_body(kinem, rigid)
 	return kinem
 
-# Convert a `KinematicBody` scene node to `RigidBody`
 func kinem_to_rigid(kinem: KinematicBody) -> RigidBody:
 	var rigid := RigidBody.new()
 	trans_body(rigid, kinem)
 	return rigid
+
+func rigid_to_stat(rigid: RigidBody) -> StaticBody:
+	var stat := StaticBody.new()
+	trans_body(stat, rigid)
+	return stat
+
+func stat_to_rigid(stat: StaticBody) -> RigidBody:
+	var rigid := RigidBody.new()
+	trans_body(rigid, stat)
+	return rigid
+
+func kinem_to_stat(kinem: KinematicBody) -> StaticBody:
+	var stat := StaticBody.new()
+	trans_body(stat, kinem)
+	return stat
+
+func stat_to_kinem(stat: StaticBody) -> KinematicBody:
+	var kinem := KinematicBody.new()
+	trans_body(kinem, stat)
+	return kinem
