@@ -38,6 +38,7 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
+use_in_baked_light = true
 mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 
@@ -50,6 +51,7 @@ collision_mask = 8
 shape = SubResource( 4 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Pos"]
+use_in_baked_light = true
 mesh = SubResource( 5 )
 material/0 = SubResource( 6 )
 
@@ -59,6 +61,7 @@ collision_layer = 0
 collision_mask = 8
 
 [node name="MeshInstance2" type="MeshInstance" parent="Neg"]
+use_in_baked_light = true
 mesh = SubResource( 5 )
 material/0 = SubResource( 7 )
 

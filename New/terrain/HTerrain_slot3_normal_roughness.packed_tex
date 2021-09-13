@@ -1,6 +1,6 @@
 {
 	"contains_albedo": false,
-	"resolution": 512,
+	"resolution": 1024,
 	"src": {
 		"a": "res://Assets/2d/snow-texture-1-diagonal-wind-ridges-and-striations-rhys-leonard.jpg",
 		"rgb": "res://Assets/2d/snow-texture-1-diagonal-wind-ridges-and-striations-rhys-leonard.jpg"
