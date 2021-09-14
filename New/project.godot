@@ -154,10 +154,6 @@ wiresnap={
 3d_physics/layer_3="non-player"
 3d_physics/layer_4="wires"
 
-[physics]
-
-common/physics_fps=145
-
 [rendering]
 
 2d/options/use_nvidia_rect_flicker_workaround=true

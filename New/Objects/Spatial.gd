@@ -34,6 +34,8 @@ func connecting(path, resistance, split, body, oldresistances):
 	if connected == true:
 		if path.has(self):
 			print("dead")
+			get_parent().visible = false
+			get_parent().get_child(5).start(0.05)
 			stop = true
 			return
 		else:
@@ -101,6 +103,8 @@ func connecting(path, resistance, split, body, oldresistances):
 		if path.has(self):
 			stop = true
 			print("dead")
+			get_parent().visible = false
+			get_parent().get_child(5).start(0.05)
 			return
 		if stop == false:
 			var paths = path

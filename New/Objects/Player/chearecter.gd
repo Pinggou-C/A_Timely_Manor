@@ -48,7 +48,7 @@ func _physics_process(delta):
 	if wiresnap == true:
 		pos_next = Vector3(stepify(pos_next.x, 0.5),stepify(pos_next.y, 0.5),stepify(pos_next.z, 0.5))
 	var vel = (pos_next - pos_cur) / delta
-	pickvel = pick.move_and_slide(vel, Vector3.UP, false, 4, PI/4, false)
+	pickvel = pick.move_and_slide(vel, Vector3.UP, false, 4, PI/4, true)
 func get_input():
 	if picked == true:
 		if Input.is_action_just_pressed("mouse_r"):

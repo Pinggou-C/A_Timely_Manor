@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Objects/Wire.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Areas/Area/Spatial.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scenes/pause/pausefilter.gd" type="Script" id=4]
 [ext_resource path="res://terrain/H2Terrain.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Materials/truepillar.tres" type="Material" id=7]
+[ext_resource path="res://Objects/test2.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Objects/Player/chearecter.tscn" type="PackedScene" id=9]
 
 [sub_resource type="ProceduralSky" id=1]
@@ -144,8 +145,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -218.361, 266.939, 0.860828 )
 [node name="RigidBody5" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -218.481, 266.743, -0.733749 )
 
+[node name="Spatial3" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -213.306, 267.912, 0 )
+
 [node name="RigidBody6" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -218.968, 267.224, -2.60215 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -218.968, 266.787, -2.60215 )
 
 [node name="RigidBody7" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -219.314, 266.962, -1.70443 )
