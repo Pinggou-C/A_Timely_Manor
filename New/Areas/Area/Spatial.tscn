@@ -1,11 +1,10 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Objects/Wire.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Areas/Area/Spatial.gd" type="Script" id=2]
 [ext_resource path="res://Objects/Battery.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/pause/pausefilter.gd" type="Script" id=4]
 [ext_resource path="res://terrain/H2Terrain.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Objects/wire2tscn.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Assets/Materials/truepillar.tres" type="Material" id=7]
 [ext_resource path="res://Objects/Player/chearecter.tscn" type="PackedScene" id=9]
 
@@ -120,64 +119,33 @@ __meta__ = {
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0069809, 0.00833321, -0.0051899 )
 shape = SubResource( 4 )
 
-[node name="RigidBody5" parent="." instance=ExtResource( 1 )]
-pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -216.849, 288.993, 1.01137 )
-
-[node name="RigidBody7" parent="." instance=ExtResource( 1 )]
-pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -216.849, 288.993, -1.64538 )
-
-[node name="RigidBody8" parent="." instance=ExtResource( 1 )]
-pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -216.815, 288.993, 0 )
-
-[node name="RigidBody9" parent="." instance=ExtResource( 1 )]
-pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -215.163, 288.993, 0 )
-
-[node name="RigidBody10" parent="." instance=ExtResource( 1 )]
-pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -216.849, 288.993, -0.398309 )
-
-[node name="RigidBody" parent="." instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -214.796, 274.121, 0 )
-
-[node name="RigidBody6" parent="." instance=ExtResource( 1 )]
-pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -216.849, 288.993, 0.688657 )
-
-[node name="RigidBody11" parent="." instance=ExtResource( 1 )]
-pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -216.849, 288.993, -0.687769 )
-
-[node name="RigidBody12" parent="." instance=ExtResource( 1 )]
-pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -216.849, 288.993, 0.240044 )
-
-[node name="RigidBody13" parent="." instance=ExtResource( 1 )]
-pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -219.014, 288.993, 0 )
-
-[node name="RigidBody14" parent="." instance=ExtResource( 1 )]
-pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -216.849, 288.993, -1.27552 )
-
 [node name="StaticBody4" parent="." instance=ExtResource( 3 )]
 pause_mode = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -216.849, 267.121, 0 )
 
-[node name="RigidBody2" parent="." instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -216.849, 292.235, 1.37325 )
-
-[node name="RigidBody3" parent="." instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -216.849, 268.043, 0 )
-
-[node name="RigidBody4" parent="." instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -216.849, 266.998, 1.08656 )
-
-[node name="RigidBody15" parent="." instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -216.849, 267.816, 0 )
-
 [node name="HTerrain2" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1024.5, 0, -1024.5 )
+
+[node name="RigidBody" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -218.779, 266.921, 0.445919 )
+
+[node name="RigidBody2" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -218.779, 266.921, -0.137934 )
+
+[node name="RigidBody3" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -218.779, 267.327, -0.137934 )
+
+[node name="RigidBody4" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -218.779, 267.327, 0.693868 )
+
+[node name="RigidBody5" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -218.779, 266.921, -0.865351 )
+
+[node name="RigidBody6" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -218.779, 266.921, -1.4492 )
+
+[node name="RigidBody7" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -218.779, 267.327, -1.4492 )
+
+[node name="RigidBody8" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -218.779, 267.327, -0.617402 )

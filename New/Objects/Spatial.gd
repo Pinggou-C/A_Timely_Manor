@@ -25,6 +25,9 @@ var splits0 =[]
 func _ready():
 	pass 
 
+func power(paths, splits, volts, amps):
+	pass
+
 func connecting(path, resistance, split, body, oldresistances):
 	var stop = false
 	if connected == true:
