@@ -30,6 +30,7 @@ func power(paths, splits, volts, amps):
 
 func connecting(path, resistance, split, body, oldresistances):
 	var stop = false
+	print(path.size())
 	if connected == true:
 		if path.has(self):
 			print("dead")
@@ -47,25 +48,28 @@ func connecting(path, resistance, split, body, oldresistances):
 						g = splits0.find(i)
 						if g != -1:
 							which = g
-						var h 
-						if split.has(i):
-							h = split.find(i)
-							if h != -1:
-								which2 = h
-							#if oldresistance0[which] == 0 && oldresistances[which2] != 0:
-							#	Global_Variables.dead_routes.append(path0)
-							#	return
-							#if oldresistances[which2] == 0 && oldresistance0[which] != 0:
-							#	path0 = path
-							#	splits0 = split
-							#	resistance0 = resistance
-							#	oldresistance0 = resistance
-							#powered_by.append(body)
+							var h 
+							if split.has(i):
+								h = split.find(i)
+								if h != -1:
+									which2 = h
+									if oldresistance0[0] == 0 && oldresistances[0] != 0:
+										Global_Variables.dead_routes.append(path0)
+										stop = true
+										print("dead4")
+									elif oldresistances[0] == 0 && oldresistance0[0] != 0:
+										path0 = path
+										splits0 = split
+										resistance0 = resistance
+										oldresistance0 = resistance
+										print("notdead")
+										powered_by.append(body)
 	#else:
 		if stop == false:
 			var paths = path
 			paths.append(self)
 			path0 = path
+			var oldres = oldresistances
 			oldresistance0 = oldresistances
 			splits0 = split
 			resistance0 = resistance
@@ -73,13 +77,14 @@ func connecting(path, resistance, split, body, oldresistances):
 			var splits = split
 			if conns.size() > 2:
 				splits.append(self)
+				oldres.append(0)
 			if conns.size() > 1:
 				for i in conns:
 					if !i.is_in_group("bat"):
 						if i != body:
-							i.connecting(paths, resistance, splits, self, oldresistances)
+							i.connecting(paths, resistance, splits, self, oldres)
 					elif i.get_parent().get_parent() != body:
-						i.get_parent().get_parent().connecting(paths, resistance, splits, self, oldresistances)
+						i.get_parent().get_parent().connecting(paths, resistance, splits, self, oldres)
 				connected = true
 			else:
 				Global_Variables.dead_paths.append(paths)
@@ -101,6 +106,7 @@ func connecting(path, resistance, split, body, oldresistances):
 			var paths = path
 			paths.append(self)
 			path0 = path
+			var oldres = oldresistances
 			oldresistance0 = oldresistances
 			splits0 = split
 			resistance0 = resistance
@@ -108,14 +114,14 @@ func connecting(path, resistance, split, body, oldresistances):
 			var splits = split
 			if conns.size() > 2:
 				splits.append(self)
-				oldresistances.append(0)
+				oldres.append(0)
 			if conns.size() > 1:
 				for i in conns:
 					if !i.is_in_group("bat"):
 						if i != body:
-							i.connecting(paths, resistance, splits, self, oldresistances)
+							i.connecting(paths, resistance, splits, self, oldres)
 					elif i.get_parent().get_parent() != body:
-						i.get_parent().get_parent().connecting(paths, resistance, splits, self, oldresistances)
+						i.get_parent().get_parent().connecting(paths, resistance, splits, self, oldres)
 				connected = true
 			else:
 				Global_Variables.dead_paths.append(paths)
