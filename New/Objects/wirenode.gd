@@ -107,3 +107,10 @@ func wire(wire, node):
 		wires.append(wire)
 	if !connecteds.has(node):
 		connecteds.append(node)
+		
+#when the player pickes the node up
+
+func pickup():
+	pass
+func drop():
+	pass

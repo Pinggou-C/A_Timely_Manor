@@ -1,0 +1,103 @@
+[gd_scene load_steps=11 format=2]
+
+[sub_resource type="Gradient" id=9]
+colors = PoolColorArray( 0.562759, 0, 1, 1, 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=10]
+gradient = SubResource( 9 )
+
+[sub_resource type="ParticlesMaterial" id=11]
+emission_shape = 2
+emission_box_extents = Vector3( 1080, 1, 1 )
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+spread = 26.7
+gravity = Vector3( 0, 98, 0 )
+initial_velocity = 576.92
+initial_velocity_random = 0.52
+angular_velocity = 126.59
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 314.19
+scale_random = 0.45
+color_ramp = SubResource( 10 )
+hue_variation = 0.03
+hue_variation_random = 1.0
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0, 0.627119, 1 )
+colors = PoolColorArray( 1, 0, 0, 1, 0.799805, 0, 0, 0.901628, 0, 0, 0, 0.709804 )
+
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
+
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0, 0.386364 ), 0.0, 0.0, 0, 0, Vector2( 0.646342, 1 ), -0.961467, -0.961467, 0, 0, Vector2( 1, 0.00454545 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=5]
+curve = SubResource( 4 )
+
+[sub_resource type="Curve" id=6]
+_data = [ Vector2( 0, 0.4125 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=7]
+curve = SubResource( 6 )
+
+[sub_resource type="ParticlesMaterial" id=8]
+resource_local_to_scene = true
+lifetime_randomness = 0.25
+trail_size_modifier = SubResource( 7 )
+emission_shape = 2
+emission_box_extents = Vector3( 1060, 100, 0 )
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+spread = 30.0
+flatness = 1.0
+gravity = Vector3( 0, 98, 0 )
+initial_velocity = 1000.0
+initial_velocity_random = 0.6
+angular_velocity = 56.47
+angular_velocity_random = 1.0
+orbit_velocity = 0.02
+orbit_velocity_random = 1.0
+damping = 9.8
+damping_random = 0.51
+angle = 360.0
+angle_random = 1.0
+scale = 75.0
+scale_random = 0.75
+scale_curve = SubResource( 5 )
+color_ramp = SubResource( 3 )
+hue_variation = 0.1
+hue_variation_random = 1.0
+
+[node name="Node2D" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 1920.0
+margin_bottom = 1080.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Particles2D2" type="Particles2D" parent="."]
+position = Vector2( 960, 1230 )
+amount = 25
+lifetime = 5.0
+explosiveness = 0.09
+randomness = 0.26
+visibility_rect = Rect2( -960, -540, 1920, 1080 )
+draw_order = 1
+process_material = SubResource( 11 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+position = Vector2( 960, 1230 )
+amount = 200
+lifetime = 5.0
+explosiveness = 0.2
+randomness = 0.26
+visibility_rect = Rect2( -960, -540, 1920, 1080 )
+draw_order = 1
+process_material = SubResource( 8 )

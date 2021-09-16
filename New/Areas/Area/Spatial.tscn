@@ -87,7 +87,7 @@ pause_mode = 1
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 pause_mode = 1
-transform = Transform( -0.866026, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, 0.433013, -0.75, 0.119, 0, 0 )
+transform = Transform( -0.866026, -0.25, 0.433012, 0, 0.866025, 0.5, -0.5, 0.433013, -0.75, 0.119, 0, 0 )
 light_color = Color( 1, 1, 0.952941, 1 )
 shadow_enabled = true
 directional_shadow_blend_splits = true
@@ -160,5 +160,5 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -219.314, 266.962, -1.70443 )
 [node name="RigidBody8" parent="wire+wirenodes" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -218.662, 266.972, -1.39325 )
 
-[node name="MeshInstance" parent="." instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, -1, 0, 0, 0, 1, -225.863, 266.751, 11.4484 )
+[node name="Spatial2" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -217.739, 266.8, 0.965466 )

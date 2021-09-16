@@ -52,23 +52,25 @@ func _physics_process(delta):
 func get_input():
 	if picked == true:
 		if Input.is_action_just_pressed("mouse_r"):
-			var gg = floor(pick.rotation_degrees.y)
-			if gg > 0:
-				var i = 0
-				while i < gg:
-					gg-=1
-					pick.rotation_degrees.y -= 360
-			$Tween.interpolate_property(pick, "rotation_degrees:y", pick.rotation_degrees.y, pick.rotation_degrees.y + 90 , 0.15, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-			$Tween.start()
+			if !pickgroups.has("wire_nodes"):
+				var gg = floor(pick.rotation_degrees.y)
+				if gg > 0:
+					var i = 0
+					while i < gg:
+						gg-=1
+						pick.rotation_degrees.y -= 360
+				$Tween.interpolate_property(pick, "rotation_degrees:y", pick.rotation_degrees.y, pick.rotation_degrees.y + 90 , 0.15, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+				$Tween.start()
 		elif Input.is_action_just_pressed("mouse_l"):
-			var gd = floor(pick.rotation_degrees.y)
-			if gd > 0:
-				var j = 0
-				while j < gd:
-					gd-=1
-					pick.rotation_degrees.z -= 360
-			$Tween2.interpolate_property(pick, "rotation_degrees:z", pick.rotation_degrees.z, pick.rotation_degrees.z+90 , 0.15, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-			$Tween2.start()
+			if !pickgroups.has("wire_nodes"):
+				var gd = floor(pick.rotation_degrees.y)
+				if gd > 0:
+					var j = 0
+					while j < gd:
+						gd-=1
+						pick.rotation_degrees.z -= 360
+				$Tween2.interpolate_property(pick, "rotation_degrees:z", pick.rotation_degrees.z, pick.rotation_degrees.z+90 , 0.15, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+				$Tween2.start()
 	var vc = velocety.y
 	velocety = lerp(velocety, Vector3(), 0.15)
 	if Input.is_action_pressed("ui_left"):
@@ -99,48 +101,55 @@ func get_input():
 				if pick.is_in_group("wires"):
 					pickgroups.append("wires")
 					pick.get_child(0).pickup()
-				if pick.get_child(0).modee == "rigid":
-					var body := rigid_to_kinem(pick)
-					pick = body 
+				if pick.is_in_group("wire_nodes"):
+					pick.pickup()
+					pickgroups.append("wire_nodes")
 					picked = true
-					var gii = Vector3(stepify(gooo.x, 90),stepify(gooo.y, 90),stepify(gooo.z, 90))
-					print(gii)
-					pick.set_collision_layer_bit(3, true)
-					$Tween.interpolate_property(pick, "rotation_degrees", gooo, gii, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-					$Tween.start()
-				elif pick.get_child(0).modee == "static":
-					var body := stat_to_kinem(pick)
-					pick = body 
-					picked = true
-					var gii = Vector3(stepify(gooo.x, 90),stepify(gooo.y, 90),stepify(gooo.z, 90))
-					print(gii)
-					pick.set_collision_layer_bit(3, true)
-					$Tween.interpolate_property(pick, "rotation_degrees", gooo, gii, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-					$Tween.start()
+				else:
+					if pick.get_child(0).modee == "rigid":
+						var body := rigid_to_kinem(pick)
+						pick = body 
+						picked = true
+						var gii = Vector3(stepify(gooo.x, 90),stepify(gooo.y, 90),stepify(gooo.z, 90))
+						print(gii)
+						pick.set_collision_layer_bit(3, true)
+						$Tween.interpolate_property(pick, "rotation_degrees", gooo, gii, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+						$Tween.start()
+					elif pick.get_child(0).modee == "static":
+						var body := stat_to_kinem(pick)
+						pick = body 
+						picked = true
+						var gii = Vector3(stepify(gooo.x, 90),stepify(gooo.y, 90),stepify(gooo.z, 90))
+						pick.set_collision_layer_bit(3, true)
+						$Tween.interpolate_property(pick, "rotation_degrees", gooo, gii, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+						$Tween.start()
 		elif picked == true:
-			if wiresnap == true:
-				var body := kinem_to_stat(pick)
-				body.set_collision_layer_bit(19, true)
-				body.get_child(0).drop(pickvel * 0.75, wiresnap)
-				pick = null
+			if pickgroups.has("wire_nodes"):
 				picked = false
-				for i in pickgroups:
-					if i == "wires":
-						body.set_collision_layer_bit(3, true)
-					body.add_to_group(i)
+				pick.drop(pickvel * 0.75, wiresnap)
+				pick = null
 			else:
-				var body := kinem_to_rigid(pick)
-				body.linear_velocity = pickvel * 0.75
-				body.set_collision_layer_bit(19, true)
-				body.get_child(0).drop(pickvel * 0.75, wiresnap)
-				pick = null
-				picked = false
-				for i in pickgroups:
-					if i == "wires":
-						body.set_collision_layer_bit(3, true)
-					body.add_to_group(i)
-
-			
+				if wiresnap == true:
+					var body := kinem_to_stat(pick)
+					body.set_collision_layer_bit(19, true)
+					body.get_child(0).drop(pickvel * 0.75, wiresnap)
+					pick = null
+					picked = false
+					for i in pickgroups:
+						if i == "wires":
+							body.set_collision_layer_bit(3, true)
+						body.add_to_group(i)
+				else:
+					var body := kinem_to_rigid(pick)
+					body.linear_velocity = pickvel * 0.75
+					body.set_collision_layer_bit(19, true)
+					body.get_child(0).drop(pickvel * 0.75, wiresnap)
+					pick = null
+					picked = false
+					for i in pickgroups:
+						if i == "wires":
+							body.set_collision_layer_bit(3, true)
+						body.add_to_group(i)
 
 
 func _input(event):

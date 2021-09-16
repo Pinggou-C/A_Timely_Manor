@@ -47,3 +47,30 @@ func combine(otherwire):
 	var nodefront = otherwire.frontnode
 	otherwire.frontnode.wire(self, rearnode)
 	otherwire.queue_free()
+
+#generates wire
+func resize():
+	var x = abs(rear.x - front.x)
+	var z = abs(rear.z - front.z)
+	if x > z:
+		var wire1 = MeshInstance.new()
+		wire1.mesh = CubeMesh.new()
+		wire1.mesh.size = Vector3(x, 0.05, 0.05)
+		wire1.translation = Vector3((rear.x - front.x) / 2, wire1.translation.y, wire1.translation.z)
+		add_child(wire1)
+		var wire2 = MeshInstance.new()
+		wire2.mesh = CubeMesh.new()
+		wire2.mesh.size = Vector3(0.05, 0.05, z)
+		wire2.translation = Vector3((rear.x - front.x), wire1.translation.y, (rear.z - front.z) / 2)
+		add_child(wire2)
+	else:
+		var wire1 = MeshInstance.new()
+		wire1.mesh = CubeMesh.new()
+		wire1.mesh.size = Vector3(0.05, 0.05, z)
+		wire1.translation = Vector3(wire1.translation.z, wire1.translation.y, (rear.z - front.z) / 2)
+		add_child(wire1)
+		var wire2 = MeshInstance.new()
+		wire2.mesh = CubeMesh.new()
+		wire2.mesh.size = Vector3(x, 0.05, 0.05)
+		wire2.translation = Vector3((rear.x - front.x) / 2, wire2.translation.y, (rear.z - front.z))
+		add_child(wire2)
