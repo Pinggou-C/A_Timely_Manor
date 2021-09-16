@@ -1,10 +1,12 @@
-extends KinematicBody
+ extends KinematicBody
 
 var printtt = 0
 var connecteds = []
 var wires = []
+
 var flowing = false
 var connected = false
+
 var pickedup = false
 var selfwire = null
 
@@ -15,9 +17,12 @@ var path0 =[]
 var resistance0 =0
 var oldresistance0 =[]
 var splits0 =[]
-#adds wire to the wirestack
-func conn(wire):
-	wires.append(wire)
+#adds wire to the wirestack and adds the other node connected to thats wire to self
+func conn(wire, newnode):
+	if !wires.has(wire):
+		wires.append(wire)
+	if !connecteds.has(newnode):
+		connecteds.append(newnode)
 
 func onwire(wire, position, contype):
 	pass
@@ -33,7 +38,7 @@ func onnode(node, position, contype):
 	elif contype == "disconnect":
 		#if it is disconnecting
 		pass
-
+#pathfind function
 func connecting(path, resistance, body, oldresistances):
 	if !path.has(self):
 		powered_by.append(body)
@@ -57,14 +62,48 @@ func power(paths, splits, volt, amp):
 		#calculates amps is already been powered
 		pass
 
+#when a wire or node enters th area
 func connect_wire(body):
 	if body.is_in_group("wires"):
-		pass
+		var nodeassign = body.front_node
+		var nodebottom = body.rear_node
+		var nodepos = body.front
+		body.resize_node(self, translation)
+		#creates the new wire and connects it to the node
+		var newwire = load("res://Objects/goodwire.tscn")
+		newwire.instance()
+		get_parent().add_child(newwire)
+		wires.append(newwire)
+		#connects nodes to the new wire
+		newwire.connect_node_front(nodeassign, nodepos)
+		newwire.connect_node_rear(self, translation)
+		#connects new nodes to self if it doesnt yet have them
+		if !connecteds.has(nodeassign):
+			connecteds.assign(nodeassign)
+		if !connecteds.has(nodebottom):
+			connecteds.assign(nodebottom)
+		if !wires.has(newwire):
+			wires.append(newwire)
 	elif body.is_in_group("wire_nodes"):
+		for i in wires:
+			i.connect_to_node(body, self)
+
+#when the wire get picked up and disconnected
+func disconnect_wire(wires, ownwire):
+	if wires.size() > 2:
+		for i in wires:
+			pass
+	elif wires.size() == 2:
+		if wires[0].frontnode == self:
+			wires[0].combine(wires[1])
+		else:
+			wires[1].combine(wires[0])
+	elif wires.size() == 1:
 		pass
 
-func disconnect_wire(body):
-	if body.is_in_group("wires"):
-		pass
-	elif body.is_in_group("wire_nodes"):
-		pass
+
+func wire(wire, node):
+	if !wires.has(wire):
+		wires.append(wire)
+	if !connecteds.has(node):
+		connecteds.append(node)

@@ -28,4 +28,3 @@ collision_mask = 24
 shape = SubResource( 2 )
 
 [connection signal="body_entered" from="Area" to="." method="connect_wire"]
-[connection signal="body_exited" from="Area" to="." method="disconnect_wire"]
