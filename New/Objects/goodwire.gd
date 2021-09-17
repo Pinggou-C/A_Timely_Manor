@@ -52,33 +52,39 @@ func combine(otherwire):
 func resize():
 	var x = abs(rear.x - front.x)
 	var z = abs(rear.z - front.z)
-	if x > z:
-		get_child(3).queue_free()
-		get_child(2).queue_free()
-		var wire1 = MeshInstance.new()
-		wire1.mesh = CubeMesh.new()
+	var y = abs(rear.y - front.y)
+	get_child(3).queue_free()
+	get_child(2).queue_free()
+	get_child(4).queue_free()
+	var wire1 = MeshInstance.new()
+	wire1.mesh = CubeMesh.new()
+	var wire2 = MeshInstance.new()
+	wire2.mesh = CubeMesh.new()
+	var wire3 = MeshInstance.new()
+	wire3.mesh = CubeMesh.new()
+	if x > z && x > y:
 		wire1.mesh.size = Vector3(x, 0.05, 0.05)
-		wire1.translation = Vector3(-(rear.x - front.x)/ 2, rear.y, wire1.translation.z)
-		add_child(wire1)
-		$front.translation = front
-		var wire2 = MeshInstance.new()
-		wire2.mesh = CubeMesh.new()
+		wire1.translation = Vector3(-(rear.x - front.x)/ 2+rear.x, rear.y, rear.z)
 		wire2.mesh.size = Vector3(0.05, 0.05, z)
-		wire2.translation = Vector3(-(rear.x - front.x), rear.y, -(rear.z - front.z) / 2)
-		add_child(wire2)
-		$rear.translation = rear
-	else:
-		get_child(3).queue_free()
-		get_child(2).queue_free()
-		var wire1 = MeshInstance.new()
-		wire1.mesh = CubeMesh.new()
+		wire2.translation = Vector3(-(rear.x - front.x)+rear.x, rear.y, -(rear.z - front.z) / 2 + rear.z)
+		wire3.mesh.size = Vector3(0.05, y, 0.05)
+		wire3.translation = Vector3(-(rear.x - front.x)+rear.x, -(rear.y - front.y) / 2 + rear.z, -(rear.z - front.z) + rear.z)
+	elif z > x && z > y:
 		wire1.mesh.size = Vector3(0.05, 0.05, z)
-		wire1.translation = Vector3(wire1.translation.x, rear.y, -(rear.z - front.z) / 2)
-		add_child(wire1)
-		$front.translation = front
-		var wire2 = MeshInstance.new()
-		wire2.mesh = CubeMesh.new()
+		wire1.translation =Vector3(rear.x, rear.y, -(rear.z - front.z)/ 2 + rear.z)
 		wire2.mesh.size = Vector3(x, 0.05, 0.05)
-		wire2.translation = Vector3(-(rear.x - front.x) / 2, rear.y, -(rear.z - front.z))
-		add_child(wire2)
-		$rear.translation = rear
+		wire2.translation = Vector3(-(rear.x - front.x) / 2 + rear.x, rear.y, -(rear.z - front.z)+rear.z)
+		wire3.mesh.size = Vector3(0.05, y, 0.05)
+		wire3.translation = Vector3(-(rear.x - front.x)+rear.x, -(rear.y - front.y) / 2 + rear.y, -(rear.z - front.z) + rear.z)
+	else:
+		wire1.mesh.size = Vector3(0.05, y, 0.05)
+		wire1.translation =Vector3(rear.x, -(rear.y - front.y)/ 2 + rear.y, rear.z)
+		wire2.mesh.size = Vector3(x, 0.05, 0.05)
+		wire2.translation = Vector3(-(rear.x - front.x) / 2 + rear.x, -(rear.y - front.y) + rear.y, rear.z)
+		wire3.mesh.size = Vector3(0.05, 0.05, z)
+		wire3.translation = Vector3(-(rear.x - front.x)+rear.x, -(rear.y - front.y) + rear.y, -(rear.z - front.z) / 2 + rear.z)
+	add_child(wire1)
+	add_child(wire2)
+	add_child(wire3)
+	$rear.translation = rear
+	$front.translation = front

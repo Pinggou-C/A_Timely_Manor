@@ -44,3 +44,5 @@ shape = SubResource( 1 )
 [node name="MeshInstance" type="MeshInstance" parent="."]
 
 [node name="MeshInstance2" type="MeshInstance" parent="."]
+
+[node name="MeshInstance3" type="MeshInstance" parent="."]
