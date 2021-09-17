@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Objects/goodwire.gd" type="Script" id=1]
+[ext_resource path="res://Objects/rearfront.gd" type="Script" id=2]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.05, 0.05, 0.05 )
+
+[sub_resource type="CubeMesh" id=2]
+size = Vector3( 0.1, 0.1, 0.1 )
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 1, 0, 0, 1 )
+
+[node name="wire" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="front" type="KinematicBody" parent="." groups=[
+"wire_nodes",
+]]
+collision_layer = 786433
+script = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="front"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="front"]
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="rear" type="KinematicBody" parent="." groups=[
+"wire_nodes",
+]]
+collision_layer = 786433
+script = ExtResource( 2 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="rear"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="rear"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+
+[node name="MeshInstance2" type="MeshInstance" parent="."]

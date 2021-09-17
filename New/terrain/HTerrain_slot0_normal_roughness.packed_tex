@@ -1,0 +1,8 @@
+{
+	"contains_albedo": false,
+	"resolution": 1024,
+	"src": {
+		"a": "#ffffffff",
+		"rgb": "res://Assets/2d/download.jpg"
+	}
+}

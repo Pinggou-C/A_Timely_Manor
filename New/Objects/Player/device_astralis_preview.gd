@@ -8,5 +8,6 @@ extends Sprite
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#position = Global_Settings.Resolution / 2
+	print(OS.get_window_size()/2)
+	position = OS.get_window_size()/2
 	pass
