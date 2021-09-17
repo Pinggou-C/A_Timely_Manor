@@ -45,8 +45,9 @@ func _physics_process(delta):
 		return
 	var pos_cur = pick.get_global_transform().origin
 	var pos_next = ($Head.get_global_transform() * rel_pos).origin
-	if wiresnap == true:
-		pos_next = Vector3(stepify(pos_next.x, 0.5),stepify(pos_next.y, 0.5),stepify(pos_next.z, 0.5))
+	if !pickgroups.has("wire_nodes"):
+		if wiresnap == true:
+			pos_next = Vector3(stepify(pos_next.x, 0.5),stepify(pos_next.y, 0.5),stepify(pos_next.z, 0.5))
 	var vel = (pos_next - pos_cur) / delta
 	pickvel = pick.move_and_slide(vel, Vector3.UP, false, 4, PI/4, true)
 func get_input():

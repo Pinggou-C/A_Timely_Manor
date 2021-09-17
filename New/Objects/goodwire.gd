@@ -53,24 +53,32 @@ func resize():
 	var x = abs(rear.x - front.x)
 	var z = abs(rear.z - front.z)
 	if x > z:
+		get_child(3).queue_free()
+		get_child(2).queue_free()
 		var wire1 = MeshInstance.new()
 		wire1.mesh = CubeMesh.new()
 		wire1.mesh.size = Vector3(x, 0.05, 0.05)
-		wire1.translation = Vector3((rear.x - front.x) / 2, wire1.translation.y, wire1.translation.z)
+		wire1.translation = Vector3(-(rear.x - front.x)/ 2, rear.y, wire1.translation.z)
 		add_child(wire1)
+		$front.translation = front
 		var wire2 = MeshInstance.new()
 		wire2.mesh = CubeMesh.new()
 		wire2.mesh.size = Vector3(0.05, 0.05, z)
-		wire2.translation = Vector3((rear.x - front.x), wire1.translation.y, (rear.z - front.z) / 2)
+		wire2.translation = Vector3(-(rear.x - front.x), rear.y, -(rear.z - front.z) / 2)
 		add_child(wire2)
+		$rear.translation = rear
 	else:
+		get_child(3).queue_free()
+		get_child(2).queue_free()
 		var wire1 = MeshInstance.new()
 		wire1.mesh = CubeMesh.new()
 		wire1.mesh.size = Vector3(0.05, 0.05, z)
-		wire1.translation = Vector3(wire1.translation.z, wire1.translation.y, (rear.z - front.z) / 2)
+		wire1.translation = Vector3(wire1.translation.x, rear.y, -(rear.z - front.z) / 2)
 		add_child(wire1)
+		$front.translation = front
 		var wire2 = MeshInstance.new()
 		wire2.mesh = CubeMesh.new()
 		wire2.mesh.size = Vector3(x, 0.05, 0.05)
-		wire2.translation = Vector3((rear.x - front.x) / 2, wire2.translation.y, (rear.z - front.z))
+		wire2.translation = Vector3(-(rear.x - front.x) / 2, rear.y, -(rear.z - front.z))
 		add_child(wire2)
+		$rear.translation = rear
