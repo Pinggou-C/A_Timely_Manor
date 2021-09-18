@@ -1,4 +1,4 @@
-extends KinematicBody
+extends Node
 
 
 # Declare member variables here. Examples:
@@ -11,9 +11,5 @@ func _ready():
 	pass # Replace with function body.
 
 
-func pickup():
+func save():
 	pass
-func drop(w1, w2):
-	get_parent().front = get_parent().get_child(0).translation
-	get_parent().rear = get_parent().get_child(1).translation
-	get_parent().resize()

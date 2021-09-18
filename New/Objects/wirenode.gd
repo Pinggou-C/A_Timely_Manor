@@ -10,6 +10,8 @@ var connected = false
 var pickedup = false
 var selfwire = null
 
+var oldpos
+
 var powered_by = []
 var volts
 var amps
@@ -17,6 +19,10 @@ var path0 =[]
 var resistance0 =0
 var oldresistance0 =[]
 var splits0 =[]
+
+func _ready():
+	oldpos = translation
+
 #adds wire to the wirestack and adds the other node connected to thats wire to self
 func conn(wire, newnode):
 	if !wires.has(wire):
@@ -114,3 +120,14 @@ func pickup():
 	pass
 func drop():
 	pass
+
+func enter():
+	#when i wire gets connected
+	pass
+
+
+func _physics_process(delta):
+	if abs(oldpos.x - translation.x) > 0.01 || abs(oldpos.y - translation.y) > 0.01 || abs(oldpos.z - translation.z) > 0.01:
+		for i in connected:
+			i.resize()
+	oldpos = translation

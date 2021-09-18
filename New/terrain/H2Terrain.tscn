@@ -3,19 +3,19 @@
 [ext_resource path="res://terrain/data.hterrain" type="Resource" id=1]
 [ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=2]
 [ext_resource path="res://addons/zylann.hterrain/hterrain_texture_set.gd" type="Script" id=3]
-[ext_resource path="res://Assets/2d/H2Terrain_slot3_albedo_bump.packed_tex" type="Texture" id=4]
-[ext_resource path="res://Assets/2d/H2Terrain_slot3_normal_roughness.packed_tex" type="Texture" id=5]
-[ext_resource path="res://Assets/2d/H2Terrain_slot0_albedo_bump.packed_tex" type="Texture" id=6]
-[ext_resource path="res://Assets/2d/H2Terrain_slot0_normal_roughness.packed_tex" type="Texture" id=7]
-[ext_resource path="res://Assets/2d/H2Terrain_slot2_albedo_bump.packed_tex" type="Texture" id=8]
-[ext_resource path="res://Assets/2d/H2Terrain_slot1_normal_roughness.packed_tex" type="Texture" id=9]
-[ext_resource path="res://Assets/2d/H2Terrain_slot2_normal_roughness.packed_tex" type="Texture" id=10]
-[ext_resource path="res://Assets/2d/H2Terrain_slot1_albedo_bump.packed_tex" type="Texture" id=11]
+[ext_resource path="res://terrain/H2Terrain_slot2_normal_roughness.packed_tex" type="Texture" id=4]
+[ext_resource path="res://terrain/H2Terrain_slot3_normal_roughness.packed_tex" type="Texture" id=5]
+[ext_resource path="res://terrain/H2Terrain_slot3_albedo_bump.packed_tex" type="Texture" id=6]
+[ext_resource path="res://terrain/H2Terrain_slot0_normal_roughness.packed_tex" type="Texture" id=7]
+[ext_resource path="res://terrain/H2Terrain_slot1_normal_roughness.packed_tex" type="Texture" id=8]
+[ext_resource path="res://terrain/H2Terrain_slot0_albedo_bump.packed_tex" type="Texture" id=9]
+[ext_resource path="res://terrain/H2Terrain_slot1_albedo_bump.packed_tex" type="Texture" id=10]
+[ext_resource path="res://terrain/H2Terrain_slot2_albedo_bump.packed_tex" type="Texture" id=11]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 3 )
 mode = 0
-textures = [ [ ExtResource( 6 ), ExtResource( 11 ), ExtResource( 8 ), ExtResource( 4 ) ], [ ExtResource( 7 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 5 ) ] ]
+textures = [ [ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 6 ) ], [ ExtResource( 7 ), ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ) ] ]
 
 [node name="HTerrain" type="Spatial"]
 script = ExtResource( 2 )

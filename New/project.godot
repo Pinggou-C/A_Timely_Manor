@@ -76,12 +76,14 @@ _global_script_class_icons={
 
 config/name="A Timely Manor"
 run/main_scene="res://Areas/Area/Spatial.tscn"
+config/use_custom_user_dir=true
 run/low_processor_mode=true
 
 [autoload]
 
 Global_Settings="*res://Globals/Scripts/Global_settings.gd"
 Global_Variables="*res://Globals/Scripts/Global_vars.gd"
+LevelLoader="*res://Globals/Scripts/Global_Level_loader.gd"
 
 [debug]
 
