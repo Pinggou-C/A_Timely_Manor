@@ -1,0 +1,8 @@
+{
+	"contains_albedo": false,
+	"resolution": 2048,
+	"src": {
+		"a": "res://Assets/heightmap/Rock028_2K-JPG/Rock028_2K_Roughness.jpg",
+		"rgb": "res://Assets/heightmap/Rock028_2K-JPG/Rock028_2K_NormalGL.jpg"
+	}
+}

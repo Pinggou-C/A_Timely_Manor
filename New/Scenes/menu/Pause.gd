@@ -16,12 +16,12 @@ func pause():
 		get_tree().paused = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		paused = true
-		$rect.visible = true
+		visible = true
 	elif paused == true:
 		get_tree().paused = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		paused = false
-		$rect.visible = false
+		visible = false
 
 func _on_Resume_pressed():
 	pause()
