@@ -22,14 +22,14 @@ background_sky = SubResource( 1 )
 background_color = Color( 0.415686, 0.415686, 0.415686, 1 )
 background_energy = 0.6
 ambient_light_color = Color( 1, 0.996078, 0.807843, 1 )
+ambient_light_energy = 0.9
 ambient_light_sky_contribution = 0.7
 fog_enabled = true
 fog_color = Color( 0.501961, 0.6, 0.701961, 0.960784 )
 fog_sun_color = Color( 0.996078, 1, 0.811765, 1 )
 fog_sun_amount = 0.2
-fog_depth_begin = 25.0
-fog_depth_end = 300.0
-fog_depth_curve = 0.732043
+fog_depth_end = 250.0
+fog_depth_curve = 0.65
 fog_height_enabled = true
 fog_height_max = -50.0
 tonemap_mode = 3
@@ -77,10 +77,7 @@ pause_mode = 1
 pause_mode = 1
 transform = Transform( -0.866026, -0.25, 0.433012, 0, 0.866025, 0.5, -0.5, 0.433013, -0.75, 0.119, 0, 0 )
 light_color = Color( 1, 0.992157, 0.854902, 1 )
-light_energy = 1.4
 shadow_enabled = true
-shadow_bias = 0.0
-shadow_contact = 0.3
 directional_shadow_split_1 = 0.05
 directional_shadow_split_2 = 0.1
 directional_shadow_split_3 = 0.25
@@ -123,6 +120,6 @@ pause_mode = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.295124, 42.7623, 0 )
 
 [node name="HTerrain" parent="." instance=ExtResource( 2 )]
-transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -512, 0, -512 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -512, 0, -512 )
 
 [node name="wire+wirenodes" type="Spatial" parent="."]

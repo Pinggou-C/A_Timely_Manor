@@ -31,3 +31,6 @@ func _on_Main_menu_pressed():
 	LevelLoader.save()
 	for i in get_tree().get_nodes_in_group("menu"):
 		i.pause(false)
+	visible = false
+	get_tree().set_current_scene(Global_Variables.menu)
+	Global_Variables.current = "menu"

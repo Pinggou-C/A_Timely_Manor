@@ -9,7 +9,7 @@ onready var level = preload("res://Areas/Area/Spatial.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	Global_Variables.menu = self
 
 
 
@@ -19,18 +19,17 @@ func _on_Quit_pressed():
 
 
 func _on_start_pressed():
+	print("hello")
 	var lev =  level.instance()
 	get_tree().get_root().add_child(lev)
 	get_tree().set_current_scene(lev)
+	Global_Variables.current = "Level1"
 	pause(true)
 
 func pause(which):
 	if which == true:
 		visible = false
-		for i in $buttons.get_children():
-			i.disabled = true
 	else:
 		visible = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		for i in $buttons.get_children():
-			i.disabled = false
+
