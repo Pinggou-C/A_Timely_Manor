@@ -1,42 +1,40 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://Objects/Wire.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Areas/Area/Spatial.gd" type="Script" id=2]
+[ext_resource path="res://terrain/HTerrain.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Objects/Battery.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/pause/pausefilter.gd" type="Script" id=4]
-[ext_resource path="res://terrain/H2Terrain.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Objects/3D_Objects/World/pillar.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/menu/Pause.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Materials/truepillar.tres" type="Material" id=7]
-[ext_resource path="res://Objects/test2.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Objects/Player/chearecter.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Objects/goodwire.tscn" type="PackedScene" id=10]
 
 [sub_resource type="ProceduralSky" id=1]
-sky_top_color = Color( 0.286275, 0.588235, 0.752941, 1 )
-ground_bottom_color = Color( 0.239216, 0.27451, 0.309804, 1 )
-ground_horizon_color = Color( 0.839216, 0.917647, 0.980392, 1 )
-ground_curve = 0.0857419
-sun_color = Color( 1, 0.988235, 0.666667, 1 )
-sun_curve = 0.0420448
-sun_energy = 1.25
+sky_top_color = Color( 0.4, 0.788235, 1, 1 )
+ground_bottom_color = Color( 0.576471, 0.576471, 0.576471, 1 )
+ground_horizon_color = Color( 0.839216, 0.917647, 0.996078, 1 )
+ground_curve = 0.183792
+sun_color = Color( 1, 0.996078, 0.8, 1 )
+sun_longitude = 44.24
+sun_angle_max = 89.94
 texture_size = 1
 
 [sub_resource type="Environment" id=2]
 background_mode = 2
 background_sky = SubResource( 1 )
-background_color = Color( 0.572549, 0.568627, 0.603922, 1 )
-ambient_light_color = Color( 1, 1, 1, 1 )
-ambient_light_energy = 0.5
-ambient_light_sky_contribution = 0.5
+background_color = Color( 0.415686, 0.415686, 0.415686, 1 )
+background_energy = 0.6
+ambient_light_color = Color( 1, 0.996078, 0.807843, 1 )
+ambient_light_energy = 0.9
+ambient_light_sky_contribution = 0.7
 fog_enabled = true
-fog_color = Color( 0.501961, 0.6, 0.701961, 0.941176 )
-fog_sun_amount = 0.35
-fog_depth_begin = 25.0
-fog_depth_end = 500.0
+fog_color = Color( 0.501961, 0.6, 0.701961, 0.960784 )
+fog_sun_color = Color( 0.996078, 1, 0.811765, 1 )
+fog_sun_amount = 0.2
+fog_depth_end = 250.0
+fog_depth_curve = 0.65
 fog_height_enabled = true
-fog_height_min = 350.0
-fog_height_max = 50.0
-fog_height_curve = 0.333
+fog_height_max = -50.0
+tonemap_mode = 3
+tonemap_exposure = 0.95
+tonemap_white = 1.5
 dof_blur_far_enabled = true
 dof_blur_far_distance = 200.0
 dof_blur_far_transition = 200.0
@@ -44,8 +42,8 @@ dof_blur_near_distance = 0.67
 dof_blur_near_transition = 0.33
 dof_blur_near_quality = 0
 adjustment_enabled = true
-adjustment_contrast = 1.15
-adjustment_saturation = 0.95
+adjustment_contrast = 1.1
+adjustment_saturation = 0.9
 
 [sub_resource type="CubeMesh" id=3]
 size = Vector3( 10, 1, 10 )
@@ -58,22 +56,11 @@ extents = Vector3( 10, 0.499, 10 )
 "effected",
 ]]
 pause_mode = 2
-script = ExtResource( 2 )
+
+[node name="Pause" parent="." instance=ExtResource( 5 )]
 
 [node name="Spatial" type="Spatial" parent="."]
 pause_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="." groups=[
-"paused",
-]]
-visible = false
-margin_right = 1366.0
-margin_bottom = 768.0
-color = Color( 1, 1, 1, 0.294118 )
-script = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 pause_mode = 1
@@ -81,7 +68,7 @@ environment = SubResource( 2 )
 
 [node name="KinematicBody" parent="." instance=ExtResource( 9 )]
 pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -220.103, 279.317, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 48.4879, 0 )
 
 [node name="Tween" type="Tween" parent="."]
 pause_mode = 1
@@ -89,10 +76,13 @@ pause_mode = 1
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 pause_mode = 1
 transform = Transform( -0.866026, -0.25, 0.433012, 0, 0.866025, 0.5, -0.5, 0.433013, -0.75, 0.119, 0, 0 )
-light_color = Color( 1, 1, 0.952941, 1 )
+light_color = Color( 1, 0.992157, 0.854902, 1 )
 shadow_enabled = true
+directional_shadow_split_1 = 0.05
+directional_shadow_split_2 = 0.1
+directional_shadow_split_3 = 0.25
 directional_shadow_blend_splits = true
-directional_shadow_normal_bias = 0.0
+directional_shadow_normal_bias = 0.4
 directional_shadow_depth_range = 1
 __meta__ = {
 "volumetric": 0.0
@@ -109,7 +99,7 @@ one_shot = true
 "floor",
 ]]
 pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -216.849, 266.221, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.76542, 41.8173, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody" groups=[
 "floor",
@@ -127,42 +117,9 @@ shape = SubResource( 4 )
 
 [node name="Battery" parent="." instance=ExtResource( 3 )]
 pause_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -216.849, 267.121, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.295124, 42.7623, 0 )
 
-[node name="HTerrain2" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1024.5, 0, -1024.5 )
+[node name="HTerrain" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -512, 0, -512 )
 
 [node name="wire+wirenodes" type="Spatial" parent="."]
-
-[node name="RigidBody" parent="wire+wirenodes" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -218.894, 266.988, 0.395121 )
-
-[node name="RigidBody2" parent="wire+wirenodes" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -218.779, 266.921, -0.137934 )
-
-[node name="RigidBody3" parent="wire+wirenodes" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -219.48, 267.183, -0.517428 )
-
-[node name="RigidBody4" parent="wire+wirenodes" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -218.361, 266.939, 0.860828 )
-
-[node name="RigidBody5" parent="wire+wirenodes" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -218.481, 266.743, -0.733749 )
-
-[node name="Spatial3" parent="wire+wirenodes" instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -213.306, 267.912, 0 )
-
-[node name="RigidBody6" parent="wire+wirenodes" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -218.968, 266.787, -2.60215 )
-
-[node name="RigidBody7" parent="wire+wirenodes" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -219.314, 266.962, -1.70443 )
-
-[node name="RigidBody8" parent="wire+wirenodes" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -218.662, 266.972, -1.39325 )
-
-[node name="Spatial2" parent="." instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -217.739, 266.8, 0.965466 )
-
-[node name="wire" parent="." instance=ExtResource( 10 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -217.725, 266.937, -3.05616 )

@@ -1,0 +1,120 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Assets/menu/background.jpg" type="Texture" id=1]
+[ext_resource path="res://Scenes/menu/new_styleboxflat.tres" type="StyleBox" id=2]
+[ext_resource path="res://Scenes/menu/new_styleboxflat2.tres" type="StyleBox" id=3]
+[ext_resource path="res://Scenes/menu/new_styleboxflat3.tres" type="StyleBox" id=4]
+[ext_resource path="res://Scenes/menu/Main_menu.gd" type="Script" id=5]
+
+[sub_resource type="StyleBoxFlat" id=1]
+resource_local_to_scene = true
+bg_color = Color( 0, 0, 0, 0.392157 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.431373, 0.431373, 0.431373, 1 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="Main_menu" type="Control" groups=[
+"menu",
+]]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -214.081, -8.97974 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="buttons" type="Control" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 176.0
+margin_top = -330.0
+margin_right = 676.0
+margin_bottom = -37.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="start" type="Button" parent="buttons"]
+margin_right = 300.0
+margin_bottom = 50.0
+custom_styles/hover = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 2 )
+custom_styles/disabled = ExtResource( 4 )
+custom_styles/normal = ExtResource( 2 )
+text = "New Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="load game" type="Button" parent="buttons"]
+margin_top = 50.0
+margin_right = 300.0
+margin_bottom = 100.0
+custom_styles/hover = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 2 )
+custom_styles/disabled = ExtResource( 4 )
+custom_styles/normal = ExtResource( 2 )
+text = "Load Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Settinga" type="Button" parent="buttons"]
+margin_top = 100.0
+margin_right = 300.0
+margin_bottom = 150.0
+custom_styles/hover = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 2 )
+custom_styles/disabled = ExtResource( 4 )
+custom_styles/normal = ExtResource( 2 )
+text = "Settings"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Extras" type="Button" parent="buttons"]
+margin_top = 150.0
+margin_right = 300.0
+margin_bottom = 200.0
+custom_styles/hover = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 2 )
+custom_styles/disabled = ExtResource( 4 )
+custom_styles/normal = ExtResource( 2 )
+text = "Extra's"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Quit" type="Button" parent="buttons"]
+anchor_bottom = 100.0
+margin_top = 200.0
+margin_right = 300.0
+margin_bottom = -29050.0
+custom_styles/hover = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 2 )
+custom_styles/disabled = ExtResource( 4 )
+custom_styles/normal = SubResource( 1 )
+text = "Quit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="buttons/start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="buttons/Quit" to="." method="_on_Quit_pressed"]

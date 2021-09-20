@@ -1,25 +1,26 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://terrain/data.hterrain" type="Resource" id=1]
+[ext_resource path="res://goodterrain/HTerrain_slot0_albedo_bump.packed_tex" type="Texture" id=1]
 [ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=2]
 [ext_resource path="res://addons/zylann.hterrain/hterrain_texture_set.gd" type="Script" id=3]
-[ext_resource path="res://Assets/2d/H2Terrain_slot3_albedo_bump.packed_tex" type="Texture" id=4]
-[ext_resource path="res://Assets/2d/H2Terrain_slot3_normal_roughness.packed_tex" type="Texture" id=5]
-[ext_resource path="res://Assets/2d/H2Terrain_slot0_albedo_bump.packed_tex" type="Texture" id=6]
-[ext_resource path="res://Assets/2d/H2Terrain_slot0_normal_roughness.packed_tex" type="Texture" id=7]
-[ext_resource path="res://Assets/2d/H2Terrain_slot2_albedo_bump.packed_tex" type="Texture" id=8]
-[ext_resource path="res://Assets/2d/H2Terrain_slot1_normal_roughness.packed_tex" type="Texture" id=9]
-[ext_resource path="res://Assets/2d/H2Terrain_slot2_normal_roughness.packed_tex" type="Texture" id=10]
-[ext_resource path="res://Assets/2d/H2Terrain_slot1_albedo_bump.packed_tex" type="Texture" id=11]
+[ext_resource path="res://goodterrain/HTerrain_slot1_normal_roughness.packed_tex" type="Texture" id=4]
+[ext_resource path="res://goodterrain/HTerrain_slot2_albedo_bump.packed_tex" type="Texture" id=5]
+[ext_resource path="res://goodterrain/HTerrain_slot1_albedo_bump.packed_tex" type="Texture" id=6]
+[ext_resource path="res://goodterrain/HTerrain_slot0_normal_roughness.packed_tex" type="Texture" id=7]
+[ext_resource path="res://goodterrain/HTerrain_slot3_normal_roughness.packed_tex" type="Texture" id=8]
+[ext_resource path="res://goodterrain/HTerrain_slot2_normal_roughness.packed_tex" type="Texture" id=9]
+[ext_resource path="res://goodterrain/HTerrain_slot3_albedo_bump.packed_tex" type="Texture" id=10]
+[ext_resource path="res://goodterrain/data.hterrain" type="Resource" id=11]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 3 )
 mode = 0
-textures = [ [ ExtResource( 6 ), ExtResource( 11 ), ExtResource( 8 ), ExtResource( 4 ) ], [ ExtResource( 7 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 5 ) ] ]
+textures = [ [ ExtResource( 1 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 10 ) ], [ ExtResource( 7 ), ExtResource( 4 ), ExtResource( 9 ), ExtResource( 8 ) ] ]
 
 [node name="HTerrain" type="Spatial"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
 script = ExtResource( 2 )
-_terrain_data = ExtResource( 1 )
+_terrain_data = ExtResource( 11 )
 chunk_size = 16
 collision_enabled = true
 collision_layer = 1
@@ -31,7 +32,7 @@ texture_set = SubResource( 1 )
 shader_params/u_ground_uv_scale_per_texture = Plane( 20, 20, 20, 20 )
 shader_params/u_depth_blending = true
 shader_params/u_triplanar = false
-shader_params/u_tile_reduction = Plane( 0, 0, 0, 0 )
-shader_params/u_globalmap_blend_start = null
-shader_params/u_globalmap_blend_distance = null
+shader_params/u_tile_reduction = Plane( 1, 1, 1, 1 )
+shader_params/u_globalmap_blend_start = 0.0
+shader_params/u_globalmap_blend_distance = 0.0
 shader_params/u_colormap_opacity_per_texture = Plane( 1, 1, 1, 1 )

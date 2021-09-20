@@ -1,8 +1,0 @@
-{
-	"contains_albedo": true,
-	"resolution": 512,
-	"src": {
-		"a": "res://Assets/2d/c81d3530d39cbfb8266802057cf147b72.jpg",
-		"rgb": "res://Assets/2d/c81d3530d39cbfb8266802057cf147b72.jpg"
-	}
-}
