@@ -26,13 +26,21 @@ func drop(w1, w2):
 
 
 func _on_frontarea_body_entered(body):
-	if body.is_in_group("wire"):
-		pass
-	elif body.is_in_group("wire_nodes"):
-		if body.is_in_group("wire_end"):
-			pass
-		else:
-			var go = body.enter(self)
+	if body != get_parent().get_child(1) && body != get_parent().get_child(3) :
+		if body.is_in_group("wire"):
+			if body.is_in_group("wire_end"):
+				if body.pickedup == false:
+					var which = "back"
+					if body.is_in_group("wire_front_end"):
+						which = "front"
+					get_parent().combine(body, which)
+			else:
+				pass
+		elif body.is_in_group("wire_nodes"):
+			if body.is_in_group("wire_end"):
+				pass
+			else:
+				var go = body.enter(self)
 
 
 func _on_frontarea_body_exited(body):

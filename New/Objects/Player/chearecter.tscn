@@ -34,6 +34,7 @@ transform = Transform( 1, 0, 0, 0, -2.18557e-08, -1, 0, 0.5, -4.37114e-08, 0, 0,
 shape = SubResource( 1 )
 
 [node name="Camera" type="Camera" parent="."]
+process_priority = -921
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -0.192089 )
 current = true
 fov = 81.5

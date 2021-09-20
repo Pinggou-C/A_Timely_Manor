@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/menu/Pause.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/menu/new_styleboxflat.tres" type="StyleBox" id=2]
 [ext_resource path="res://Scenes/menu/new_styleboxflat2.tres" type="StyleBox" id=3]
+[ext_resource path="res://Scenes/menu/new_styleboxflat3.tres" type="StyleBox" id=4]
+
+[sub_resource type="Theme" id=1]
 
 [node name="Pause" type="Control"]
 pause_mode = 2
@@ -41,7 +44,10 @@ margin_left = -200.0
 margin_top = 21.651
 margin_right = 200.0
 margin_bottom = 96.651
+custom_styles/hover = ExtResource( 2 )
 custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 2 )
+custom_styles/disabled = ExtResource( 4 )
 custom_styles/normal = ExtResource( 2 )
 text = "Resume"
 __meta__ = {
@@ -57,7 +63,10 @@ margin_left = -200.0
 margin_top = 102.42
 margin_right = 200.0
 margin_bottom = 177.42
+custom_styles/hover = ExtResource( 2 )
 custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 2 )
+custom_styles/disabled = ExtResource( 4 )
 custom_styles/normal = ExtResource( 2 )
 text = "Main Menu"
 __meta__ = {
@@ -73,12 +82,29 @@ margin_left = -200.0
 margin_top = 184.339
 margin_right = 200.0
 margin_bottom = 259.339
+custom_styles/hover = ExtResource( 2 )
 custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 2 )
+custom_styles/disabled = ExtResource( 4 )
 custom_styles/normal = ExtResource( 2 )
 text = "Save and Quit"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="confirm" type="ConfirmationDialog" parent="."]
+visible = true
+margin_left = 844.091
+margin_top = 594.905
+margin_right = 1055.09
+margin_bottom = 664.905
+theme = SubResource( 1 )
+dialog_text = "Do you want to quit the game?"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="pressed" from="Buttons/Resume" to="." method="_on_Resume_pressed"]
 [connection signal="pressed" from="Buttons/Main_menu" to="." method="_on_Main_menu_pressed"]
+[connection signal="button_up" from="Buttons/Save_and_Quit" to="." method="_on_Save_and_Quit_button_up"]
+[connection signal="confirmed" from="confirm" to="." method="_on_confirm_confirmed"]

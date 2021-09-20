@@ -29,8 +29,18 @@ func _on_Resume_pressed():
 
 func _on_Main_menu_pressed():
 	LevelLoader.save()
-	for i in get_tree().get_nodes_in_group("menu"):
-		i.pause(false)
 	visible = false
 	get_tree().set_current_scene(Global_Variables.menu)
 	Global_Variables.current = "menu"
+	pause()
+	Global_Variables.menu.pause(false)
+	get_parent().queue_free()
+
+
+func _on_Save_and_Quit_button_up():
+	$confirm.popup()
+	
+
+
+func _on_confirm_confirmed():
+	get_tree().notification(MainLoop.NOTIFICATION_WM_QUIT_REQUEST)
