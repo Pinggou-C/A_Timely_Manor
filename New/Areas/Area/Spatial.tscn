@@ -125,11 +125,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -512, 0, -512 )
 
 [node name="wire+wirenodes" type="Spatial" parent="."]
 
-[node name="wire" parent="wire+wirenodes" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.53061, 42.5173, 1.64781 )
+[node name="wire3" parent="wire+wirenodes" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0552847, 42.5173, -1.98706 )
 
-[node name="wire" parent="." instance=ExtResource( 1 )]
+[node name="wire2" parent="wire+wirenodes" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1275, 42.5173, -1.10198 )
 
-[node name="wire2" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0552847, 42.5173, -1.98706 )
+[node name="wire" parent="wire+wirenodes" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.53061, 42.5173, 1.64781 )

@@ -46,6 +46,8 @@ func _ready():
 	mycoll3.set_collision_layer_bit(0, false)
 	mycoll3.set_collision_layer_bit(1, true)
 	mycoll3.set_collision_layer_bit(3, true)
+	front = $front.get_global_transform().origin
+	rear = $rear.get_global_transform().origin
 #code in the wires is only called from th nodes
 #calling functions in nodes is not neccesairy appart from certain situations, such as when a new nodes is created or when a node is changed
 
@@ -53,11 +55,11 @@ func _ready():
 func connect_to_node(newnode, oldnode):
 	if frontnode == oldnode:
 		frontnode = newnode
-		front = frontnode.get_global_position()
+		front = frontnode.get_global_transform().origin 
 		frontnode.conn(self, rearnode)
 	elif rearnode == oldnode:
 		rearnode = newnode
-		rear = rearnode.get_global_position()
+		rear = rearnode.fet_global_transform().origin 
 		rearnode.conn(self, frontnode)
 #function for when the wire needs a new node
 func newnode(position, oldnode, pos):
@@ -86,24 +88,36 @@ func resize_node(node, pos):
 func combine(otherwire, which, which2):
 	if which2 == "rear":
 		if which == "back":
+			print("bb")
 			rear = otherwire.front
 			rearnode = otherwire.frontnode
 		elif which == "front":
+			print("bf")
 			rear = otherwire.rear
 			rearnode = otherwire.rearnode
 	if which2 == "front":
 		if which == "back":
+			print("fb")
 			front = otherwire.front
 			frontnode = otherwire.frontnode
+			print(otherwire.front)
 		elif which == "front":
+			print("ff")
 			front = otherwire.rear
 			frontnode = otherwire.rearnode
-	otherwire.frontnode.wire(self, rearnode)
+	$front.global_transform.origin = front
+	$frontarea.global_transform.origin = front
+	$rear.global_transform.origin = rear
+	$reararea.global_transform.origin = rear
+	if otherwire.frontnode != null:
+		otherwire.frontnode.wire(self, rearnode)
 	otherwire.queue_free()
 	resize()
+	#resize()
 
 #generates wire
 func resize():
+	print('resize')
 	var x = abs(rear.x - front.x)
 	var z = abs(rear.z - front.z)
 	var y = abs(rear.y - front.y)
@@ -119,43 +133,43 @@ func resize():
 	if x > z && x > y:
 		wire1.mesh.size = x1
 		wirecoll1.shape.extents = x1 /2
-		wire1.translation = Vector3(-(rear.x - front.x)/ 2+rear.x, rear.y, rear.z)
-		wirecoll1.translation = wire1.translation
+		wire1.global_transform.origin = Vector3(-(rear.x - front.x)/ 2+rear.x, rear.y, rear.z)
+		wirecoll1.global_transform.origin = wire1.get_global_transform().origin
 		wire2.mesh.size = z1
 		wirecoll2.shape.extents = z1 / 2
-		wire2.translation = Vector3(-(rear.x - front.x)+rear.x, rear.y, -(rear.z - front.z) / 2 + rear.z)
-		wirecoll2.translation = wire2.translation
+		wire2.global_transform.origin = Vector3(-(rear.x - front.x)+rear.x, rear.y, -(rear.z - front.z) / 2 + rear.z)
+		wirecoll2.global_transform.origin = wire2.get_global_transform().origin
 		wire3.mesh.size = y1
 		wirecoll3.shape.extents = y1 / 2
-		wire3.translation = Vector3(-(rear.x - front.x)+rear.x, -(rear.y - front.y) / 2 + rear.y, -(rear.z - front.z) + rear.z)
-		wirecoll3.translation = wire3.translation
+		wire3.global_transform.origin = Vector3(-(rear.x - front.x)+rear.x, -(rear.y - front.y) / 2 + rear.y, -(rear.z - front.z) + rear.z)
+		wirecoll3.global_transform.origin = wire3.get_global_transform().origin
 	elif z > x && z > y:
 		wire1.mesh.size = z1
 		wirecoll2.shape.extents = z1 / 2
-		wire1.translation =Vector3(rear.x, rear.y, -(rear.z - front.z)/ 2 + rear.z)
-		wirecoll2.translation = wire1.translation
+		wire1.global_transform.origin =Vector3(rear.x, rear.y, -(rear.z - front.z)/ 2 + rear.z)
+		wirecoll2.global_transform.origin = wire1.get_global_transform().origin
 		wire2.mesh.size = x1
 		wirecoll1.shape.extents = x1 /2
-		wire2.translation = Vector3(-(rear.x - front.x) / 2 + rear.x, rear.y, -(rear.z - front.z)+rear.z)
-		wirecoll1.translation = wire2.translation
+		wire2.global_transform.origin = Vector3(-(rear.x - front.x) / 2 + rear.x, rear.y, -(rear.z - front.z)+rear.z)
+		wirecoll1.global_transform.origin = wire2.get_global_transform().origin
 		wire3.mesh.size = y1
 		wirecoll3.shape.extents = y1 / 2
-		wire3.translation = Vector3(-(rear.x - front.x)+rear.x, -(rear.y - front.y) / 2 + rear.y, -(rear.z - front.z) + rear.z)
-		wirecoll3.translation = wire3.translation
+		wire3.global_transform.origin = Vector3(-(rear.x - front.x)+rear.x, -(rear.y - front.y) / 2 + rear.y, -(rear.z - front.z) + rear.z)
+		wirecoll3.global_transform.origin = wire3.get_global_transform().origin
 	else:
 		wire1.mesh.size = y1
 		wirecoll3.shape.extents = y1 / 2
 		wire1.translation =Vector3(rear.x, -(rear.y - front.y)/ 2 + rear.y, rear.z)
-		wirecoll3.translation = wire1.translation
+		wirecoll3.global_transform.origin = wire1.get_global_transform().origin
 		wire2.mesh.size = x1
 		wirecoll1.shape.extents = x1 /2
-		wire2.translation = Vector3(-(rear.x - front.x) / 2 + rear.x, -(rear.y - front.y) + rear.y, rear.z)
-		wirecoll1.translation = wire2.translation
+		wire2.global_transform.origin = Vector3(-(rear.x - front.x) / 2 + rear.x, -(rear.y - front.y) + rear.y, rear.z)
+		wirecoll1.global_transform.origin = wire2.get_global_transform().origin
 		wire3.mesh.size = z1
 		wirecoll2.shape.extents = z1 / 2
-		wire3.translation = Vector3(-(rear.x - front.x)+rear.x, -(rear.y - front.y) + rear.y, -(rear.z - front.z) / 2 + rear.z)
-		wirecoll2.translation = wire3.translation
-	$rear.translation = rear
-	$front.translation = front
-	$reararea.translation = rear
-	$frontarea.translation = front
+		wire3.global_transform.origin = Vector3(-(rear.x - front.x)+rear.x, -(rear.y - front.y) + rear.y, -(rear.z - front.z) / 2 + rear.z)
+		wirecoll2.global_transform.origin = wire3.get_global_transform().origin
+	$rear.global_transform.origin = rear
+	$front.global_transform.origin = front
+	$reararea.global_transform.origin = rear
+	$frontarea.global_transform.origin = front

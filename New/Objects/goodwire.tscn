@@ -26,9 +26,10 @@ shape = SubResource( 1 )
 [node name="front" type="KinematicBody" parent="." groups=[
 "wire",
 "wire_end",
+"wire_front_end",
 "wire_nodes",
 ]]
-collision_layer = 786432
+collision_layer = 786440
 script = ExtResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="front"]
@@ -52,7 +53,7 @@ shape = SubResource( 1 )
 "wire_nodes",
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.111213, 0, 0 )
-collision_layer = 786432
+collision_layer = 786440
 script = ExtResource( 2 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="rear"]
