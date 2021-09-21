@@ -4,10 +4,10 @@
 [ext_resource path="res://testmiror/MeshInstance.shader" type="Shader" id=2]
 
 [sub_resource type="PlaneMesh" id=1]
-size = Vector2( 20, 20 )
+size = Vector2( 5, 5 )
 
 [sub_resource type="ViewportTexture" id=2]
-viewport_path = NodePath("/root/EditorNode/@@580/@@581/@@589/@@591/@@595/@@599/@@600/@@601/@@617/@@618/@@627/@@628/@@6060/@@5899/@@5900/@@5901/@@5902/@@5903/MeshInstance/Viewport")
+viewport_path = NodePath("/root/EditorNode/@@580/@@581/@@589/@@591/@@595/@@599/@@600/@@601/@@617/@@618/@@627/@@628/@@6066/@@5905/@@5906/@@5907/@@5908/@@5909/MeshInstance/Viewport")
 
 [sub_resource type="ShaderMaterial" id=3]
 resource_local_to_scene = true
@@ -30,7 +30,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0 )
 shape = SubResource( 4 )
 
 [node name="Viewport" type="Viewport" parent="."]
-size = Vector2( 2048, 1200 )
+size = Vector2( 960, 540 )
 msaa = 4
 debanding = true
 keep_3d_linear = true
@@ -39,6 +39,7 @@ keep_3d_linear = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -31.33, 10, 12.5 )
 cull_mask = 1048573
 current = true
+far = 1874.6
 
 [node name="DummyCam" type="Position3D" parent="."]
 

@@ -16,7 +16,7 @@ func _ready():
 	get("material/0").get("shader_param/refl_tx").set("viewport_path",find_node("Viewport").get_path())			#sets the viewport_path to the right viewport for every instance of this scene ,Mi2's child(0)='View'
 	#$View.size = Vector2(2000,1000)			#the screen display size (from project settings)
 											# must have the same width to height ratio (w=2h) as the settings here: 
-	$Viewport.size = Vector2(ProjectSettings.get_setting("display/window/size/width"), ProjectSettings.get_setting("display/window/size/height"))
+	$Viewport.size = Vector2(1920/2, 1080/2)
 	get_node("Viewport/Camera").set("cull_mask",1048575)#when all the camera's layer bits are turned on, the cull mask value is 1048575:  2^0 + 2^1 + 2^2 +...+2^19=1048575
 	get_node("Viewport/Camera").set_cull_mask_bit(IgnoreLayer-1,false)		#while every layer is on this turns the chosen layer off
 #For Diagnostics:=========================================================================================================================================================================================================================================
