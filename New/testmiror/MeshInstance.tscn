@@ -31,9 +31,9 @@ shape = SubResource( 4 )
 
 [node name="Viewport" type="Viewport" parent="."]
 size = Vector2( 960, 540 )
-msaa = 4
 debanding = true
 keep_3d_linear = true
+shadow_atlas_quad_0 = 1
 
 [node name="Camera" type="Camera" parent="Viewport"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -31.33, 10, 12.5 )
