@@ -47,6 +47,8 @@ var qualitys = ['low', 'medium', 'high']
 var scale = 1
 var scaled = [0, 8]
 
+var motionblur = true
+
 var follow_surface = true
 var follow_surfaces = [false, true]
 

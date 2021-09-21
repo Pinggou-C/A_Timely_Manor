@@ -75,7 +75,7 @@ _global_script_class_icons={
 [application]
 
 config/name="A Timely Manor"
-run/main_scene="res://Scenes/menu/Main_menu.tscn"
+run/main_scene="res://Scenes/menu/Mainmenu.tscn"
 config/use_custom_user_dir=true
 run/low_processor_mode=true
 
