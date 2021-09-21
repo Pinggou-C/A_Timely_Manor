@@ -1,55 +1,17 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Objects/goodwire.tscn" type="PackedScene" id=1]
 [ext_resource path="res://terrain/HTerrain.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Objects/Battery.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Areas/Area/Spatial.tres" type="Environment" id=4]
 [ext_resource path="res://Scenes/menu/Pause.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Materials/truepillar.tres" type="Material" id=7]
 [ext_resource path="res://Objects/Player/chearecter.tscn" type="PackedScene" id=9]
 
-[sub_resource type="ProceduralSky" id=1]
-sky_top_color = Color( 0.4, 0.788235, 1, 1 )
-ground_bottom_color = Color( 0.576471, 0.576471, 0.576471, 1 )
-ground_horizon_color = Color( 0.839216, 0.917647, 0.996078, 1 )
-ground_curve = 0.183792
-sun_color = Color( 1, 0.996078, 0.8, 1 )
-sun_longitude = 44.24
-sun_angle_max = 89.94
-texture_size = 1
-
-[sub_resource type="Environment" id=2]
-background_mode = 2
-background_sky = SubResource( 1 )
-background_color = Color( 0.415686, 0.415686, 0.415686, 1 )
-background_energy = 0.6
-ambient_light_color = Color( 1, 0.996078, 0.807843, 1 )
-ambient_light_energy = 0.9
-ambient_light_sky_contribution = 0.7
-fog_enabled = true
-fog_color = Color( 0.501961, 0.6, 0.701961, 0.960784 )
-fog_sun_color = Color( 0.996078, 1, 0.811765, 1 )
-fog_sun_amount = 0.2
-fog_depth_end = 250.0
-fog_depth_curve = 0.65
-fog_height_enabled = true
-fog_height_max = -50.0
-tonemap_mode = 3
-tonemap_exposure = 0.95
-tonemap_white = 1.5
-dof_blur_far_enabled = true
-dof_blur_far_distance = 200.0
-dof_blur_far_transition = 200.0
-dof_blur_near_distance = 0.67
-dof_blur_near_transition = 0.33
-dof_blur_near_quality = 0
-adjustment_enabled = true
-adjustment_contrast = 1.1
-adjustment_saturation = 0.9
-
-[sub_resource type="CubeMesh" id=3]
+[sub_resource type="CubeMesh" id=1]
 size = Vector3( 10, 1, 10 )
 
-[sub_resource type="BoxShape" id=4]
+[sub_resource type="BoxShape" id=2]
 margin = 0.03
 extents = Vector3( 10, 0.499, 10 )
 
@@ -65,7 +27,7 @@ pause_mode = 2
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 pause_mode = 1
-environment = SubResource( 2 )
+environment = ExtResource( 4 )
 
 [node name="KinematicBody" parent="." instance=ExtResource( 9 )]
 pause_mode = 1
@@ -106,7 +68,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.76542, 41.8173, 0 )
 "floor",
 ]]
 layers = 1048575
-mesh = SubResource( 3 )
+mesh = SubResource( 1 )
 material/0 = ExtResource( 7 )
 __meta__ = {
 "apply_volumetrics": false
@@ -114,7 +76,7 @@ __meta__ = {
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0069809, 0.00833321, -0.0051899 )
-shape = SubResource( 4 )
+shape = SubResource( 2 )
 
 [node name="Battery" parent="." instance=ExtResource( 3 )]
 pause_mode = 1
