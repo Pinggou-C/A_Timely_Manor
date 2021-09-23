@@ -17,11 +17,11 @@ func save():
 #loads an area and instances all levels in it
 func Loadarea(area):
 	var path = "res://Level_creator/Areas"
-	path += "/area"+String(area)+".tscn"
+	path += "/area"+String(area)+"/area.tscn"
 	var nod = load(path)
 	var arr = nod.instance()
 	get_tree().get_root().add_child(arr)
-	arr.load_childer()
+	arr.load_children()
 
 #unloads an area removing all levels
 func unLoadarea(area):
