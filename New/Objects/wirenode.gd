@@ -12,6 +12,11 @@ var selfwire = null
 
 var oldpos
 
+#all the sides and their positions
+
+
+
+
 var powered_by = []
 var volts
 var amps
@@ -27,6 +32,7 @@ func _ready():
 func conn(wire, newnode):
 	if !wires.has(wire):
 		wires.append(wire)
+		return get_global_transform().origin
 	if !connecteds.has(newnode):
 		connecteds.append(newnode)
 
@@ -121,13 +127,13 @@ func pickup():
 func drop():
 	pass
 
-func enter():
+func enter(which):
 	#when i wire gets connected
 	pass
 
 
 func _physics_process(delta):
 	if abs(oldpos.x - translation.x) > 0.01 || abs(oldpos.y - translation.y) > 0.01 || abs(oldpos.z - translation.z) > 0.01:
-		for i in connected:
+		for i in connecteds:
 			i.resize()
 	oldpos = translation

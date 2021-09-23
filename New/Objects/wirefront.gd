@@ -30,7 +30,11 @@ func drop(w1, w2):
 
 
 func _on_frontarea_body_entered(body):
-	if body != get_parent().get_child(1) && body != get_parent().get_child(3) :
+	var continu = false
+	for i in get_parent().get_children():
+		if i == body && continu == false:
+			continu = true
+	if body != get_parent().get_child(1) && body != get_parent().get_child(3) && continu == false:
 		if body.is_in_group("wire"):
 			get_parent().newnode(get_global_transform().origin, body, "front")
 		elif body.is_in_group("wire_nodes"):

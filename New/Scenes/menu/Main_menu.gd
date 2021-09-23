@@ -5,7 +5,7 @@ var saves = []
 # Declare member variables here. Examples:
 # var a = 2
 var level = preload("res://Areas/Area/Spatial.tscn")
-
+var returned = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,12 +19,8 @@ func _on_Quit_pressed():
 
 
 func _on_start_pressed():
-	print("hello")
-	var lev =  level.instance()
-	get_tree().get_root().add_child(lev)
-	get_tree().set_current_scene(lev)
-	Global_Variables.current = "Level1"
 	pause(true)
+	BackgroundLoad.load_scene("res://Areas/Area/Spatial.tscn", 0.01, true, self)
 
 func pause(which):
 	if which == true:
@@ -36,4 +32,10 @@ func pause(which):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		for i in $buttons.get_children():
 			i.disabled = false
+
+func load_return(reswource):
+	get_tree().get_root().add_child(reswource)
+	var gg = get_tree().current_scene
+	get_tree().current_scene = reswource
+	gg.queue_free()
 

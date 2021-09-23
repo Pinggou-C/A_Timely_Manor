@@ -84,6 +84,7 @@ run/low_processor_mode=true
 Global_Settings="*res://Globals/Scripts/Global_settings.gd"
 Global_Variables="*res://Globals/Scripts/Global_vars.gd"
 LevelLoader="*res://Globals/Scripts/Global_Level_loader.gd"
+BackgroundLoad="*res://resource_loader/background_load.tscn"
 
 [debug]
 

@@ -4,6 +4,7 @@ var frontnode = null
 var rearnode = null
 var front = Vector3()
 var rear = Vector3()
+var newnode = preload("res://Objects/wirenode.tscn")
 
 func _ready():
 	#creates meshes and collisionshaped to prefent shapecopying by other wires
@@ -68,16 +69,21 @@ func connect_to_node(newnode, oldnode):
 #also splits the wire the node gets put on
 func newnode(pos, otherwire,frontback):
 	#loads and adds new node to scene
-	var newnode = load("res://Objects/wirenode.tscn")
-	newnode.instance()
-	get_parent().add_child(newnode)
-	newnode.global_transform.origin = pos
-	var newpos = newnode.conn(self)
+	
+	var newnode2 = newnode.instance()
+	get_parent().add_child(newnode2)
+	newnode2.global_transform.origin = pos
+	var node
+	if frontback == "front":
+		node = rearnode
+	else:
+		node = frontnode
+	var newpos = newnode2.conn(self, node)
 	if frontback == "front":
 		front = newpos
 	else:
 		rear = newpos
-	otherwire.split(newnode)
+	otherwire.get_parent().split(newpos + Vector3(0, 0.25, 0), rear, front, newpos - Vector3(0, -0.25, 0))
 	
 
 #splits a wire in 2
