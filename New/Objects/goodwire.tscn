@@ -24,7 +24,6 @@ collision_mask = 24
 shape = SubResource( 1 )
 
 [node name="front" type="KinematicBody" parent="." groups=[
-"wire",
 "wire_end",
 "wire_front_end",
 "wire_nodes",
@@ -48,7 +47,6 @@ collision_mask = 24
 shape = SubResource( 1 )
 
 [node name="rear" type="KinematicBody" parent="." groups=[
-"wire",
 "wire_end",
 "wire_nodes",
 ]]

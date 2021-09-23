@@ -5,6 +5,7 @@ func _process(_delta):
 	get_tree().call_group("mirro", "update_cams", global_transform)
 
 func _ready():
+	set_process(false)
 	if Global_Settings.motionblur == true:
 		var bb = blur.instance()
 		add_child(bb)

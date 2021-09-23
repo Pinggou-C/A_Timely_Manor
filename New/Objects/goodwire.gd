@@ -20,6 +20,7 @@ func _ready():
 	myMesh3.mesh.size = Vector3(0.01, 0.01, 0.01)
 	add_child(myMesh3)
 	var mycoll1 = StaticBody.new()
+	mycoll1.add_to_group("wire")
 	add_child(mycoll1)
 	var mycol = CollisionShape.new()
 	mycol.shape = BoxShape.new()
@@ -29,6 +30,7 @@ func _ready():
 	mycoll1.set_collision_layer_bit(1, true)
 	mycoll1.set_collision_layer_bit(3, true)
 	var mycoll2 = StaticBody.new()
+	mycoll2.add_to_group("wire")
 	add_child(mycoll2)
 	var mycol1 = CollisionShape.new()
 	mycol1.shape = BoxShape.new()
@@ -38,6 +40,7 @@ func _ready():
 	mycoll2.set_collision_layer_bit(1, true)
 	mycoll2.set_collision_layer_bit(3, true)
 	var mycoll3 = StaticBody.new()
+	mycoll3.add_to_group("wire")
 	add_child(mycoll3)
 	var mycol2 = CollisionShape.new()
 	mycol2.shape = BoxShape.new()
@@ -62,13 +65,33 @@ func connect_to_node(newnode, oldnode):
 		rear = rearnode.fet_global_transform().origin 
 		rearnode.conn(self, frontnode)
 #function for when the wire needs a new node
-func newnode(position, oldnode, pos):
+#also splits the wire the node gets put on
+func newnode(pos, otherwire,frontback):
 	#loads and adds new node to scene
 	var newnode = load("res://Objects/wirenode.tscn")
 	newnode.instance()
 	get_parent().add_child(newnode)
-	newnode.translation = pos
-	newnode.conn(self)
+	newnode.global_transform.origin = pos
+	var newpos = newnode.conn(self)
+	if frontback == "front":
+		front = newpos
+	else:
+		rear = newpos
+	otherwire.split(newnode)
+	
+
+#splits a wire in 2
+func split(beginpos, beginpos2, endpos, endpos2):
+	var newwire = load("res://Objects/goodwire.tscn")
+	var newwire2 = newwire.instance()
+	get_parent().add_child(newwire2)
+	newwire2.rear = beginpos
+	newwire2.front = endpos
+	front = endpos2
+	rear = beginpos2
+	newwire2.resize()
+	resize()
+
 
 #connects a node to the wire
 #front
@@ -117,7 +140,6 @@ func combine(otherwire, which, which2):
 
 #generates wire
 func resize():
-	print('resize')
 	var x = abs(rear.x - front.x)
 	var z = abs(rear.z - front.z)
 	var y = abs(rear.y - front.y)
@@ -159,7 +181,7 @@ func resize():
 	else:
 		wire1.mesh.size = y1
 		wirecoll3.shape.extents = y1 / 2
-		wire1.translation =Vector3(rear.x, -(rear.y - front.y)/ 2 + rear.y, rear.z)
+		wire1.global_transform.origin =Vector3(rear.x, -(rear.y - front.y)/ 2 + rear.y, rear.z)
 		wirecoll3.global_transform.origin = wire1.get_global_transform().origin
 		wire2.mesh.size = x1
 		wirecoll1.shape.extents = x1 /2

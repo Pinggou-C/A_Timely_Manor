@@ -32,6 +32,8 @@ func drop(w1, w2):
 func _on_frontarea_body_entered(body):
 	if body != get_parent().get_child(1) && body != get_parent().get_child(3) :
 		if body.is_in_group("wire"):
+			get_parent().newnode(get_global_transform().origin, body, "front")
+		elif body.is_in_group("wire_nodes"):
 			if body.is_in_group("wire_end"):
 				if body.pickedup == false:
 					which = "back"
@@ -39,11 +41,6 @@ func _on_frontarea_body_entered(body):
 						which = "front"
 					whichbody = body
 					print('fi')
-			else:
-				pass
-		elif body.is_in_group("wire_nodes"):
-			if body.is_in_group("wire_end"):
-				pass
 			else:
 				var go = body.enter(self)
 
