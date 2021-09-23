@@ -124,7 +124,7 @@ func wire(wire, node):
 
 func pickup():
 	pass
-func drop():
+func drop(hi1, hi2):
 	pass
 
 func enter(which):

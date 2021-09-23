@@ -83,20 +83,20 @@ func newnode(pos, otherwire,frontback):
 		front = newpos
 	else:
 		rear = newpos
-	otherwire.get_parent().split(newpos + Vector3(0, 0.25, 0), rear, front, newpos - Vector3(0, -0.25, 0))
+	otherwire.get_parent().split(newpos + Vector3(0, 0, 0.25), rear- Vector3(0, 0, 0.35), front+ Vector3(0, 0, 0.35), newpos - Vector3(0, 0, -0.25))
 	
 
 #splits a wire in 2
 func split(beginpos, beginpos2, endpos, endpos2):
 	var newwire = load("res://Objects/goodwire.tscn")
 	var newwire2 = newwire.instance()
-	get_parent().add_child(newwire2)
 	newwire2.rear = beginpos
 	newwire2.front = endpos
 	front = endpos2
 	rear = beginpos2
-	newwire2.resize()
 	resize()
+	get_parent().add_child(newwire2)
+	newwire2.resize()
 
 
 #connects a node to the wire

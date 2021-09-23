@@ -3,13 +3,13 @@
 [ext_resource path="res://Objects/wirenode.gd" type="Script" id=1]
 
 [sub_resource type="BoxShape" id=1]
-extents = Vector3( 0.025, 0.025, 0.1 )
+extents = Vector3( 0.125, 0.125, 0.125 )
 
 [sub_resource type="BoxShape" id=2]
-extents = Vector3( 0.05, 0.05, 0.05 )
+extents = Vector3( 0.15, 0.15, 0.15 )
 
 [sub_resource type="CubeMesh" id=3]
-size = Vector3( 0.05, 0.05, 0.2 )
+size = Vector3( 0.25, 0.25, 0.25 )
 
 [node name="KinematicBody" type="KinematicBody" groups=[
 "wire_nodes",
@@ -18,7 +18,6 @@ collision_layer = 786448
 script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.05 )
 shape = SubResource( 1 )
 
 [node name="Timer" type="Timer" parent="."]
@@ -31,7 +30,6 @@ collision_mask = 24
 shape = SubResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.05 )
 mesh = SubResource( 3 )
 material/0 = null
 
