@@ -1,5 +1,12 @@
  extends KinematicBody
 
+class MyCustomSorter:
+	static func sort_ascending(a, b):
+		if a[0] < b[0]:
+			return true
+		return false
+
+
 var printtt = 0
 var connecteds = []
 var wires = []
@@ -32,49 +39,32 @@ func _ready():
 	oldpos = translation
 
 #adds wire to the wirestack and adds the other node connected to thats wire to self
-func conn(wire, newnode):
+func conn(wire, newnode, frontback):
+	var posss
+	#get closest
+	var posarr = []
+	if frontback == "front":
+		posss = wire.rear
+	else:
+		posss = wire.front
 	if !wires.has(wire):
 		wires.append(wire)
 		var pos
-		var poss2
-		var poss3
 		if pos1 == null:
-			pos1 = wire
-			pos = $pos1.get_global_transform().origin
+			print($pos1.get_global_transform().origin)
+			print(posss)
+			var g = posss- $pos1.get_global_transform().origin
+			posarr.append([abs((posss.x - $pos1.get_global_transform().origin.x) + (posss.y - $pos1.get_global_transform().origin.y) + (posss.z - $pos1.get_global_transform().origin.z)), 1, $pos1.get_global_transform().origin])
 		elif pos2 == null:
-			pos2 = wire
-			pos = $pos2.get_global_transform().origin
+			posarr.append([abs((posss.x - $pos2.get_global_transform().origin.x) + (posss.y - $pos2.get_global_transform().origin.y) + (posss.z - $pos2.get_global_transform().origin.z)), 2, $pos2.get_global_transform().origin])
 		elif pos3 == null:
-			pos1 = wire
-			pos = $pos3.get_global_transform().origin
+			posarr.append([abs((posss.x - $pos3.get_global_transform().origin.x) + (posss.y - $pos3.get_global_transform().origin.y) + (posss.z - $pos3.get_global_transform().origin.z)), 3, $pos3.get_global_transform().origin])
 		elif pos4 == null:
-			pos4 = wire
-			pos = $pos4.get_global_transform().origin
-		if pos1 == null:
-			pos1 = wire
-			poss2 = $pos1.get_global_transform().origin
-		elif pos2 == null:
-			pos2 = wire
-			poss2 = $pos2.get_global_transform().origin
-		elif pos3 == null:
-			pos1 = wire
-			poss2 = $pos3.get_global_transform().origin
-		elif pos4 == null:
-			pos1 = wire
-			poss2 = $pos4.get_global_transform().origin
-		if pos1 == null:
-			pos1 = wire
-			poss3 = $pos1.get_global_transform().origin
-		elif pos2 == null:
-			pos2 = wire
-			poss3 = $pos2.get_global_transform().origin
-		elif pos3 == null:
-			pos1 = wire
-			poss3 = $pos3.get_global_transform().origin
-		elif pos4 == null:
-			pos1 = wire
-			poss3 = $pos4.get_global_transform().origin
-		return [pos, poss2, poss3]
+			posarr.append([abs((posss.x - $pos4.get_global_transform().origin.x) + (posss.y - $pos4.get_global_transform().origin.y) + (posss.z - $pos4.get_global_transform().origin.z)), 4, $pos4.get_global_transform().origin])
+		posarr.sort_custom(MyCustomSorter, "sort_ascending")
+		pos = posarr[0][2]
+		set("pos" + String(posarr[0][1]), wire)
+		return pos
 	if !connecteds.has(newnode):
 		connecteds.append(newnode)
 

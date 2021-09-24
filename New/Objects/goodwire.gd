@@ -4,8 +4,9 @@ var frontnode = null
 var rearnode = null
 var front = Vector3()
 var rear = Vector3()
-var newnode = preload("res://Objects/wirenode.tscn")
 
+func _physics_process(delta):
+	print(String(front.x)+ "  "+ String(rear))
 func _ready():
 	#creates meshes and collisionshaped to prefent shapecopying by other wires
 	var myMesh = MeshInstance.new()
@@ -69,6 +70,7 @@ func connect_to_node(newnode, oldnode):
 #also splits the wire the node gets put on
 func newnode(pos, otherwire,frontback):
 	#loads and adds new node to scene
+	var newnode = load("res://Objects/wirenode.tscn")
 	var newnode2 = newnode.instance()
 	get_parent().add_child(newnode2)
 	newnode2.global_transform.origin = pos
@@ -77,13 +79,13 @@ func newnode(pos, otherwire,frontback):
 		node = rearnode
 	else:
 		node = frontnode
-	var newpos = newnode2.conn(self, node)
+	var newpos = newnode2.conn(self, node, frontback)
 	
 	if frontback == "front":
-		front = newpos[1]
+		front = newpos
 	else:
-		rear = newpos[1]
-	otherwire.get_parent().split(newpos[0], otherwire.get_parent().rear, otherwire.get_parent().front, newpos[2])
+		rear = newpos
+	otherwire.get_parent().split(newpos, otherwire.get_parent().rear, otherwire.get_parent().front, newpos)
 	
 
 #splits a wire in 2
