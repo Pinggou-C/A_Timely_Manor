@@ -36,7 +36,10 @@ func _on_frontarea_body_entered(body):
 			continu = true
 	if body != get_parent().get_child(1) && body != get_parent().get_child(3) && continu == false:
 		if body.is_in_group("wire"):
+			print('gi')
+			#if body.get_parent().rearnode != get_parent().frontnode && body.get_parent().frontnode != get_parent().rearnode:
 			get_parent().newnode(get_global_transform().origin, body, "front")
+			print('giiS')
 		elif body.is_in_group("wire_nodes"):
 			if body.is_in_group("wire_end"):
 				if body.pickedup == false:

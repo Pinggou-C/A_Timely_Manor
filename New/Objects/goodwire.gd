@@ -69,7 +69,6 @@ func connect_to_node(newnode, oldnode):
 #also splits the wire the node gets put on
 func newnode(pos, otherwire,frontback):
 	#loads and adds new node to scene
-	
 	var newnode2 = newnode.instance()
 	get_parent().add_child(newnode2)
 	newnode2.global_transform.origin = pos
@@ -79,11 +78,12 @@ func newnode(pos, otherwire,frontback):
 	else:
 		node = frontnode
 	var newpos = newnode2.conn(self, node)
+	
 	if frontback == "front":
-		front = newpos
+		front = newpos[1]
 	else:
-		rear = newpos
-	otherwire.get_parent().split(newpos + Vector3(0, 0, 0.25), rear- Vector3(0, 0, 0.35), front+ Vector3(0, 0, 0.35), newpos - Vector3(0, 0, -0.25))
+		rear = newpos[1]
+	otherwire.get_parent().split(newpos[0], otherwire.get_parent().rear, otherwire.get_parent().front, newpos[2])
 	
 
 #splits a wire in 2

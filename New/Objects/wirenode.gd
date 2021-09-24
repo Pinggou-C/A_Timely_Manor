@@ -13,7 +13,10 @@ var selfwire = null
 var oldpos
 
 #all the sides and their positions
-
+var pos1 = null
+var pos2 = null
+var pos3 = null
+var pos4 = null
 
 
 
@@ -32,7 +35,46 @@ func _ready():
 func conn(wire, newnode):
 	if !wires.has(wire):
 		wires.append(wire)
-		return get_global_transform().origin
+		var pos
+		var poss2
+		var poss3
+		if pos1 == null:
+			pos1 = wire
+			pos = $pos1.get_global_transform().origin
+		elif pos2 == null:
+			pos2 = wire
+			pos = $pos2.get_global_transform().origin
+		elif pos3 == null:
+			pos1 = wire
+			pos = $pos3.get_global_transform().origin
+		elif pos4 == null:
+			pos4 = wire
+			pos = $pos4.get_global_transform().origin
+		if pos1 == null:
+			pos1 = wire
+			poss2 = $pos1.get_global_transform().origin
+		elif pos2 == null:
+			pos2 = wire
+			poss2 = $pos2.get_global_transform().origin
+		elif pos3 == null:
+			pos1 = wire
+			poss2 = $pos3.get_global_transform().origin
+		elif pos4 == null:
+			pos1 = wire
+			poss2 = $pos4.get_global_transform().origin
+		if pos1 == null:
+			pos1 = wire
+			poss3 = $pos1.get_global_transform().origin
+		elif pos2 == null:
+			pos2 = wire
+			poss3 = $pos2.get_global_transform().origin
+		elif pos3 == null:
+			pos1 = wire
+			poss3 = $pos3.get_global_transform().origin
+		elif pos4 == null:
+			pos1 = wire
+			poss3 = $pos4.get_global_transform().origin
+		return [pos, poss2, poss3]
 	if !connecteds.has(newnode):
 		connecteds.append(newnode)
 
