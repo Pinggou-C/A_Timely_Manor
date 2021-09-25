@@ -2,11 +2,12 @@ extends Spatial
 
 var frontnode = null
 var rearnode = null
-var front = Vector3()
-var rear = Vector3()
+var front = null
+var rear = null
 
 func _physics_process(delta):
-	print(String(front.x)+ "  "+ String(rear))
+	#print(frontnode)
+	pass
 func _ready():
 	#creates meshes and collisionshaped to prefent shapecopying by other wires
 	var myMesh = MeshInstance.new()
@@ -50,22 +51,27 @@ func _ready():
 	mycoll3.add_child(mycol2)
 	mycoll3.set_collision_layer_bit(0, false)
 	mycoll3.set_collision_layer_bit(1, true)
-	mycoll3.set_collision_layer_bit(3, true)
-	front = $front.get_global_transform().origin
-	rear = $rear.get_global_transform().origin
+	mycoll3.set_collision_layer_bit(3, true) 
+	if front == null:
+		front = $front.get_global_transform().origin
+	if rear == null:
+		rear = $rear.get_global_transform().origin
+	resize()
 #code in the wires is only called from th nodes
 #calling functions in nodes is not neccesairy appart from certain situations, such as when a new nodes is created or when a node is changed
 
 #when replacing a node with another one
 func connect_to_node(newnode, oldnode):
+	pass
 	if frontnode == oldnode:
 		frontnode = newnode
 		front = frontnode.get_global_transform().origin 
 		frontnode.conn(self, rearnode)
 	elif rearnode == oldnode:
 		rearnode = newnode
-		rear = rearnode.fet_global_transform().origin 
+		rear = rearnode.get_global_transform().origin 
 		rearnode.conn(self, frontnode)
+	pass
 #function for when the wire needs a new node
 #also splits the wire the node gets put on
 func newnode(pos, otherwire,frontback):
@@ -85,21 +91,45 @@ func newnode(pos, otherwire,frontback):
 		front = newpos
 	else:
 		rear = newpos
-	otherwire.get_parent().split(newpos, otherwire.get_parent().rear, otherwire.get_parent().front, newpos)
+	otherwire.get_parent().split(newnode2)
 	
 
 #splits a wire in 2
-func split(beginpos, beginpos2, endpos, endpos2):
+func split(node):
+	#makes new wire
 	var newwire = load("res://Objects/goodwire.tscn")
 	var newwire2 = newwire.instance()
-	newwire2.rear = beginpos
-	newwire2.front = endpos
-	front = endpos2
-	rear = beginpos2
-	resize()
 	get_parent().add_child(newwire2)
+	var rear_node = rearnode
+	#new wires front, and rearnode
+	var poss
+	var poss2
+	#gets the frontnode if it has that and gets the position the rear should have
+	if frontnode != null:
+		newwire2.frontnode = frontnode
+		frontnode.conn(newwire2, node, "front")
+		poss = node.conn(newwire2, frontnode, "rear")
+	else:
+		poss = node.conn(newwire2, null, "rear")
+	#gets the rearnode if it has that and gets the position the fron should have
+	if rearnode != null:
+		rearnode.conn(self, node, "rear")
+		poss2 = node.conn(self, frontnode, "front")
+	else:
+		poss2 = node.conn(self, null, "front")
+		#resizes and sets positions
+	newwire2.rear = poss
+	newwire2.front = front
+	newwire2.rearnode = node
+	frontnode = node
+	front = poss2
+	rear = rear
+	print("rear")
+	print(newwire2.rear)
+	print("front")
+	print(newwire2.front)
+	resize()
 	newwire2.resize()
-
 
 #connects a node to the wire
 #front

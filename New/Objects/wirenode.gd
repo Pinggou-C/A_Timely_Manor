@@ -50,21 +50,26 @@ func conn(wire, newnode, frontback):
 	if !wires.has(wire):
 		wires.append(wire)
 		var pos
+		var stop = false
 		if pos1 == null:
-			print($pos1.get_global_transform().origin)
-			print(posss)
+			#print(wire) 
+			print(String(posss) + "  " + frontback)
 			var g = posss- $pos1.get_global_transform().origin
 			posarr.append([abs((posss.x - $pos1.get_global_transform().origin.x) + (posss.y - $pos1.get_global_transform().origin.y) + (posss.z - $pos1.get_global_transform().origin.z)), 1, $pos1.get_global_transform().origin])
-		elif pos2 == null:
+		if pos2 == null:
 			posarr.append([abs((posss.x - $pos2.get_global_transform().origin.x) + (posss.y - $pos2.get_global_transform().origin.y) + (posss.z - $pos2.get_global_transform().origin.z)), 2, $pos2.get_global_transform().origin])
-		elif pos3 == null:
+		if pos3 == null:
 			posarr.append([abs((posss.x - $pos3.get_global_transform().origin.x) + (posss.y - $pos3.get_global_transform().origin.y) + (posss.z - $pos3.get_global_transform().origin.z)), 3, $pos3.get_global_transform().origin])
-		elif pos4 == null:
+		if pos4 == null:
 			posarr.append([abs((posss.x - $pos4.get_global_transform().origin.x) + (posss.y - $pos4.get_global_transform().origin.y) + (posss.z - $pos4.get_global_transform().origin.z)), 4, $pos4.get_global_transform().origin])
-		posarr.sort_custom(MyCustomSorter, "sort_ascending")
-		pos = posarr[0][2]
-		set("pos" + String(posarr[0][1]), wire)
-		return pos
+		if pos4 != null && pos3 != null && pos2 != null && pos1 != null :
+			stop = true
+		if stop == false:
+			posarr.sort_custom(MyCustomSorter, "sort_ascending")
+			pos = posarr[0][2]
+			print(pos)
+			set("pos" + String(posarr[0][1]), wire)
+			return pos
 	if !connecteds.has(newnode):
 		connecteds.append(newnode)
 
@@ -108,7 +113,9 @@ func power(paths, splits, volt, amp):
 
 #when a wire or node enters th area
 func connect_wire(body):
-	if body.is_in_group("wires"):
+	return
+	var hello = false
+	if body.is_in_group("wires") && hello == true:
 		var nodeassign = body.front_node
 		var nodebottom = body.rear_node
 		var nodepos = body.front

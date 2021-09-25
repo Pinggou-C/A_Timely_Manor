@@ -27,7 +27,7 @@ func start_connecting(body):
 func connecting(path, resistance, split, body, oldresistance):
 	print("print5")
 	if Global_Variables.paths.size() > 0:
-		print(Global_Variables.paths.size())
+		#print(Global_Variables.paths.size())
 		for j in Global_Variables.paths:
 			var splitt = j['splits']
 			var which = -1

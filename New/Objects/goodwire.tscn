@@ -5,7 +5,7 @@
 [ext_resource path="res://Objects/wirefront.gd" type="Script" id=3]
 
 [sub_resource type="BoxShape" id=1]
-extents = Vector3( 0.06, 0.06, 0.06 )
+extents = Vector3( 0.05, 0.05, 0.05 )
 
 [sub_resource type="CubeMesh" id=2]
 size = Vector3( 0.1, 0.1, 0.1 )
@@ -28,6 +28,7 @@ shape = SubResource( 1 )
 "wire_front_end",
 "wire_nodes",
 ]]
+process_priority = 1
 collision_layer = 786440
 script = ExtResource( 3 )
 
@@ -50,6 +51,7 @@ shape = SubResource( 1 )
 "wire_end",
 "wire_nodes",
 ]]
+process_priority = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.111213, 0, 0 )
 collision_layer = 786440
 script = ExtResource( 2 )
