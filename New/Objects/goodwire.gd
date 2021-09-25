@@ -4,10 +4,11 @@ var frontnode = null
 var rearnode = null
 var front = null
 var rear = null
+var nodesidefront = null
+var nodesiderear = null
+var pickedupfront=false
+var pickeduprear=false
 
-func _physics_process(delta):
-	#print(frontnode)
-	pass
 func _ready():
 	#creates meshes and collisionshaped to prefent shapecopying by other wires
 	var myMesh = MeshInstance.new()
@@ -56,6 +57,7 @@ func _ready():
 		front = $front.get_global_transform().origin
 	if rear == null:
 		rear = $rear.get_global_transform().origin
+	print('create')
 	resize()
 #code in the wires is only called from th nodes
 #calling functions in nodes is not neccesairy appart from certain situations, such as when a new nodes is created or when a node is changed
@@ -86,11 +88,13 @@ func newnode(pos, otherwire,frontback):
 	else:
 		node = frontnode
 	var newpos = newnode2.conn(self, node, frontback)
-	
+	var newpostrue = newpos[0]
 	if frontback == "front":
-		front = newpos
+		front = newpostrue
+		nodesidefront = newpos[1]
 	else:
-		rear = newpos
+		rear = newpostrue
+		nodesiderear = newpos[1]
 	otherwire.get_parent().split(newnode2)
 	
 
@@ -118,17 +122,22 @@ func split(node):
 	else:
 		poss2 = node.conn(self, null, "front")
 		#resizes and sets positions
-	newwire2.rear = poss
+	var goodpos = poss[0]
+	var goodpos2 = poss2[0]
+	nodesidefront = poss2[1]
+	newwire2.nodesiderear = poss[1]
+	newwire2.rear = goodpos
 	newwire2.front = front
 	newwire2.rearnode = node
 	frontnode = node
-	front = poss2
+	front = goodpos2
 	rear = rear
 	print("rear")
 	print(newwire2.rear)
 	print("front")
 	print(newwire2.front)
 	resize()
+	newwire2.discon(true)
 	newwire2.resize()
 
 #connects a node to the wire
@@ -167,6 +176,7 @@ func combine(otherwire, which, which2):
 			front = otherwire.rear
 			frontnode = otherwire.rearnode
 	$front.global_transform.origin = front
+	$front.snappos = front
 	$frontarea.global_transform.origin = front
 	$rear.global_transform.origin = rear
 	$reararea.global_transform.origin = rear
@@ -233,3 +243,15 @@ func resize():
 	$front.global_transform.origin = front
 	$reararea.global_transform.origin = rear
 	$frontarea.global_transform.origin = front
+
+
+func discon(booll):
+	if booll == true:
+		print("dis")
+		get_child(7).get_child(0).disabled = true
+		get_child(8).get_child(0).disabled = true
+		get_child(9).get_child(0).disabled = true
+	else: 
+		get_child(7).get_child(0).disabled = false
+		get_child(8).get_child(0).disabled = false
+		get_child(9).get_child(0).disabled = false

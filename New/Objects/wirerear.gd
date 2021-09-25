@@ -22,9 +22,10 @@ func _physics_process(delta):
 
 func pickup():
 	pickedup = true
-
+	get_parent().pickeduprear = true
 func drop(w1, w2):
 	pickedup = false
+	get_parent().pickeduprear = false
 	get_parent().rear = get_global_transform().origin
 	get_parent().resize()
 	if which != null:

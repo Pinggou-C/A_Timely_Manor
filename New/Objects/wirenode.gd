@@ -48,13 +48,14 @@ func conn(wire, newnode, frontback):
 	else:
 		posss = wire.front
 	if !wires.has(wire):
+		print(wire)
 		wires.append(wire)
+		print(wires)
+		print("wires")
 		var pos
 		var stop = false
+		print(String(posss) + "  " + frontback)
 		if pos1 == null:
-			#print(wire) 
-			print(String(posss) + "  " + frontback)
-			var g = posss- $pos1.get_global_transform().origin
 			posarr.append([abs((posss.x - $pos1.get_global_transform().origin.x) + (posss.y - $pos1.get_global_transform().origin.y) + (posss.z - $pos1.get_global_transform().origin.z)), 1, $pos1.get_global_transform().origin])
 		if pos2 == null:
 			posarr.append([abs((posss.x - $pos2.get_global_transform().origin.x) + (posss.y - $pos2.get_global_transform().origin.y) + (posss.z - $pos2.get_global_transform().origin.z)), 2, $pos2.get_global_transform().origin])
@@ -69,16 +70,13 @@ func conn(wire, newnode, frontback):
 			pos = posarr[0][2]
 			print(pos)
 			set("pos" + String(posarr[0][1]), wire)
-			return pos
+			return [pos, posarr[0][1]]
 	if !connecteds.has(newnode):
 		connecteds.append(newnode)
 
-func onwire(wire, position, contype):
-	pass
-
 func onnode(node, position, contype):
 	if contype == "connect":
-		var pos = node.get_global_translation()
+		var pos = node.get_global_transform().origin
 		translation = pos
 		#calls its own wire to replace itself with a new node
 		selfwire.connect_to_node(node, self)
@@ -87,6 +85,13 @@ func onnode(node, position, contype):
 	elif contype == "disconnect":
 		#if it is disconnecting
 		pass
+
+#
+#
+#
+#
+#
+#
 #pathfind function
 func connecting(path, resistance, body, oldresistances):
 	if !path.has(self):
@@ -112,6 +117,14 @@ func power(paths, splits, volt, amp):
 		pass
 
 #when a wire or node enters th area
+
+
+
+
+
+
+
+
 func connect_wire(body):
 	return
 	var hello = false
@@ -172,7 +185,7 @@ func enter(which):
 
 
 func _physics_process(delta):
-	if abs(oldpos.x - translation.x) > 0.01 || abs(oldpos.y - translation.y) > 0.01 || abs(oldpos.z - translation.z) > 0.01:
-		for i in connecteds:
+	if get_global_transform().origin != oldpos:
+		for i in wires:
 			i.resize()
-	oldpos = translation
+		oldpos = get_global_transform().origin

@@ -39,31 +39,22 @@ func _thread_load(path):
 
 
 func _thread_done(resource):
-	print('hi')
 	assert(resource)
-	print('hi2')
 	# Always wait for threads to finish, this is required on Windows.
 	thread.wait_to_finish()
-	print('hi3')
 	# Hide the progress bar.
 	progress.hide()
-	print('hi4')
 	# Instantiate new scene.
 	var new_scene = resource.instance()
 	# Free current scene.
-	print('hi5')
 	if retur == false:
-		print('hi6')
 		get_tree().get_root().add_child(new_scene)
 		var gg = get_tree().current_scene
 		get_tree().current_scene = new_scene
 		gg.queue_free()
-
 	else:
 		node.load_return(new_scene)
-		print('hi10')
 	progress.visible = false
-	print('hi11')
 
 func load_scene(path, delayy = 0.01, recall = false, who = null):
 	thread = Thread.new()
