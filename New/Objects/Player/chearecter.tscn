@@ -11,6 +11,8 @@ radius = 0.4
 
 [sub_resource type="CapsuleMesh" id=2]
 radius = 0.4
+radial_segments = 10
+rings = 2
 
 [node name="KinematicBody" type="KinematicBody" groups=[
 "player",

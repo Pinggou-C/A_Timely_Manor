@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Spatial.gd" type="Script" id=1]
+
+[sub_resource type="CylinderMesh" id=1]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.4
+radial_segments = 15
+
+[sub_resource type="CubeMesh" id=2]
+size = Vector3( 0.05, 0.05, 0.3 )
+
+[node name="camera" type="Spatial"]
+script = ExtResource( 1 )
+baseangle = Vector3( 110, 0, 0 )
+returnspeed = 0.5
+
+[node name="e1" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.1 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, -0.15, -0.2 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="3" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, -0.287945, -0.439299 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="RayCast" type="RayCast" parent="."]
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="notifier" type="VisibilityNotifier" parent="."]
+
+[connection signal="visibility_changed" from="." to="." method="_on_Spatial_visibility_changed"]
