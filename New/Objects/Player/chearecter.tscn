@@ -3,7 +3,7 @@
 [ext_resource path="res://Objects/Player/chearecter.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Audio_Assets/step.mp3" type="AudioStream" id=2]
 [ext_resource path="res://Untitled.png" type="Texture" id=3]
-[ext_resource path="res://testmiror/PlayerCam.gd" type="Script" id=4]
+[ext_resource path="res://Objects/Player/PlayerCam.gd" type="Script" id=4]
 [ext_resource path="res://Objects/Player/device_astralis_preview.gd" type="Script" id=5]
 
 [sub_resource type="CapsuleShape" id=1]

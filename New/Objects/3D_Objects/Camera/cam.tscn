@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Spatial.gd" type="Script" id=1]
+[ext_resource path="res://Objects/3D_Objects/Camera/Spatial.gd" type="Script" id=1]
 
 [sub_resource type="CylinderMesh" id=1]
 top_radius = 0.1
@@ -36,5 +36,6 @@ material/0 = null
 [node name="Tween" type="Tween" parent="."]
 
 [node name="notifier" type="VisibilityNotifier" parent="."]
+aabb = AABB( -0.0995767, -0.102957, -0.307308, 0.199153, 0.205914, 0.415397 )
 
 [connection signal="visibility_changed" from="." to="." method="_on_Spatial_visibility_changed"]

@@ -3,8 +3,16 @@ var onscreen = true
 export(Vector3) var baseangle = Vector3(90, 0, 0)
 export(float) var returnspeed = 0.25
 export(String, "gimp_ball", "under_arm", "over_arm") var standtype
+export(bool) var camera = false
+export(NodePath) var node 
 
 func _ready():
+	if camera == true:
+		var cam = Camera.new()
+		add_child(cam)
+		cam.current = true
+		cam.far = 50
+		node.camconnect(cam)
 	get_node("notifier").connect("screen_exited", self, "_on_screen_exited")
 	get_node("notifier").connect("screen_entered", self, "_on_screen_entered")
 

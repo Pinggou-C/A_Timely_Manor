@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Objects/wirenode.gd" type="Script" id=1]
+[ext_resource path="res://Objects/electronics/Scripts/Basics/wirenode.gd" type="Script" id=1]
 [ext_resource path="res://Assets/3D_Assets/4-plug 1.0.obj" type="ArrayMesh" id=2]
 
 [sub_resource type="ConcavePolygonShape" id=1]
