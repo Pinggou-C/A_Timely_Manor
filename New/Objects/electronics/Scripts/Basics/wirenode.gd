@@ -11,6 +11,8 @@ var printtt = 0
 var connecteds = []
 var wires = []
 
+var battery
+
 var flowing = false
 var connected = false
 
@@ -134,7 +136,7 @@ func connect_wire(body):
 		var nodepos = body.front
 		body.resize_node(self, translation)
 		#creates the new wire and connects it to the node
-		var newwire = load("res://Objects/goodwire.tscn")
+		var newwire = load("res://Objects/electronics/Items/Basics/goodwire.tscn")
 		newwire.instance()
 		get_parent().add_child(newwire)
 		wires.append(newwire)
@@ -153,7 +155,9 @@ func connect_wire(body):
 			i.connect_to_node(body, self)
 
 #when the wire get picked up and disconnected
-func disconnect_wire(wires, ownwire):
+func disconnect_wire(wire):
+	if wires.has(wire):
+		wires.remove(wires.find(wire))
 	if wires.size() > 2:
 		for i in wires:
 			pass
@@ -162,8 +166,12 @@ func disconnect_wire(wires, ownwire):
 			wires[0].combine(wires[1])
 		else:
 			wires[1].combine(wires[0])
-	elif wires.size() == 1:
-		pass
+
+
+func disconnect_node(node):
+	if connecteds.has(node):
+		connecteds.remove(connecteds.find(node))
+		battery.start_connecting()
 
 
 func wire(wire, node):
@@ -187,5 +195,6 @@ func enter(which):
 func _physics_process(delta):
 	if get_global_transform().origin != oldpos:
 		for i in wires:
-			i.resize()
+			#i.resize()
+			pass
 		oldpos = get_global_transform().origin

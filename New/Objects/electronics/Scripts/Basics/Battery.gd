@@ -18,7 +18,7 @@ export(float) var amps = 1
 func _ready():
 	Global_Variables.batteries.append(self)
 
-func start_connecting(body):
+func start_connecting(body = null):
 	if posconnect != null && negconnect != null:
 		print("print1")
 		posconnect.connecting([], 0, [], self, [])

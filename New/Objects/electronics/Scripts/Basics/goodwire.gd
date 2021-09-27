@@ -78,7 +78,7 @@ func connect_to_node(newnode, oldnode):
 #also splits the wire the node gets put on
 func newnode(pos, otherwire,frontback):
 	#loads and adds new node to scene
-	var newnode = load("res://Objects/wirenode.tscn")
+	var newnode = load("res://Objects/electronics/Items/Basics/wirenode.tscn")
 	var newnode2 = newnode.instance()
 	get_parent().add_child(newnode2)
 	newnode2.global_transform.origin = pos
@@ -96,12 +96,25 @@ func newnode(pos, otherwire,frontback):
 		rear = newpostrue
 		nodesiderear = newpos[1]
 	otherwire.get_parent().split(newnode2)
-	
+
+
+func removenode(node, rearfront):
+	node.disconnect_wire(self)
+	if rearfront == "front":
+		frontnode = null
+		if rearnode != null:
+			rearnode.disconnect_node(node)
+			node.disconnect_node(rearnode)
+	elif rearfront == "front":
+		rearnode = null
+		if frontnode != null:
+			frontnode.disconnect_node(node)
+			node.disconnect_node(frontnode)
 
 #splits a wire in 2
 func split(node):
 	#makes new wire
-	var newwire = load("res://Objects/goodwire.tscn")
+	var newwire = load("res://Objects/electronics/Items/Basics/goodwire.tscn")
 	var newwire2 = newwire.instance()
 	get_parent().add_child(newwire2)
 	var rear_node = rearnode
