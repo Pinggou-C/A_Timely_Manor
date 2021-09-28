@@ -40,19 +40,20 @@ func drop(w1, w2):
 		elif disconpickup == "node":
 			connected = null
 	if con != null:
-		if conpickup == "wire":
-			var g = is_not_in_node(con, "wire")
-			if g == true:
-				get_parent().newnode(get_global_transform().origin, con, "front")
-		elif conpickup == "end":
-			var gg = "back"
-			if con.is_in_group("wire_front_end"):
-				gg = "front"
-			get_parent().combine(con.get_parent(), gg, "front")
-			which = null
-			whichbody = null
-		elif conpickup == "node":
-			var go = con.enter(self)
+		if connected == null:
+			if conpickup == "wire":
+				var g = is_not_in_node(con, "wire")
+				if g == true:
+					get_parent().newnode(get_global_transform().origin, con, "front")
+			elif conpickup == "end":
+				var gg = "back"
+				if con.is_in_group("wire_front_end"):
+					gg = "front"
+				get_parent().combine(con.get_parent(), gg, "front")
+				which = null
+				whichbody = null
+			elif conpickup == "node":
+				var go = con.enter(self)
 			
 	pickedup = false
 	get_parent().pickedupfront = true
@@ -102,7 +103,7 @@ func _on_frontarea_body_entered(body, bypas = false):
 						con = body
 						conpickup = 'node'
 			elif body.is_in_group("battery"):
-				pass
+				get_parent().battery(body, "front")
 
 
 func _on_frontarea_body_exited(body):

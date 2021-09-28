@@ -40,19 +40,20 @@ func drop(w1, w2):
 		elif disconpickup == "node":
 			connected = null
 	if con != null:
-		if conpickup == "wire":
-			var g = is_not_in_node(con, "wire")
-			if g == true:
-				get_parent().newnode(get_global_transform().origin, con, "rear")
-		elif conpickup == "end":
-			var gg = "front"
-			if con.is_in_group("wire_front_end"):
-				gg = "back"
-			get_parent().combine(con.get_parent(), gg, "rear")
-			which = null
-			whichbody = null
-		elif conpickup == "node":
-			var go = con.enter(self)
+		if connected == null:
+			if conpickup == "wire":
+				var g = is_not_in_node(con, "wire")
+				if g == true:
+					get_parent().newnode(get_global_transform().origin, con, "rear")
+			elif conpickup == "end":
+				var gg = "front"
+				if con.is_in_group("wire_front_end"):
+					gg = "back"
+				get_parent().combine(con.get_parent(), gg, "rear")
+				which = null
+				whichbody = null
+			elif conpickup == "node":
+				var go = con.enter(self)
 			
 	pickedup = false
 	get_parent().pickedupfront = true

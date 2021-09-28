@@ -93,9 +93,11 @@ func newnode(pos, otherwire,frontback):
 	var newpostrue = newpos[0]
 	if frontback == "front":
 		front = newpostrue
+		$front.snappos = newpostrue
 		nodesidefront = newpos[1]
 	else:
 		rear = newpostrue
+		$rear.snappos = newpostrue
 		nodesiderear = newpos[1]
 	otherwire.get_parent().split(newnode2)
 
@@ -270,3 +272,7 @@ func discon(booll):
 		get_child(7).get_child(0).disabled = false
 		get_child(8).get_child(0).disabled = false
 		get_child(9).get_child(0).disabled = false
+
+
+func battery(battery, frontback):
+	pass

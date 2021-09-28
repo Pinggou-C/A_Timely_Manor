@@ -58,13 +58,13 @@ func conn(wire, newnode, frontback):
 		var pos
 		var stop = false
 		if pos1 == null:
-			posarr.append([abs((posss.x - $pos1.get_global_transform().origin.x) + (posss.y - $pos1.get_global_transform().origin.y) + (posss.z - $pos1.get_global_transform().origin.z)), 1, $pos1.get_global_transform().origin])
+			posarr.append([sqrt(pow(posss.x - $pos1.get_global_transform().origin.x, 2) + pow(posss.z - $pos1.get_global_transform().origin.z, 2) + pow(posss.y - $pos1.get_global_transform().origin.y, 2)), 1, $pos1.get_global_transform().origin])
 		if pos2 == null:
-			posarr.append([abs((posss.x - $pos2.get_global_transform().origin.x) + (posss.y - $pos2.get_global_transform().origin.y) + (posss.z - $pos2.get_global_transform().origin.z)), 2, $pos2.get_global_transform().origin])
+			posarr.append([sqrt(pow(posss.x - $pos2.get_global_transform().origin.x, 2) + pow(posss.z - $pos2.get_global_transform().origin.z, 2) + pow(posss.y - $pos2.get_global_transform().origin.y, 2)), 2, $pos2.get_global_transform().origin])
 		if pos3 == null:
-			posarr.append([abs((posss.x - $pos3.get_global_transform().origin.x) + (posss.y - $pos3.get_global_transform().origin.y) + (posss.z - $pos3.get_global_transform().origin.z)), 3, $pos3.get_global_transform().origin])
+			posarr.append([sqrt(pow(posss.x - $pos3.get_global_transform().origin.x, 2) + pow(posss.z - $pos3.get_global_transform().origin.z, 2) + pow(posss.y - $pos3.get_global_transform().origin.y, 2)), 3, $pos3.get_global_transform().origin])
 		if pos4 == null:
-			posarr.append([abs((posss.x - $pos4.get_global_transform().origin.x) + (posss.y - $pos4.get_global_transform().origin.y) + (posss.z - $pos4.get_global_transform().origin.z)), 4, $pos4.get_global_transform().origin])
+			posarr.append([sqrt(pow(posss.x - $pos4.get_global_transform().origin.x, 2) + pow(posss.z - $pos4.get_global_transform().origin.z, 2) + pow(posss.y - $pos4.get_global_transform().origin.y, 2)), 4, $pos4.get_global_transform().origin])
 		if pos4 != null && pos3 != null && pos2 != null && pos1 != null :
 			stop = true
 		if stop == false:

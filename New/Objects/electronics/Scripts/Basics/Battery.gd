@@ -70,13 +70,13 @@ func connecting(path, resistance, split, body, oldresistance):
 				Global_Variables.paths.remove(Global_Variables.paths.find(h))
 
 func posdiscon(body):
-	if body.is_in_group('wires'):
+	if body.is_in_group('wire_end'):
 		posconnect = null
 		if flowing == true:
 			flowing = false
 
 func negcon(body):
-	if body.is_in_group('wires'):
+	if body.is_in_group('wire_end'):
 		negconnect = body.get_child(0)
 		print("wi")
 #		if posconnect != null:
@@ -90,7 +90,7 @@ func negcon(body):
 
 
 func negdiscon(body):
-	if body.is_in_group('wires'):
+	if body.is_in_group('wire_end'):
 		negconnect = null
 		if flowing == true:
 			flowing = false
@@ -98,9 +98,10 @@ func negdiscon(body):
 
 
 func poscon(body):
-	if body.is_in_group('wires'):
+	if body.is_in_group('wire_end'):
 		posconnect = body.get_child(0)
 		print("wi")
+	
 	#	if negconnect != null:
 	#		posconnect.connecting([], 0, [], self, [])
 	#		$Timer.start(0.5)
