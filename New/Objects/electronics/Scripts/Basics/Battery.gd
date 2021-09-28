@@ -77,16 +77,10 @@ func posdiscon(body):
 
 func negcon(body):
 	if body.is_in_group('wire_end'):
-		negconnect = body.get_child(0)
-		print("wi")
-#		if posconnect != null:
-	#		posconnect.connecting([], 0, [], self, [])
-	#		$Timer.start(0.5)
-	#var group = get_tree().get_nodes_in_group('special')
-	#for i in group:
-	#	if i.posconnect == null || i.negconnect == null:
-	#		return
-	#posconnect.connecting([], 0, [])
+		if body.is_in_group("wire_front_end"):
+			negconnect = body.get_parent().rearnode
+		else:
+			negconnect = body.get_parent().frontnode
 
 
 func negdiscon(body):
@@ -96,22 +90,12 @@ func negdiscon(body):
 			flowing = false
 
 
-
 func poscon(body):
 	if body.is_in_group('wire_end'):
-		posconnect = body.get_child(0)
-		print("wi")
-	
-	#	if negconnect != null:
-	#		posconnect.connecting([], 0, [], self, [])
-	#		$Timer.start(0.5)
-	#gets all nodes which need to be connected properly and checks if they are
-	#var group = get_tree().get_nodes_in_group('special')
-	#for i in group:
-	#	if i.posconnect == null || i.negconnect == null:
-	#		return
-	#posconnect.connecting([], 0, [])
-		
+		if body.is_in_group("wire_front_end"):
+			posconnect = body.get_parent().rearnode
+		else:
+			posconnect = body.get_parent().frontnode
 
 
 func _on_Timer_timeout():

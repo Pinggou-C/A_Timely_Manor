@@ -103,7 +103,7 @@ func _on_reararea_body_entered(body, bypas = false):
 						con = body
 						conpickup = 'node'
 			elif body.is_in_group("battery"):
-				pass
+				get_parent().battery(body, "rear")
 
 
 func _on_reararea_body_exited(body):

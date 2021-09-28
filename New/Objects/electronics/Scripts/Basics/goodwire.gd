@@ -2,10 +2,16 @@ extends Spatial
 
 var frontnode = null
 var rearnode = null
+
+var front_is_battery = false
+var rear_is_battery = false
+
 var front = null
 var rear = null
+
 var nodesidefront = null
 var nodesiderear = null
+
 var pickedupfront=false
 var pickeduprear=false
 
@@ -275,4 +281,13 @@ func discon(booll):
 
 
 func battery(battery, frontback):
-	pass
+	if frontback == "front":
+		frontnode = battery
+		front_is_battery = true
+		if rearnode != null:
+			battery.start_connecting()
+	elif frontback == "rear":
+		rearnode = battery
+		rear_is_battery= true
+		if frontnode != null:
+			battery.start_connecting()
