@@ -85,8 +85,10 @@ func newnode(pos, otherwire,frontback):
 	var node
 	if frontback == "front":
 		node = rearnode
+		frontnode = newnode2
 	else:
 		node = frontnode
+		rearnode = newnode2
 	var newpos = newnode2.conn(self, node, frontback)
 	var newpostrue = newpos[0]
 	if frontback == "front":
@@ -150,7 +152,7 @@ func split(node):
 	print("front")
 	print(newwire2.front)
 	resize()
-	newwire2.discon(true)
+	#newwire2.discon(true)
 	newwire2.resize()
 
 #connects a node to the wire

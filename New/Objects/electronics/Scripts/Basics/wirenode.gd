@@ -6,6 +6,10 @@ class MyCustomSorter:
 			return true
 		return false
 
+const MAX_COMPONENT_UPDATES_PER_FRAME = 10
+
+var electrical_update_in_progress = false
+
 
 var printtt = 0
 var connecteds = []
@@ -50,13 +54,9 @@ func conn(wire, newnode, frontback):
 	else:
 		posss = wire.front
 	if !wires.has(wire):
-		print(wire)
 		wires.append(wire)
-		print(wires)
-		print("wires")
 		var pos
 		var stop = false
-		print(String(posss) + "  " + frontback)
 		if pos1 == null:
 			posarr.append([abs((posss.x - $pos1.get_global_transform().origin.x) + (posss.y - $pos1.get_global_transform().origin.y) + (posss.z - $pos1.get_global_transform().origin.z)), 1, $pos1.get_global_transform().origin])
 		if pos2 == null:
@@ -70,7 +70,6 @@ func conn(wire, newnode, frontback):
 		if stop == false:
 			posarr.sort_custom(MyCustomSorter, "sort_ascending")
 			pos = posarr[0][2]
-			print(pos)
 			set("pos" + String(posarr[0][1]), wire)
 			return [pos, posarr[0][1]]
 	if !connecteds.has(newnode):
@@ -97,26 +96,42 @@ func onnode(node, position, contype):
 #pathfind function
 func connecting(path, resistance, body, oldresistances):
 	if !path.has(self):
+		if ElectricsUpdate.updated_components == ElectricsUpdate.MAX_COMPONENT_UPDATES_PER_FRAME:
+		# Yield until the next physics frame, allowing other parts of your code to execute.	
+			yield(get_tree(), "physics_frame") 
+			ElectricsUpdate.updated_components = 0
 		powered_by.append(body)
 		var pathnew = path
 		var oldresistancenew = oldresistances
 		pathnew.append(self)
 		oldresistancenew.append(0)
+		ElectricsUpdate.updated_components += 1
 		for i in connecteds:
 			if i != body:
 				i.connecting(pathnew, resistance, self, oldresistancenew)
+		
 
 func power(paths, splits, volt, amp):
-	if volts == 0:
-		volts = volt
-	else:
-		#calculates voltage if it has already been powered once
-		pass
-	if amps ==0:
-		amps = amp
-	else:
-		#calculates amps is already been powered
-		pass
+	if ElectricsUpdate.updated_components == ElectricsUpdate.MAX_COMPONENT_UPDATES_PER_FRAME:
+		# Yield until the next physics frame, allowing other parts of your code to execute.	
+		yield(get_tree(), "physics_frame") 
+		ElectricsUpdate.updated_components = 0
+	ElectricsUpdate.updated_components += 1
+	for path in paths:
+		path.remove(0)
+		for i in connecteds:
+			if path.has(i):
+				pass
+		if volts == 0:
+			volts = volt
+		else:
+			#calculates voltage if it has already been powered once
+			pass
+		if amps ==0:
+			amps = amp
+		else:
+			#calculates amps is already been powered
+			pass
 
 #when a wire or node enters th area
 

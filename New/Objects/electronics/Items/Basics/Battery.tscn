@@ -43,7 +43,7 @@ material/0 = SubResource( 3 )
 [node name="Pos" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, -0.35, 0 )
 collision_layer = 0
-collision_mask = 8
+collision_mask = 24
 
 [node name="CollisionShape" type="CollisionShape" parent="Pos"]
 shape = SubResource( 4 )
@@ -56,7 +56,7 @@ material/0 = SubResource( 6 )
 [node name="Neg" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, -0.35, 0 )
 collision_layer = 0
-collision_mask = 8
+collision_mask = 24
 
 [node name="MeshInstance2" type="MeshInstance" parent="Neg"]
 use_in_baked_light = true
@@ -74,10 +74,11 @@ one_shot = true
 one_shot = true
 
 [node name="StaticBody" type="StaticBody" parent="." groups=[
+"battery",
 "wires2",
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, -0.35, 0 )
-collision_layer = 9
+collision_layer = 33
 
 [node name="CollisionShape3" type="CollisionShape" parent="StaticBody" groups=[
 "bat",
@@ -85,10 +86,11 @@ collision_layer = 9
 shape = SubResource( 9 )
 
 [node name="StaticBody2" type="StaticBody" parent="." groups=[
+"battery",
 "wires2",
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, -0.35, 0 )
-collision_layer = 9
+collision_layer = 33
 
 [node name="CollisionShape2" type="CollisionShape" parent="StaticBody2" groups=[
 "bat",

@@ -101,6 +101,8 @@ func _on_frontarea_body_entered(body, bypas = false):
 					else:
 						con = body
 						conpickup = 'node'
+			elif body.is_in_group("battery"):
+				pass
 
 
 func _on_frontarea_body_exited(body):
