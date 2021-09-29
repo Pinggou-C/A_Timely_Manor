@@ -21,27 +21,27 @@ func _ready():
 func start_connecting(body = null):
 	if posconnect != null && negconnect != null:
 		print("print1")
-		posconnect.connecting([], 0, [], self, [])
+		posconnect.connecting([], 0, self, [])
 		$Timer.start(0.5)
 #gets called when a sygnal returns
-func connecting(path, resistance, split, body, oldresistance):
+func connecting(path, resistance, body, oldresistance):
 	print("print5")
 	if Global_Variables.paths.size() > 0:
 		#print(Global_Variables.paths.size())
 		for j in Global_Variables.paths:
-			var splitt = j['splits']
+			#var splitt = j['splits']
 			var which = -1
 			var which2 = -1
-			if split.size() > 0:
-				var rev = split
-				rev.invert()
-				for i in rev:
-					var g = splitt.find(i)
-					if g != -1:
-						which = g
-						var h = split.find(i)
-						if h != -1:
-							which2 = h
+			#if split.size() > 0:
+			#	var rev = split
+			#	rev.invert()
+			#	for i in rev:
+			#		var g = splitt.find(i)
+			#		if g != -1:
+			#			which = g
+			#			var h = split.find(i)
+			#			if h != -1:
+			#				which2 = h
 						#if oldresistance[which] == 0 && j["oldresistances"][which2] != 0:
 							#Global_Variables.paths.remove(Global_Variables.paths.find(j))
 							#Global_Variables.dead_paths.append(j)
@@ -50,19 +50,12 @@ func connecting(path, resistance, split, body, oldresistance):
 	for i in path:
 		if wires.has(i) == false:
 			wires.append(i)
-	all_paths.append({"path":path, 'resistance':resistance, 'splits':split,'oldresistances':oldresistance})
-	var dict = {"path":path, 'resistance':resistance, 'splits':split,'oldresistances':oldresistance}
+	all_paths.append({"path":path, 'resistance':resistance,'oldresistances':oldresistance})
+	var dict = {"path":path, 'resistance':resistance,'oldresistances':oldresistance}
 	print(dict)
 	for i in Global_Variables.paths:
 		if i["path"] != dict["path"]:
 			Global_Variables.paths.append(dict)
-	#Global_Variables.all_routes.append(path)
-	for i in split:
-		if !Global_Variables.splits.has(i):
-			Global_Variables.splits.append(i)
-#	for j in split:
-#		if splits.has(j) == false:
-#			splits.append(j)
 	if resistance == 0:
 		for h in Global_Variables.paths:
 			if h['resistance'] != 0:
@@ -101,3 +94,9 @@ func poscon(body):
 func _on_Timer_timeout():
 	var rev = Global_Variables.paths
 	print("print3")
+
+func cunn(node, body2):
+	if posconnect == body2:
+		posconnect = node
+	elif negconnect == body2:
+		negconnect = node

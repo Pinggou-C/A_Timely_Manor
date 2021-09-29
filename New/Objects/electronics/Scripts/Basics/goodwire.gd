@@ -134,13 +134,19 @@ func split(node):
 	#gets the frontnode if it has that and gets the position the rear should have
 	if frontnode != null:
 		newwire2.frontnode = frontnode
-		frontnode.conn(newwire2, node, "front")
+		if front_is_battery:
+			frontnode.conn( node, self)
+		else:
+			frontnode.conn(newwire2, node, "front")
 		poss = node.conn(newwire2, frontnode, "rear")
 	else:
 		poss = node.conn(newwire2, null, "rear")
 	#gets the rearnode if it has that and gets the position the fron should have
 	if rearnode != null:
-		rearnode.conn(self, node, "rear")
+		if front_is_battery:
+			rearnode.conn(node, self)
+		else:
+			rearnode.conn(self, node, "rear")
 		poss2 = node.conn(self, frontnode, "front")
 	else:
 		poss2 = node.conn(self, null, "front")
@@ -168,15 +174,31 @@ func split(node):
 func connect_node_front(node, pos):
 	frontnode = node
 	front = pos
+	resize()
+
+func disconnect_node(node, frontback):
+	if frontback == "front":
+		frontnode =null
+		node.disconnect_node(rearnode)
+		node.disconnect_wire(self)
+		rearnode.disconnect_node(node)
+	else:
+		rearnode = null
+		node.disconnect_node(frontnode)
+		node.disconnect_wire(self)
+		frontnode.disconnect_node(node)
+
 #rear
 func connect_node_rear(node, pos):
 	rearnode = node
 	rear = pos
+	resize()
 	
 #when a node is put in the middle of the wire it splits it up
 func resize_node(node, pos):
 	frontnode = node
 	front = pos
+	resize()
 
 func combine(otherwire, which, which2):
 	if which2 == "rear":

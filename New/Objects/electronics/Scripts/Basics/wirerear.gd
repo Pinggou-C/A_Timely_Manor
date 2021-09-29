@@ -7,6 +7,10 @@ var which = null
 var whichbody = null
 var snappos = Vector3(0, 0, 0)
 
+var targetpos = Vector3()
+var snap_to_node = false
+var snapnode = null
+
 var disconpickup
 var discon
 var conpickup
@@ -103,7 +107,7 @@ func _on_reararea_body_entered(body, bypas = false):
 						con = body
 						conpickup = 'node'
 			elif body.is_in_group("battery"):
-				get_parent().battery(body, "rear")
+				get_parent().battery(body.get_parent(), "rear")
 
 
 func _on_reararea_body_exited(body):

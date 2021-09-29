@@ -186,7 +186,7 @@ func disconnect_wire(wire):
 func disconnect_node(node):
 	if connecteds.has(node):
 		connecteds.remove(connecteds.find(node))
-		battery.start_connecting()
+		#battery.start_connecting()
 
 
 func wire(wire, node):

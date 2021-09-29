@@ -3,8 +3,8 @@ extends KinematicBody
 var wiresnap = false
 
 var gravity = Vector3.DOWN * 18
-var speed  = 6
-var jump_speed  = 9
+var speed  = 4.5
+var jump_speed  = 7
 var spin = 0.07
 var jump
 var mouseDelta:Vector2 = Vector2()
@@ -45,11 +45,22 @@ func _physics_process(delta):
 		return
 	var pos_cur = pick.get_global_transform().origin
 	var pos_next = ($Head.get_global_transform() * rel_pos).origin
-	if !pickgroups.has("wire_nodes"):
-		if wiresnap == true:
-			pos_next = Vector3(stepify(pos_next.x, 0.5),stepify(pos_next.y, 0.5),stepify(pos_next.z, 0.5))
-	var vel = (pos_next - pos_cur) / delta
-	pickvel = pick.move_and_slide(vel, Vector3.UP, false, 4, PI/4, true)
+	if pick.is_in_group("wire_end"):
+		if pick.snap_to_node == true:
+			print(pick.targetpos)
+			var p = pick.targetpos - pos_next
+			if sqrt(pow(p.x, 2)+pow(p.y, 2)+pow(p.z, 2)) > 0.1:
+				var vel = (pos_next - pos_cur) / delta
+				pickvel = pick.move_and_slide(vel, Vector3.UP, false, 4, PI/4, true)
+		else:
+			var vel = (pos_next - pos_cur) / delta
+			pickvel = pick.move_and_slide(vel, Vector3.UP, false, 4, PI/4, true)
+	else:
+		if !pickgroups.has("wire_nodes"):
+			if wiresnap == true:
+				pos_next = Vector3(stepify(pos_next.x, 0.5),stepify(pos_next.y, 0.5),stepify(pos_next.z, 0.5))
+		var vel = (pos_next - pos_cur) / delta
+		pickvel = pick.move_and_slide(vel, Vector3.UP, false, 4, PI/4, true)
 func get_input():
 	if picked == true:
 		if Input.is_action_just_pressed("mouse_r"):

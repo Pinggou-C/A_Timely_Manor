@@ -7,6 +7,10 @@ var which = null
 var whichbody = null
 var snappos = Vector3(0, 0, 0)
 
+var targetpos = Vector3()
+var snap_to_node = false
+var snapnode = null
+
 var disconpickup
 var discon
 var conpickup
@@ -34,6 +38,7 @@ func pickup():
 
 
 func drop(w1, w2):
+	var parent = get_parent()
 	if discon != null:
 		if disconpickup == "end":
 			pass
@@ -44,16 +49,17 @@ func drop(w1, w2):
 			if conpickup == "wire":
 				var g = is_not_in_node(con, "wire")
 				if g == true:
-					get_parent().newnode(get_global_transform().origin, con, "front")
+					parent.newnode(get_global_transform().origin, con, "front")
 			elif conpickup == "end":
 				var gg = "back"
 				if con.is_in_group("wire_front_end"):
 					gg = "front"
-				get_parent().combine(con.get_parent(), gg, "front")
+				parent.combine(con.get_parent(), gg, "front")
 				which = null
 				whichbody = null
 			elif conpickup == "node":
-				var go = con.enter(self)
+				var go = con.conn(parent, parent.frontnode, 'front')
+				parent.connect_node_front(con, go[0])
 			
 	pickedup = false
 	get_parent().pickedupfront = true
@@ -71,24 +77,25 @@ func drop(w1, w2):
 
 
 func _on_frontarea_body_entered(body, bypas = false):
+	var parent = get_parent()
 	if pickedup == true || bypas == true:
 		var continu = false
-		for i in get_parent().get_children():
+		for i in parent.get_children():
 			if i == body && continu == false:
 				continu = true
-		if body != get_parent().get_child(1) && body != get_parent().get_child(3) && continu == false:
+		if body != parent.get_child(1) && body != parent.get_child(3) && continu == false:
 			if body.is_in_group("wire"):
-				if get_parent().frontnode == null:
+				if parent.frontnode == null:
 					var g = is_not_in_node(body, "wire")
 					if g == true:
-						get_parent().newnode(get_global_transform().origin, body, "front")
+						parent.newnode(get_global_transform().origin, body, "front")
 						print('giiS')
 				else:
 					conpickup = 'wire'
 					con = body
 			elif body.is_in_group("wire_nodes"):
 				if body.is_in_group("wire_end"):
-					if get_parent().frontnode == null:
+					if parent.frontnode == null:
 						which = "back"
 						if body.is_in_group("wire_front_end"):
 							which = "front"
@@ -97,13 +104,21 @@ func _on_frontarea_body_entered(body, bypas = false):
 						con = body
 						conpickup = 'end'
 				else:
-					if get_parent().frontnode == null:
-						var go = body.enter(self)
+					if parent.frontnode == null:
+						var go = body.conn(parent, parent.frontnode, 'front')
+						parent.connect_node_front(body, go[0])
+						targetpos = go[0]
+						snap_to_node = true
+						snapnode = body
 					else:
 						con = body
 						conpickup = 'node'
+						var go = body.conn(parent, parent.frontnode, 'front')
+						targetpos = go[0] 
+						snap_to_node = true
+						snapnode = body
 			elif body.is_in_group("battery"):
-				get_parent().battery(body, "front")
+				parent.battery(body.get_parent(), "front")
 
 
 func _on_frontarea_body_exited(body):
@@ -118,7 +133,11 @@ func _on_frontarea_body_exited(body):
 			if body.is_in_group("wire_end"):
 				pass
 			else:
-				pass
+				if body == snapnode:
+					snapnode =null
+					snap_to_node = false
+					targetpos = Vector3()
+				
 
 
 #checks if a body is in the wiregroup of the parents nodes
