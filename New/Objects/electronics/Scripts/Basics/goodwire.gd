@@ -181,12 +181,14 @@ func disconnect_node(node, frontback):
 		frontnode =null
 		node.disconnect_node(rearnode)
 		node.disconnect_wire(self)
-		rearnode.disconnect_node(node)
+		if rearnode != null:
+			rearnode.disconnect_node(node)
 	else:
 		rearnode = null
 		node.disconnect_node(frontnode)
 		node.disconnect_wire(self)
-		frontnode.disconnect_node(node)
+		if frontnode != null:
+			frontnode.disconnect_node(node)
 
 #rear
 func connect_node_rear(node, pos):

@@ -49,7 +49,7 @@ func _physics_process(delta):
 		if pick.snap_to_node == true:
 			print(pick.targetpos)
 			var p = pick.targetpos - pos_next
-			if sqrt(pow(p.x, 2)+pow(p.y, 2)+pow(p.z, 2)) > 0.1:
+			if sqrt(pow(p.x, 2)+pow(p.y, 2)+pow(p.z, 2)) > 0.25:
 				var vel = (pos_next - pos_cur) / delta
 				pickvel = pick.move_and_slide(vel, Vector3.UP, false, 4, PI/4, true)
 		else:

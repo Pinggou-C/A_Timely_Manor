@@ -45,14 +45,20 @@ func _ready():
 	oldpos = translation
 
 #adds wire to the wirestack and adds the other node connected to thats wire to self
-func conn(wire, newnode, frontback):
+func conn(wire, newnode, frontback, auto = false):
 	var posss
 	#get closest
 	var posarr = []
-	if frontback == "front":
-		posss = wire.rear
+	if auto != true:
+		if frontback == "front":
+			posss = wire.rear
+		else:
+			posss = wire.front
 	else:
-		posss = wire.front
+		if frontback == "front":
+			posss = wire.front
+		else:
+			posss = wire.rear
 	if !wires.has(wire):
 		wires.append(wire)
 		var pos
@@ -173,6 +179,14 @@ func connect_wire(body):
 func disconnect_wire(wire):
 	if wires.has(wire):
 		wires.remove(wires.find(wire))
+	if pos1 == wire:
+		pos1 = null
+	elif pos2 == wire:
+		pos2 =  null
+	elif pos3 == wire:
+		pos3 = null
+	elif pos4 == wire:
+		pos4 = null
 	if wires.size() > 2:
 		for i in wires:
 			pass

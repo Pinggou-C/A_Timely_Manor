@@ -105,7 +105,7 @@ func _on_frontarea_body_entered(body, bypas = false):
 						conpickup = 'end'
 				else:
 					if parent.frontnode == null:
-						var go = body.conn(parent, parent.frontnode, 'front')
+						var go = body.conn(parent, parent.frontnode, 'front', true)
 						parent.connect_node_front(body, go[0])
 						targetpos = go[0]
 						snap_to_node = true
@@ -113,7 +113,7 @@ func _on_frontarea_body_entered(body, bypas = false):
 					else:
 						con = body
 						conpickup = 'node'
-						var go = body.conn(parent, parent.frontnode, 'front')
+						var go = body.conn(parent, parent.frontnode, 'front', true)
 						targetpos = go[0] 
 						snap_to_node = true
 						snapnode = body
@@ -137,7 +137,7 @@ func _on_frontarea_body_exited(body):
 					snapnode =null
 					snap_to_node = false
 					targetpos = Vector3()
-				
+				get_parent().disconnect_node(body, 'front')
 
 
 #checks if a body is in the wiregroup of the parents nodes
