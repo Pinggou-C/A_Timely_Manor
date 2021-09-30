@@ -26,7 +26,7 @@ func _ready():
 
 
 func _physics_process(delta):
-	if oldpos != get_global_transform().origin:
+	if oldpos != get_global_transform().origin && pickedup == true:
 		get_parent().front = get_global_transform().origin
 		get_parent().resize()
 		oldpos = get_global_transform().origin
@@ -62,17 +62,17 @@ func drop(w1, w2):
 				parent.connect_node_front(con, go[0])
 			
 	pickedup = false
-	get_parent().pickedupfront = true
-	get_parent().front = get_global_transform().origin
-	get_parent().resize()
+	parent.pickedupfront = true
+	parent.front = get_global_transform().origin
+	parent.resize()
 	if which != null:
-		get_parent().combine(whichbody.get_parent(), which, "front")
+		parent.combine(whichbody.get_parent(), which, "front")
 		which = null
 		whichbody = null
 	if snappos != Vector3(0, 0, 0):
 		global_transform.origin = snappos
-		get_parent().front = snappos
-		get_parent().resize()
+		parent.front = snappos
+		parent.resize()
 	
 
 
@@ -88,7 +88,7 @@ func _on_frontarea_body_entered(body, bypas = false):
 				if parent.frontnode == null:
 					var g = is_not_in_node(body, "wire")
 					if g == true:
-						parent.newnode(get_global_transform().origin, body, "front")
+						#parent.newnode(get_global_transform().origin, body, "front")
 						print('giiS')
 				else:
 					conpickup = 'wire'

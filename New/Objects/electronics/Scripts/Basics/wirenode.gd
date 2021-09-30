@@ -224,6 +224,14 @@ func enter(which):
 func _physics_process(delta):
 	if get_global_transform().origin != oldpos:
 		for i in wires:
-			#i.resize()
-			pass
+			var pos
+			if i == pos1:
+				pos = $pos1.get_global_transform().origin
+			elif i == pos2:
+				pos = $pos2.get_global_transform().origin
+			elif i == pos3:
+				pos = $pos3.get_global_transform().origin
+			elif i == pos4:
+				pos = $pos4.get_global_transform().origin
+			i.change_size(self, pos)
 		oldpos = get_global_transform().origin

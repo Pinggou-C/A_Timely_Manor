@@ -315,3 +315,17 @@ func battery(battery, frontback):
 		rear_is_battery= true
 		if frontnode != null:
 			battery.start_connecting()
+
+func change_size(node, pos):
+	if node == frontnode:
+		front = pos
+		$front.global_transform.origin = pos
+		$front.targetpos = pos
+		$frontarea.global_transform.origin = pos
+		resize()
+	elif node == rearnode:
+		rear = pos
+		$rear.global_transform.origin = pos
+		$rear.targetpos = pos
+		$frontarea.global_transform.origin = pos
+		resize()
