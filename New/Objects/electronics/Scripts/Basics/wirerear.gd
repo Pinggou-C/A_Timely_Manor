@@ -104,19 +104,20 @@ func _on_reararea_body_entered(body, bypas = false):
 						con = body
 						conpickup = 'end'
 				else:
-					if parent.rearnode == null:
-						var go = body.conn(parent, parent.rearnode, 'rear', true)
-						parent.connect_node_rear(body, go[0])
-						targetpos = go[0]
-						snap_to_node = true
-						snapnode = body
-					else:
-						var go = body.conn(parent, parent.rearnode, 'rear', true)
-						targetpos = go[0]
-						snap_to_node = true
-						snapnode = body
-						con = body
-						conpickup = 'node'
+					if body.time != "temp":
+						if parent.rearnode == null:
+							var go = body.conn(parent, parent.rearnode, 'rear', true)
+							parent.connect_node_rear(body, go[0])
+							targetpos = go[0]
+							snap_to_node = true
+							snapnode = body
+						else:
+							var go = body.conn(parent, parent.rearnode, 'rear', true)
+							targetpos = go[0]
+							snap_to_node = true
+							snapnode = body
+							con = body
+							conpickup = 'node'
 			elif body.is_in_group("battery"):
 				parent.battery(body.get_parent(), "rear")
 

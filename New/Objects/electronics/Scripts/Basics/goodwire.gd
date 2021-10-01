@@ -82,11 +82,12 @@ func connect_to_node(newnode, oldnode):
 	pass
 #function for when the wire needs a new node
 #also splits the wire the node gets put on
-func newnode(pos, otherwire,frontback):
+func newnode(pos, otherwire,frontback, time = "perm"):
 	#loads and adds new node to scene
 	var newnode = load("res://Objects/electronics/Items/Basics/wirenode.tscn")
 	var newnode2 = newnode.instance()
 	get_parent().add_child(newnode2)
+	newnode2.temp()
 	newnode2.global_transform.origin = pos
 	var node
 	if frontback == "front":

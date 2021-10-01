@@ -88,7 +88,7 @@ func _on_frontarea_body_entered(body, bypas = false):
 				if parent.frontnode == null:
 					var g = is_not_in_node(body, "wire")
 					if g == true:
-						#parent.newnode(get_global_transform().origin, body, "front")
+						parent.newnode(get_global_transform().origin, body, "front", "temp")
 						print('giiS')
 				else:
 					conpickup = 'wire'
@@ -104,19 +104,20 @@ func _on_frontarea_body_entered(body, bypas = false):
 						con = body
 						conpickup = 'end'
 				else:
-					if parent.frontnode == null:
-						var go = body.conn(parent, parent.frontnode, 'front', true)
-						parent.connect_node_front(body, go[0])
-						targetpos = go[0]
-						snap_to_node = true
-						snapnode = body
-					else:
-						con = body
-						conpickup = 'node'
-						var go = body.conn(parent, parent.frontnode, 'front', true)
-						targetpos = go[0] 
-						snap_to_node = true
-						snapnode = body
+					if body.time != "temp":
+						if parent.frontnode == null:
+							var go = body.conn(parent, parent.frontnode, 'front', true)
+							parent.connect_node_front(body, go[0])
+							targetpos = go[0]
+							snap_to_node = true
+							snapnode = body
+						else:
+							con = body
+							conpickup = 'node'
+							var go = body.conn(parent, parent.frontnode, 'front', true)
+							targetpos = go[0] 
+							snap_to_node = true
+							snapnode = body
 			elif body.is_in_group("battery"):
 				parent.battery(body.get_parent(), "front")
 
