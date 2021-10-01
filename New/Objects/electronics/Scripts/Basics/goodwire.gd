@@ -15,19 +15,24 @@ var nodesiderear = null
 var pickedupfront=false
 var pickeduprear=false
 
+export (Material) var new_material
+
 func _ready():
 	#creates meshes and collisionshaped to prefent shapecopying by other wires
 	var myMesh = MeshInstance.new()
 	myMesh.mesh = CubeMesh.new()
 	myMesh.mesh.size = Vector3(0.01, 0.01, 0.01)
+	myMesh.set_surface_material(0, new_material)
 	add_child(myMesh)
 	var myMesh2 = MeshInstance.new()
 	myMesh2.mesh = CubeMesh.new()
 	myMesh2.mesh.size = Vector3(0.01, 0.01, 0.01)
+	myMesh2.set_surface_material(0, new_material)
 	add_child(myMesh2)
 	var myMesh3 = MeshInstance.new()
 	myMesh3.mesh = CubeMesh.new()
 	myMesh3.mesh.size = Vector3(0.01, 0.01, 0.01)
+	myMesh3.set_surface_material(0, new_material)
 	add_child(myMesh3)
 	var mycoll1 = StaticBody.new()
 	mycoll1.add_to_group("wire")
@@ -87,7 +92,10 @@ func newnode(pos, otherwire,frontback, time = "perm"):
 	var newnode = load("res://Objects/electronics/Items/Basics/wirenode.tscn")
 	var newnode2 = newnode.instance()
 	get_parent().add_child(newnode2)
-	newnode2.temp()
+	if time == "temp":
+		newnode2.temp()
+	else: 
+		newnode2.perm()
 	newnode2.global_transform.origin = pos
 	var node
 	if frontback == "front":

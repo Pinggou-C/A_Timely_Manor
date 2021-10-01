@@ -13,8 +13,10 @@ var snapnode = null
 
 var disconpickup
 var discon
+var disconextra = null
 var conpickup
 var con
+var conextra = null
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -44,12 +46,17 @@ func drop(w1, w2):
 			pass
 		elif disconpickup == "node":
 			connected = null
+			if disconextra == "temp":
+				pass
 	if con != null:
 		if connected == null:
 			if conpickup == "wire":
-				var g = is_not_in_node(con, "wire")
-				if g == true:
-					parent.newnode(get_global_transform().origin, con, "front")
+				if conextra == "nodetemp":
+					parent.frontnode.perm()
+				else:
+					var g = is_not_in_node(con, "wire")
+					if g == true:
+						parent.newnode(get_global_transform().origin, con, "front")
 			elif conpickup == "end":
 				var gg = "back"
 				if con.is_in_group("wire_front_end"):
@@ -89,7 +96,9 @@ func _on_frontarea_body_entered(body, bypas = false):
 					var g = is_not_in_node(body, "wire")
 					if g == true:
 						parent.newnode(get_global_transform().origin, body, "front", "temp")
-						print('giiS')
+						conpickup = 'wire'
+						con = body
+						conextra = "nodetemp"
 				else:
 					conpickup = 'wire'
 					con = body
@@ -134,11 +143,20 @@ func _on_frontarea_body_exited(body):
 			if body.is_in_group("wire_end"):
 				pass
 			else:
-				if body == snapnode:
+				if body.time != "temp":
+					if body == snapnode:
+						snapnode =null
+						snap_to_node = false
+						targetpos = Vector3()
+					get_parent().disconnect_node(body, 'front')
+				else:
 					snapnode =null
 					snap_to_node = false
 					targetpos = Vector3()
-				get_parent().disconnect_node(body, 'front')
+					discon = body
+					disconpickup = "node"
+					disconextra = "temp"
+					
 
 
 #checks if a body is in the wiregroup of the parents nodes
@@ -164,3 +182,14 @@ func is_not_in_node(body, type):
 	if type == "node":
 		pass
 	return ret
+
+
+func add_snap(truefalse, node, pos):
+	if truefalse == true:
+		targetpos = pos 
+		snap_to_node = true
+		snapnode = node
+	else:
+		targetpos = null
+		snap_to_node = false
+		snapnode = null

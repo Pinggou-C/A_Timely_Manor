@@ -10,7 +10,7 @@ const MAX_COMPONENT_UPDATES_PER_FRAME = 10
 
 var electrical_update_in_progress = false
 
-var time = "temp"
+var time = null
 
 var printtt = 0
 var connecteds = []
@@ -239,6 +239,8 @@ func _physics_process(delta):
 
 func perm():
 	time = "perm"
+	$Tween.interpolate_property($plug.get_surface_material(0), "albedo_color", Color(0.9, 0.9, 0.9, 0.6), Color(0.9, 0.9, 0.9, 1), 0.2, Tween.TRANS_LINEAR)
+	$Tween.start()
 
 func temp():
 	time = "temp"

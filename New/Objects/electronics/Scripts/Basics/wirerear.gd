@@ -104,7 +104,7 @@ func _on_reararea_body_entered(body, bypas = false):
 						con = body
 						conpickup = 'end'
 				else:
-					if body.time != "temp":
+					if body.time == "perm":
 						if parent.rearnode == null:
 							var go = body.conn(parent, parent.rearnode, 'rear', true)
 							parent.connect_node_rear(body, go[0])
@@ -134,11 +134,12 @@ func _on_reararea_body_exited(body):
 			if body.is_in_group("wire_end"):
 				pass
 			else:
-				if body == snapnode:
-					snapnode =null
-					snap_to_node = false
-					targetpos = Vector3()
-				get_parent().disconnect_node(body, 'rear')
+				if body.time != "temp":
+					if body == snapnode:
+						snapnode =null
+						snap_to_node = false
+						targetpos = Vector3()
+					get_parent().disconnect_node(body, 'rear')
 
 
 #checks if a body is in the wiregroup of the parents nodes
