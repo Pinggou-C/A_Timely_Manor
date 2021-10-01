@@ -148,14 +148,15 @@ func _on_frontarea_body_exited(body):
 						snapnode =null
 						snap_to_node = false
 						targetpos = Vector3()
-					get_parent().disconnect_node(body, 'front')
+						snappos = Vector3(0, 0, 0)
+					get_parent().removenode(body, 'front')
 				else:
+					if body == get_parent().frontnode:
+						get_parent().removenode(body, 'front', true)
 					snapnode =null
 					snap_to_node = false
 					targetpos = Vector3()
-					discon = body
-					disconpickup = "node"
-					disconextra = "temp"
+					snappos = Vector3(0, 0, 0)
 					
 
 

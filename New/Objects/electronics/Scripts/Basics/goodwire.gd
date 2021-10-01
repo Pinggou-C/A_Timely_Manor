@@ -91,6 +91,7 @@ func newnode(pos, otherwire,frontback, time = "perm"):
 	#loads and adds new node to scene
 	var newnode = load("res://Objects/electronics/Items/Basics/wirenode.tscn")
 	var newnode2 = newnode.instance()
+	newnode2.time = "temp"
 	get_parent().add_child(newnode2)
 	if time == "temp":
 		newnode2.temp()
@@ -110,25 +111,42 @@ func newnode(pos, otherwire,frontback, time = "perm"):
 		front = newpostrue
 		$front.snappos = newpostrue
 		nodesidefront = newpos[1]
+		$front.targetpos = newpos[0]
+		$front.snap_to_node = true
+		$front.snapnode = newnode2
 	else:
 		rear = newpostrue
 		$rear.snappos = newpostrue
 		nodesiderear = newpos[1]
+		$rear.targetpos = newpos[0]
+		$rear.snap_to_node = true
+		$rear.snapnode = newnode2
 	otherwire.get_parent().split(newnode2)
 
 
-func removenode(node, rearfront):
-	node.disconnect_wire(self)
-	if rearfront == "front":
-		frontnode = null
-		if rearnode != null:
-			rearnode.disconnect_node(node)
-			node.disconnect_node(rearnode)
-	elif rearfront == "front":
-		rearnode = null
-		if frontnode != null:
-			frontnode.disconnect_node(node)
-			node.disconnect_node(frontnode)
+func removenode(node, rearfront, delete = false):
+	if delete == false:
+		node.disconnect_wire(self)
+		if rearfront == "front":
+			frontnode = null
+			if rearnode != null:
+				rearnode.disconnect_node(node)
+				node.disconnect_node(rearnode)
+		elif rearfront == "front":
+			rearnode = null
+			if frontnode != null:
+				frontnode.disconnect_node(node)
+				node.disconnect_node(frontnode)
+	else:
+		if rearfront == "front":
+			frontnode = null
+			if rearnode != null:
+				rearnode.disconnect_node(node)
+		elif rearfront == "front":
+			rearnode = null
+			if frontnode != null:
+				frontnode.disconnect_node(node)
+		node.queue_free()
 
 #splits a wire in 2
 func split(node):

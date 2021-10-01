@@ -10,7 +10,7 @@ const MAX_COMPONENT_UPDATES_PER_FRAME = 10
 
 var electrical_update_in_progress = false
 
-var time = null
+var time = "perm"
 
 var printtt = 0
 var connecteds = []
@@ -53,32 +53,32 @@ func conn(wire, newnode, frontback, auto = false):
 	if auto != true:
 		if frontback == "front":
 			posss = wire.rear
-		else:
+		elif frontback == "rear":
 			posss = wire.front
 	else:
 		if frontback == "front":
 			posss = wire.front
-		else:
+		elif frontback == "rear":
 			posss = wire.rear
 	if !wires.has(wire):
 		wires.append(wire)
-		var pos
-		var stop = false
-		if pos1 == null:
-			posarr.append([sqrt(pow(posss.x - $pos1.get_global_transform().origin.x, 2) + pow(posss.z - $pos1.get_global_transform().origin.z, 2) + pow(posss.y - $pos1.get_global_transform().origin.y, 2)), 1, $pos1.get_global_transform().origin])
-		if pos2 == null:
-			posarr.append([sqrt(pow(posss.x - $pos2.get_global_transform().origin.x, 2) + pow(posss.z - $pos2.get_global_transform().origin.z, 2) + pow(posss.y - $pos2.get_global_transform().origin.y, 2)), 2, $pos2.get_global_transform().origin])
-		if pos3 == null:
-			posarr.append([sqrt(pow(posss.x - $pos3.get_global_transform().origin.x, 2) + pow(posss.z - $pos3.get_global_transform().origin.z, 2) + pow(posss.y - $pos3.get_global_transform().origin.y, 2)), 3, $pos3.get_global_transform().origin])
-		if pos4 == null:
-			posarr.append([sqrt(pow(posss.x - $pos4.get_global_transform().origin.x, 2) + pow(posss.z - $pos4.get_global_transform().origin.z, 2) + pow(posss.y - $pos4.get_global_transform().origin.y, 2)), 4, $pos4.get_global_transform().origin])
-		if pos4 != null && pos3 != null && pos2 != null && pos1 != null :
-			stop = true
-		if stop == false:
-			posarr.sort_custom(MyCustomSorter, "sort_ascending")
-			pos = posarr[0][2]
-			set("pos" + String(posarr[0][1]), wire)
-			return [pos, posarr[0][1]]
+	var pos
+	var stop = false
+	if pos1 == null:
+		posarr.append([sqrt(pow(posss.x - $pos1.get_global_transform().origin.x, 2) + pow(posss.z - $pos1.get_global_transform().origin.z, 2) + pow(posss.y - $pos1.get_global_transform().origin.y, 2)), 1, $pos1.get_global_transform().origin])
+	if pos2 == null:
+		posarr.append([sqrt(pow(posss.x - $pos2.get_global_transform().origin.x, 2) + pow(posss.z - $pos2.get_global_transform().origin.z, 2) + pow(posss.y - $pos2.get_global_transform().origin.y, 2)), 2, $pos2.get_global_transform().origin])
+	if pos3 == null:
+		posarr.append([sqrt(pow(posss.x - $pos3.get_global_transform().origin.x, 2) + pow(posss.z - $pos3.get_global_transform().origin.z, 2) + pow(posss.y - $pos3.get_global_transform().origin.y, 2)), 3, $pos3.get_global_transform().origin])
+	if pos4 == null:
+		posarr.append([sqrt(pow(posss.x - $pos4.get_global_transform().origin.x, 2) + pow(posss.z - $pos4.get_global_transform().origin.z, 2) + pow(posss.y - $pos4.get_global_transform().origin.y, 2)), 4, $pos4.get_global_transform().origin])
+	if pos4 != null && pos3 != null && pos2 != null && pos1 != null :
+		stop = true
+	if stop == false:
+		posarr.sort_custom(MyCustomSorter, "sort_ascending")
+		pos = posarr[0][2]
+		set("pos" + String(posarr[0][1]), wire)
+		return [pos, posarr[0][1]]
 	if !connecteds.has(newnode):
 		connecteds.append(newnode)
 
@@ -194,8 +194,7 @@ func disconnect_wire(wire):
 	elif wires.size() == 2:
 		if wires[0].frontnode == self:
 			wires[0].combine(wires[1])
-		else:
-			wires[1].combine(wires[0])
+			#wires[1].combine(wires[0])
 
 
 func disconnect_node(node):

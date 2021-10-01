@@ -13,8 +13,10 @@ var snapnode = null
 
 var disconpickup
 var discon
+var disconextra
 var conpickup
 var con
+var conextra
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -44,16 +46,21 @@ func drop(w1, w2):
 			pass
 		elif disconpickup == "node":
 			connected = null
+			if disconextra == "temp":
+				pass
 	if con != null:
 		if connected == null:
 			if conpickup == "wire":
-				var g = is_not_in_node(con, "wire")
-				if g == true:
-					parent.newnode(get_global_transform().origin, con, "rear")
+				if conextra == "nodetemp":
+					parent.rearnode.perm()
+				else:
+					var g = is_not_in_node(con, "wire")
+					if g == true:
+						parent.newnode(get_global_transform().origin, con, "rear")
 			elif conpickup == "end":
-				var gg = "front"
+				var gg = "back"
 				if con.is_in_group("wire_front_end"):
-					gg = "back"
+					gg = "front"
 				parent.combine(con.get_parent(), gg, "rear")
 				which = null
 				whichbody = null
@@ -62,7 +69,7 @@ func drop(w1, w2):
 				parent.connect_node_rear(con, go[0])
 			
 	pickedup = false
-	parent.pickedupfront = true
+	parent.pickeduprear = true
 	parent.rear = get_global_transform().origin
 	parent.resize()
 	if which != null:
@@ -89,7 +96,9 @@ func _on_reararea_body_entered(body, bypas = false):
 					var g = is_not_in_node(body, "wire")
 					if g == true:
 						parent.newnode(get_global_transform().origin, body, "rear")
-						print('giiS')
+						conpickup = 'wire'
+						con = body
+						conextra = "nodetemp"
 				else:
 					conpickup = 'wire'
 					con = body
@@ -104,7 +113,7 @@ func _on_reararea_body_entered(body, bypas = false):
 						con = body
 						conpickup = 'end'
 				else:
-					if body.time == "perm":
+					if body.time != "temp":
 						if parent.rearnode == null:
 							var go = body.conn(parent, parent.rearnode, 'rear', true)
 							parent.connect_node_rear(body, go[0])
@@ -112,12 +121,13 @@ func _on_reararea_body_entered(body, bypas = false):
 							snap_to_node = true
 							snapnode = body
 						else:
-							var go = body.conn(parent, parent.rearnode, 'rear', true)
-							targetpos = go[0]
-							snap_to_node = true
-							snapnode = body
 							con = body
 							conpickup = 'node'
+							print(parent.rearnode)
+							var go = body.conn(parent, parent.rearnode, 'rear', true)
+							targetpos = go[0] 
+							snap_to_node = true
+							snapnode = body
 			elif body.is_in_group("battery"):
 				parent.battery(body.get_parent(), "rear")
 
@@ -139,7 +149,15 @@ func _on_reararea_body_exited(body):
 						snapnode =null
 						snap_to_node = false
 						targetpos = Vector3()
-					get_parent().disconnect_node(body, 'rear')
+						snappos = Vector3(0, 0, 0)
+					get_parent().removenode(body, 'rear')
+				else:
+					if body == get_parent().rearnode:
+						get_parent().removenode(body, 'rear', true)
+					snapnode =null
+					snap_to_node = false
+					targetpos = Vector3()
+					snappos = Vector3(0, 0, 0)
 
 
 #checks if a body is in the wiregroup of the parents nodes
