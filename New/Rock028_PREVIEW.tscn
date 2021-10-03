@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://shader+addons/Gonkees-Shaders-master/Gonkees-Shaders-master/lava.shader" type="Shader" id=1]
+[ext_resource path="res://Assets/heightmap/Rocks007_2K-JPG/Rocks007_2K_NormalDX.jpg" type="Texture" id=2]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 1 )
+shader_param/OCTAVES = 67
+shader_param/red = Color( 0.054902, 0, 0.152941, 1 )
+shader_param/yellow = Color( 1, 1, 1, 1 )
+shader_param/grey = Color( 0.137255, 0.00784314, 0.243137, 1 )
+shader_param/black = Color( 0, 0, 0, 1 )
+
+[node name="Rock028_PREVIEW" type="Sprite"]
+position = Vector2( 734.312, 561.107 )
+
+[node name="Rock028_PREVIEW2" type="Sprite" parent="."]
+material = SubResource( 1 )
+position = Vector2( -41.9094, -184.843 )
+scale = Vector2( 0.609165, 0.342059 )
+texture = ExtResource( 2 )
