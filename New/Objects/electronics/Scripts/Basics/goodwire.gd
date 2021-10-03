@@ -15,6 +15,9 @@ var nodesiderear = null
 var pickedupfront=false
 var pickeduprear=false
 
+var front_not_connected = false
+var rear_not_connected = false
+
 export (Material) var new_material
 
 func _ready():
@@ -123,6 +126,25 @@ func newnode(pos, otherwire,frontback, time = "perm"):
 		$rear.snapnode = newnode2
 	otherwire.get_parent().split(newnode2)
 
+func discon_node(node):
+	if node == frontnode:
+		frontnode = null
+		nodesidefront = null
+		front_is_battery = false
+		front_not_connected = false
+		$front.snappos = Vector3(0, 0, 0)
+		$front.targetpos = Vector3()
+		$front.snap_to_node = false
+		$front.snapnode = null
+	elif node == rearnode:
+		rearnode = null
+		nodesiderear = null
+		rear_is_battery = false
+		rear_not_connected = false
+		$rear.snappos = Vector3(0, 0, 0)
+		$rear.targetpos = Vector3()
+		$rear.snap_to_node = false
+		$rear.snapnode = null
 
 func removenode(node, rearfront, delete = false):
 	if delete == false:
@@ -132,21 +154,22 @@ func removenode(node, rearfront, delete = false):
 			if rearnode != null:
 				rearnode.disconnect_node(node)
 				node.disconnect_node(rearnode)
-		elif rearfront == "front":
+		elif rearfront == "rear":
 			rearnode = null
 			if frontnode != null:
 				frontnode.disconnect_node(node)
 				node.disconnect_node(frontnode)
 	else:
+		node.disconnect_wire(self, true)
 		if rearfront == "front":
 			frontnode = null
 			if rearnode != null:
 				rearnode.disconnect_node(node)
-		elif rearfront == "front":
+		elif rearfront == "rear":
 			rearnode = null
 			if frontnode != null:
 				frontnode.disconnect_node(node)
-		node.queue_free()
+		node.disconnect_all()
 
 #splits a wire in 2
 func split(node):
@@ -201,6 +224,12 @@ func split(node):
 func connect_node_front(node, pos):
 	frontnode = node
 	front = pos
+	if rearnode != null:
+		if !rear_is_battery:
+			rearnode.con_node(node, self, false)
+			node.con_node(rearnode, self, false)
+		else:
+			node.con_node(rearnode, self, true)
 	resize()
 
 func disconnect_node(node, frontback):
@@ -221,6 +250,12 @@ func disconnect_node(node, frontback):
 func connect_node_rear(node, pos):
 	rearnode = node
 	rear = pos
+	if frontnode != null:
+		if !front_is_battery:
+			frontnode.con_node(node, self, false)
+			node.con_node(frontnode, self, false)
+		else:
+			node.con_node(frontnode, self, true)
 	resize()
 	
 #when a node is put in the middle of the wire it splits it up
@@ -230,32 +265,56 @@ func resize_node(node, pos):
 	resize()
 
 func combine(otherwire, which, which2):
+	var pos
+	var frontnodee = otherwire.frontnode
+	var rearnode1 = otherwire.rearnode
 	if which2 == "rear":
 		if which == "back":
-			print("bb")
 			rear = otherwire.front
-			rearnode = otherwire.frontnode
+			rearnode = frontnodee
+			if frontnodee != null:
+				frontnodee.disconnect_wire(otherwire)
+				pos = frontnodee.conn(self, frontnode, "rear")
 		elif which == "front":
-			print("bf")
 			rear = otherwire.rear
-			rearnode = otherwire.rearnode
+			rearnode = rearnode1
+			if rearnode1 != null:
+				rearnode1.disconnect_wire(otherwire)
+				pos = rearnode1.conn(self, frontnode, "rear")
+		var truepos = pos[0]
+		#$rear.targetpos = truepos
+		#$rear.snap_to_node = true
+		#if which == "front":
+		#	$rear.snapnode = rearnode1
+		#elif which == "rear":
+		#	$rear.snapnode = frontnodee
 	if which2 == "front":
 		if which == "back":
-			print("fb")
 			front = otherwire.front
-			frontnode = otherwire.frontnode
-			print(otherwire.front)
+			frontnode = frontnodee
+			if frontnodee != null:
+				frontnodee.disconnect_wire(otherwire)
+				pos = frontnodee.conn(self, rearnode, "front")
 		elif which == "front":
-			print("ff")
 			front = otherwire.rear
-			frontnode = otherwire.rearnode
+			frontnode = rearnode1
+			if rearnode1 != null:
+				rearnode1.disconnect_wire(otherwire)
+				pos = rearnode1.conn(self, rearnode, "front")
+		var truepos = pos[0]
+		#$front.targetpos = truepos
+		#$front.snap_to_node = true
+		#if which == "front":
+		#	$front.snapnode = rearnode1
+		#elif which == "rear":
+		#	$front.snapnode = frontnodee
 	$front.global_transform.origin = front
 	$front.snappos = front
 	$frontarea.global_transform.origin = front
 	$rear.global_transform.origin = rear
 	$reararea.global_transform.origin = rear
-	if otherwire.frontnode != null:
-		otherwire.frontnode.wire(self, rearnode)
+	if frontnodee != null:
+		frontnodee.wire(self, rearnode)
 	otherwire.queue_free()
 	resize()
 	#resize()
@@ -336,11 +395,13 @@ func battery(battery, frontback):
 		frontnode = battery
 		front_is_battery = true
 		if rearnode != null:
+			rearnode.con_node(battery, self, true)
 			battery.start_connecting()
 	elif frontback == "rear":
 		rearnode = battery
 		rear_is_battery= true
 		if frontnode != null:
+			frontnode.con_node(battery, self, true)
 			battery.start_connecting()
 
 func change_size(node, pos):
@@ -356,3 +417,13 @@ func change_size(node, pos):
 		$rear.targetpos = pos
 		$frontarea.global_transform.origin = pos
 		resize()
+
+func not_connecting(battery):
+	if frontnode == battery:
+		front_not_connected = true
+	elif rearnode == battery:
+		rear_not_connected = true
+
+func connect_start():
+	front_not_connected = false
+	rear_not_connected = false

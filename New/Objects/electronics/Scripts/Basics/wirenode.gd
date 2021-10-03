@@ -32,7 +32,15 @@ var pos2 = null
 var pos3 = null
 var pos4 = null
 
+var pos_node1 = null
+var pos_node2 = null
+var pos_node3 = null
+var pos_node4 = null
 
+var pos1_battery = false
+var pos2_battery = false
+var pos3_battery = false
+var pos4_battery = false
 
 var powered_by = []
 var volts
@@ -79,8 +87,9 @@ func conn(wire, newnode, frontback, auto = false):
 		pos = posarr[0][2]
 		set("pos" + String(posarr[0][1]), wire)
 		return [pos, posarr[0][1]]
-	if !connecteds.has(newnode):
-		connecteds.append(newnode)
+	if newnode != null:
+		if !connecteds.has(newnode):
+			connecteds.append(newnode)
 
 func onnode(node, position, contype):
 	if contype == "connect":
@@ -94,6 +103,25 @@ func onnode(node, position, contype):
 		#if it is disconnecting
 		pass
 
+func con_node(node, wire, is_battery = null):
+	if !connecteds.has(node):
+		connecteds.append(node)
+	if wire == pos1:
+		pos_node1 = node
+		if is_battery == true:
+			pos1_battery = true
+	elif wire == pos2:
+		pos_node2 = node
+		if is_battery == true:
+			pos2_battery = true
+	elif wire == pos3:
+		pos_node3 = node
+		if is_battery == true:
+			pos3_battery = true
+	elif wire == pos4:
+		pos_node4 = node
+		if is_battery == true:
+			pos4_battery = true
 #
 #
 #
@@ -101,21 +129,31 @@ func onnode(node, position, contype):
 #
 #
 #pathfind function
-func connecting(path, resistance, body, oldresistances):
+func connecting(path, splits, resistance, body, oldresistances, batteries):
+	print("print4")
 	if !path.has(self):
+		print("print2")
 		if ElectricsUpdate.updated_components == ElectricsUpdate.MAX_COMPONENT_UPDATES_PER_FRAME:
 		# Yield until the next physics frame, allowing other parts of your code to execute.	
+			print('stop')
 			yield(get_tree(), "physics_frame") 
 			ElectricsUpdate.updated_components = 0
 		powered_by.append(body)
 		var pathnew = path
+		var splitsnew = splits
+		if connecteds.size() > 2:
+			splitsnew.append(self)
 		var oldresistancenew = oldresistances
 		pathnew.append(self)
 		oldresistancenew.append(0)
 		ElectricsUpdate.updated_components += 1
+		print(connecteds.size())
+		print(wires.size())
+		print(pathnew)
 		for i in connecteds:
+			print(i)
 			if i != body:
-				i.connecting(pathnew, resistance, self, oldresistancenew)
+				i.connecting(pathnew, splitsnew,resistance, self, oldresistancenew, batteries)
 		
 
 func power(paths, splits, volt, amp):
@@ -177,23 +215,41 @@ func connect_wire(body):
 			i.connect_to_node(body, self)
 
 #when the wire get picked up and disconnected
-func disconnect_wire(wire):
+func disconnect_wire(wire, special = false):
 	if wires.has(wire):
 		wires.remove(wires.find(wire))
 	if pos1 == wire:
 		pos1 = null
+		pos1_battery = false
+		pos_node1 = null
 	elif pos2 == wire:
 		pos2 =  null
+		pos2_battery = false
+		pos_node2 = null
 	elif pos3 == wire:
 		pos3 = null
+		pos3_battery = false
+		pos_node3 = null
 	elif pos4 == wire:
 		pos4 = null
-	if wires.size() > 2:
-		for i in wires:
-			pass
-	elif wires.size() == 2:
-		if wires[0].frontnode == self:
-			wires[0].combine(wires[1])
+		pos4_battery = false
+		pos_node4 = null
+	if special == true:
+		print('2')
+		if wires.size() > 2:
+			for i in wires:
+				pass
+		elif wires.size() == 2:
+			$Tween.interpolate_property($plug.get_surface_material(0), "albedo_color", Color(0.8, 0.8, 0.8, 1), Color(0.8, 0.8, 0.8, 0), 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			$Tween.start()
+			var which2 = "front"
+			if self == wires[0].frontnode:
+				which2 = "back"
+			var which1 = "front"
+			if self == wires[1].frontnode:
+				which1 = "rear"
+			wires[0].combine(wires[1], which2, which1)
+			queue_free()
 			#wires[1].combine(wires[0])
 
 
@@ -224,6 +280,7 @@ func enter(which):
 func _physics_process(delta):
 	if get_global_transform().origin != oldpos:
 		for i in wires:
+			print(i)
 			var pos
 			if i == pos1:
 				pos = $pos1.get_global_transform().origin
@@ -238,10 +295,27 @@ func _physics_process(delta):
 
 func perm():
 	time = "perm"
-	$Tween.interpolate_property($plug.get_surface_material(0), "albedo_color", Color(0.9, 0.9, 0.9, 0.6), Color(0.9, 0.9, 0.9, 1), 0.2, Tween.TRANS_LINEAR)
+	$Tween.interpolate_property($plug.get_surface_material(0), "albedo_color", Color(0.8, 0.8, 0.8, 0.7), Color(0.8, 0.8, 0.8, 1), 0.2, Tween.TRANS_LINEAR)
 	$Tween.start()
 
 func temp():
 	time = "temp"
-	$Tween.interpolate_property($plug.get_surface_material(0), "albedo_color", Color(0.9, 0.9, 0.9, 0.2), Color(0.9, 0.9, 0.9, 0.6), 0.25, Tween.TRANS_LINEAR)
+	$Tween.interpolate_property($plug.get_surface_material(0), "albedo_color", Color(0.8, 0.8, 0.8, 0.0), Color(0.8, 0.8, 0.8, 0.7), 0.25, Tween.TRANS_LINEAR)
 	$Tween.start()
+
+#calls the wire which couldnt connect because it corrected to the wrong end of an object
+func notconnecting(battery):
+	if battery == pos_node1:
+		pos1.not_connecting(battery)
+	elif battery == pos_node2:
+		pos2.not_connecting(battery)
+	elif battery == pos_node3:
+		pos3.not_connecting(battery)
+	elif battery == pos_node4:
+		pos4.not_connecting(battery)
+
+func disconnect_all():
+	for i in wires:
+		i.discon_node(self)
+
+		

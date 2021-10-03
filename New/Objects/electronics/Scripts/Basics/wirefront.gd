@@ -67,7 +67,9 @@ func drop(w1, w2):
 			elif conpickup == "node":
 				var go = con.conn(parent, parent.frontnode, 'front')
 				parent.connect_node_front(con, go[0])
-			
+	if snapnode != null:
+		if snapnode.time == "temp":
+			snapnode.perm()
 	pickedup = false
 	parent.pickedupfront = true
 	parent.front = get_global_transform().origin
@@ -157,7 +159,6 @@ func _on_frontarea_body_exited(body):
 					snap_to_node = false
 					targetpos = Vector3()
 					snappos = Vector3(0, 0, 0)
-					
 
 
 #checks if a body is in the wiregroup of the parents nodes

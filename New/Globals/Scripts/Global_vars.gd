@@ -10,6 +10,8 @@ var splits = []
 var menu 
 var current = "menu"
 
+
+
 #can be -1, 0 & 1
 func _physics_process(delta):
 	#print(paths)

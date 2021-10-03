@@ -1,6 +1,7 @@
 [gd_resource type="Environment" load_steps=2 format=2]
 
 [sub_resource type="ProceduralSky" id=1]
+radiance_size = 3
 sky_top_color = Color( 0.4, 0.788235, 1, 1 )
 sky_energy = 0.9
 ground_bottom_color = Color( 0.576471, 0.576471, 0.576471, 1 )
@@ -31,9 +32,13 @@ fog_height_max = -50.0
 tonemap_mode = 3
 tonemap_exposure = 0.95
 tonemap_white = 1.5
+ssao_enabled = true
+ssao_color = Color( 0.956863, 0.858824, 1, 1 )
+ssao_quality = 2
 dof_blur_far_enabled = true
 dof_blur_far_distance = 200.0
 dof_blur_far_transition = 200.0
+dof_blur_far_quality = 2
 dof_blur_near_distance = 0.67
 dof_blur_near_transition = 0.33
 dof_blur_near_quality = 0

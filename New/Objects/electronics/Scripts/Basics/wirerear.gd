@@ -67,7 +67,9 @@ func drop(w1, w2):
 			elif conpickup == "node":
 				var go = con.conn(parent, parent.rearnode, 'rear')
 				parent.connect_node_rear(con, go[0])
-			
+	if snapnode != null:
+		if snapnode.time == "temp":
+			snapnode.perm()
 	pickedup = false
 	parent.pickeduprear = true
 	parent.rear = get_global_transform().origin
@@ -95,7 +97,7 @@ func _on_reararea_body_entered(body, bypas = false):
 				if parent.rearnode == null:
 					var g = is_not_in_node(body, "wire")
 					if g == true:
-						parent.newnode(get_global_transform().origin, body, "rear")
+						parent.newnode(get_global_transform().origin, body, "rear", "temp")
 						conpickup = 'wire'
 						con = body
 						conextra = "nodetemp"
@@ -123,7 +125,6 @@ func _on_reararea_body_entered(body, bypas = false):
 						else:
 							con = body
 							conpickup = 'node'
-							print(parent.rearnode)
 							var go = body.conn(parent, parent.rearnode, 'rear', true)
 							targetpos = go[0] 
 							snap_to_node = true
@@ -184,3 +185,13 @@ func is_not_in_node(body, type):
 		pass
 	return ret
 
+
+func add_snap(truefalse, node, pos):
+	if truefalse == true:
+		targetpos = pos 
+		snap_to_node = true
+		snapnode = node
+	else:
+		targetpos = null
+		snap_to_node = false
+		snapnode = null

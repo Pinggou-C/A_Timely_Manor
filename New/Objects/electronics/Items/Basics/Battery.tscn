@@ -78,7 +78,7 @@ one_shot = true
 "wires2",
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, -0.35, 0 )
-collision_layer = 33
+collision_layer = 32
 
 [node name="CollisionShape3" type="CollisionShape" parent="StaticBody" groups=[
 "bat",
@@ -90,7 +90,7 @@ shape = SubResource( 9 )
 "wires2",
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, -0.35, 0 )
-collision_layer = 33
+collision_layer = 32
 
 [node name="CollisionShape2" type="CollisionShape" parent="StaticBody2" groups=[
 "bat",
