@@ -18,11 +18,11 @@ export(float) var amps = 1
 func _ready():
 	Global_Variables.batteries.append(self)
 
-func start_connecting(body = null):
-	if posconnect != null && negconnect != null:
-		print("print1")
-		posconnect.connecting([], [], 0, self, [], [self])
-		$Timer.start(0.5)
+#func start_connecting(body = null):
+	#if posconnect != null && negconnect != null:
+		#print("print1")
+		#posconnect.connecting([], [], 0, self, [], [self])
+		#$Timer.start(0.5)
 #gets called when a sygnal returns
 func connecting(path, splits, resistance, body, oldresistance, batteries):
 	if body == negconnect:
