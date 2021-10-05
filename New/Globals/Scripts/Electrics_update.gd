@@ -55,5 +55,6 @@ func find_paths():
 	#the first the battery passes is always the positive connection point
 	var starting_point = conned_batteries[0]
 	var first_node = connecteds[nodes.find(starting_point)][1][0]
-	var second = connecteds[nodes.find(first_node)][1]
+	for i in connecteds[nodes.find(first_node)][1]:
+		pass
 	var current_path
