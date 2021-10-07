@@ -29,6 +29,9 @@ var unvalid_paths = []
 var flowing = false
 var connected = false
 
+var main_path
+var path_bits = []
+
 func _ready():
 	pass
  
@@ -42,7 +45,7 @@ func update_all_electrical_components():
 	var components_updated_this_frame = 0
 	for i in scene_tree.get_nodes_in_group("electrical_components"):
 		var p = i.conecteds()
-		connecteds.append([p[0],p[1]])
+		connecteds.append([p[0], p[1], p[2], p[3]])
 		nodes.append(p[0])
 		if p[0].is_in_group("batteries"):
 			conned_batteries.append([p[0]])
@@ -61,31 +64,49 @@ func find_paths():
 	first_node = connecteds[nodes.find(starting_point)][1][0]
 	var previous_node = starting_point
 	var current_node = connecteds[nodes.find(starting_point)][1][0]
-	path(current_node. previous_node, [previous_node])
+	path(current_node, previous_node, null, [previous_node], 0, [], ["b"], [])
 	
 
-func path(current, previous, path, res, old_res, node_ord):
+func path(current, previous,prev_proper, path, res, old_res, node_ord, splits):
 	var current_node = current
-	var revious_node = previous
+	var previous_node = previous
 	var next_nodes = connecteds[nodes.find(current_node)][1]
-	var current_path = path
+	var current_path
+	var splits_new = splits
 	var resistance = res
-	var old_resistance = old_res
 	var node_order  = node_ord
+	node_order.append(connecteds[nodes.find(current_node)][2])
+	var prev_normal_node = prev_proper
+	var new_paths = []
 	current_path.append(current_node)
 	for i in next_nodes:
 		if !path.has(i):
-			if i.is_in_group("batteries):
+			if connecteds[nodes.find(i)][2] == "battery":
+				node_order.append("battery")
 				if i == connecteds[nodes.find(starting_point)][1][1]:
-					end_path(i, current_node, current_path, resistance, old_resistance, node_order)
-			elif !nodes.find(previous_node)[1].has(i):
+					end_path(i,current_path, node_order, old_res, resistance)
+			elif !nodes.find(prev_normal_node)[1].has(i):
+				var nod_or = node_order
+				var cur_path = path
 				if !nodes.find(first_node)[1].has(i):
-					path(i, current_node, current_path, resistance, old_resistance, node_order)
+					if connecteds[nodes.find(i)][2] == "node":
+						new_paths.append(i, current_path.append(i), "node", 0, old_res)
+					if connecteds[nodes.find(i)][2] == "appliance":
+						var old_resistance = old_res
+						var ress = connecteds[nodes.find(i)][3]
+						old_resistance.append(ress)
+						if current == connecteds[nodes.find(i)][1][0]:
+							new_paths.append(i, current_path.append(i), "appliance", ress, old_resistance)
+						else:
+							errors.append(current_node, i, "wrong entrance")
+					if connecteds[nodes.find(i)][2] == "non_appliance":
+						new_paths.append(i, current_path.append(i), "non_appliance", 0, old_res)
 				else:
-					error.append[current_node, i, "to first node"]
+					errors.append(current_node, i, "to first node")
 			else:
-				error.append[current_node, i, "to prefious node"]
+				errors.append(current_node, i, "to prefious node")
 
-func end_path(path):
-	!if paths.has(path):
-		paths.append(path)
+func end_path(node, path, node_ord, old_res, res):
+	var tot_path = {"path":path, "node_order":node_ord, "old_resistance":old_res, "resistance":res}
+	if !paths.has(tot_path):
+		paths.append(tot_path)
