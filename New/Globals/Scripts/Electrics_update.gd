@@ -14,6 +14,10 @@ var batteries = []
 
 var updated_components = 0
 
+var first_node
+var errors = []
+var starting_point 
+
 var connecteds = []
 var nodes = []
 var conned_batteries = []
@@ -53,8 +57,35 @@ func update_all_electrical_components():
 
 func find_paths():
 	#the first the battery passes is always the positive connection point
-	var starting_point = conned_batteries[0]
-	var first_node = connecteds[nodes.find(starting_point)][1][0]
-	for i in connecteds[nodes.find(first_node)][1]:
-		pass
-	var current_path
+	starting_point = conned_batteries[0]
+	first_node = connecteds[nodes.find(starting_point)][1][0]
+	var previous_node = starting_point
+	var current_node = connecteds[nodes.find(starting_point)][1][0]
+	path(current_node. previous_node, [previous_node])
+	
+
+func path(current, previous, path, res, old_res, node_ord):
+	var current_node = current
+	var revious_node = previous
+	var next_nodes = connecteds[nodes.find(current_node)][1]
+	var current_path = path
+	var resistance = res
+	var old_resistance = old_res
+	var node_order  = node_ord
+	current_path.append(current_node)
+	for i in next_nodes:
+		if !path.has(i):
+			if i.is_in_group("batteries):
+				if i == connecteds[nodes.find(starting_point)][1][1]:
+					path(i, current_node. current_path)
+			elif !nodes.find(previous_node)[1].has(i):
+				if !nodes.find(first_node)[1].has(i):
+					path(i, current_node. current_path)
+				else:
+					error,append[current_node, i, "to first node"]
+			else:
+				error.append[current_node, i, "to prefious node"]
+
+func end_path(path):
+	!if paths.has(path):
+		paths.append(path)
