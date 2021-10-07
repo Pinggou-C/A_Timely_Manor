@@ -77,12 +77,12 @@ func path(current, previous, path, res, old_res, node_ord):
 		if !path.has(i):
 			if i.is_in_group("batteries):
 				if i == connecteds[nodes.find(starting_point)][1][1]:
-					path(i, current_node. current_path)
+					end_path(i, current_node, current_path, resistance, old_resistance, node_order)
 			elif !nodes.find(previous_node)[1].has(i):
 				if !nodes.find(first_node)[1].has(i):
-					path(i, current_node. current_path)
+					path(i, current_node, current_path, resistance, old_resistance, node_order)
 				else:
-					error,append[current_node, i, "to first node"]
+					error.append[current_node, i, "to first node"]
 			else:
 				error.append[current_node, i, "to prefious node"]
 
