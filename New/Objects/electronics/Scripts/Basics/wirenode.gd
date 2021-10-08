@@ -12,6 +12,8 @@ var electrical_update_in_progress = false
 
 var time = "perm"
 
+export(String, "node", "appliance", "non_appliance") var type = "node"
+
 var printtt = 0
 var connecteds = []
 var wires = []
@@ -319,3 +321,8 @@ func disconnect_all():
 		i.discon_node(self)
 
 		
+func conecteds():
+	if connecteds.size() > 1:
+		return [self, connecteds, type, 0]
+	else:
+		return [0, 0, "error"]

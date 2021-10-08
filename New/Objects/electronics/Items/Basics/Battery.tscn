@@ -29,7 +29,10 @@ extents = Vector3( 0.065, 0.065, 0.065 )
 [sub_resource type="BoxShape" id=9]
 extents = Vector3( 0.05, 0.05, 0.05 )
 
-[node name="battery" type="StaticBody"]
+[node name="battery" type="StaticBody" groups=[
+"batteries",
+"electrical_components",
+]]
 script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]

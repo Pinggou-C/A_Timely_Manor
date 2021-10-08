@@ -427,3 +427,5 @@ func not_connecting(battery):
 func connect_start():
 	front_not_connected = false
 	rear_not_connected = false
+
+
