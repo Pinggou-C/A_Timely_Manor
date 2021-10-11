@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Objects/Player/chearecter.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Audio_Assets/step.mp3" type="AudioStream" id=2]
@@ -6,11 +6,14 @@
 [ext_resource path="res://Objects/Player/PlayerCam.gd" type="Script" id=4]
 [ext_resource path="res://Objects/Player/device_astralis_preview.gd" type="Script" id=5]
 
-[sub_resource type="CylinderShape" id=3]
+[sub_resource type="CylinderShape" id=1]
 radius = 0.4
 height = 1.5
 
-[sub_resource type="CapsuleMesh" id=2]
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 0.05, 0.05, 1.4 )
+
+[sub_resource type="CapsuleMesh" id=3]
 radius = 0.4
 radial_segments = 10
 rings = 2
@@ -34,7 +37,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 "player",
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, 0 )
-shape = SubResource( 3 )
+shape = SubResource( 1 )
 
 [node name="Camera" type="Camera" parent="."]
 process_priority = -921
@@ -55,26 +58,55 @@ stream_paused = true
 [node name="RayCast" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -0.192 )
 enabled = true
-cast_to = Vector3( 0, 0, -1.5 )
+cast_to = Vector3( 0, 0, -2 )
 collision_mask = 524288
 
 [node name="Position3D" type="Position3D" parent="RayCast"]
 
+[node name="Area" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0 )
+collision_layer = 0
+collision_mask = 120
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5 )
+shape = SubResource( 2 )
+
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -2.18557e-08, -1, 0, 0.5, -4.37114e-08, 0, 0, 0 )
 use_in_baked_light = true
-mesh = SubResource( 2 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="Tween" type="Tween" parent="."]
 
 [node name="Tween2" type="Tween" parent="."]
 
-[node name="device_astralis_preview" type="Sprite" parent="."]
+[node name="crosshair" type="Sprite" parent="."]
 position = Vector2( 683, 384 )
 texture = ExtResource( 3 )
 script = ExtResource( 5 )
 
+[node name="text" type="RichTextLabel" parent="crosshair"]
+margin_left = -120.0
+margin_top = 120.0
+margin_right = 120.0
+margin_bottom = 240.0
+bbcode_enabled = true
+bbcode_text = "~ \\n Error: [u][b][color=red]\" + info[4]+\"[/color][/b][/u]"
+text = "~ \\n Error: \" + info[4]+\""
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Timer" type="Timer" parent="."]
 
 [node name="Timer2" type="Timer" parent="."]
+
+[node name="PDA" type="Timer" parent="."]
+process_mode = 0
+one_shot = true
+
+[connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
+[connection signal="body_exited" from="Area" to="." method="_on_Area_body_exited"]
+[connection signal="timeout" from="PDA" to="." method="_on_PDA_timeout"]

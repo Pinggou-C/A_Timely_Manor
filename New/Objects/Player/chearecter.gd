@@ -2,6 +2,10 @@ extends KinematicBody
 
 var wiresnap = false
 
+var looking_at = null
+var temp_look
+var all_looks = []
+
 var gravity = Vector3.DOWN * 18
 var speed  = 4.5
 var jump_speed  = 7
@@ -177,6 +181,7 @@ func _process(_delta):
 	mouseDelta = Vector2()
 	$Head.rotation_degrees.x = lerp($Head.rotation_degrees.x, $Camera.rotation_degrees.x, 0.33)
 	$RayCast.rotation_degrees.x = lerp($RayCast.rotation_degrees.x, $Camera.rotation_degrees.x, 0.33)
+	$Area.rotation_degrees.x = lerp($Area.rotation_degrees.x, $Camera.rotation_degrees.x, 0.33)
 
 # Get the `Transform` of a `PhysicsBody` relative to the player position
 func get_rel_pos(body):
@@ -216,3 +221,47 @@ func stat_to_kinem(stat: StaticBody) -> KinematicBody:
 	var kinem := KinematicBody.new()
 	trans_body(kinem, stat)
 	return kinem
+
+
+func _on_Area_body_entered(body):
+	if temp_look == null && looking_at == null:
+		temp_look = body
+		$PDA.start(0.15)
+	all_looks.append(body)
+
+
+func _on_Area_body_exited(body):
+	if temp_look == body:
+		temp_look = null
+		$PDA.stop()
+	if body == looking_at:
+		looking_at = null
+	if all_looks.has(body):
+		all_looks.remove(all_looks.find(body))
+	if all_looks.size() > 0:
+		temp_look = all_looks[0]
+		$PDA.start(0.15)
+
+
+func _on_PDA_timeout():
+	looking_at = temp_look
+	temp_look = null
+	#gets info from components, volts amps resistance, errors etc
+	var info = looking_at.get_info()
+	var text
+	if info[0] == "wire" || info[0] == "node":
+		if info[1] == false:
+			text = "Volts: "+String(info[2])+"V \nStroomsterkte: "+String(info[3])+"A /nWeerstand: ~ \nError: ~"
+		else:
+			text = "Volts: "+String(info[2])+"V \nStroomsterkte: "+String(info[3])+"A /nWeerstand: ~ \nError: [u][b][color=red]" + info[4]+"[/color][/b][/u]"
+	elif info[0] == "appliance":
+		if info[1] == false:
+			text = "Volts: "+String(info[2])+"V \nStroomsterkte: "+String(info[3])+"A /nWeerstand: ~ \nError: ~"
+		else:
+			text = "Volts: "+String(info[2])+"V \nStroomsterkte: "+String(info[3])+"A /nWeerstand: ~ \nError: [u][b][color=red]" + info[4]+"[/color][/b][/u]"
+	elif info[0] == "battery":
+		if info[1] == false:
+			text = "Volts: "+String(info[2])+"V \nStroomsterkte: "+String(info[3])+"A /nWeerstand: ~ \nError: ~"
+		else:
+			text = "Volts: "+String(info[2])+"V \nStroomsterkte: "+String(info[3])+"A /nWeerstand: ~ \nError: [u][b][color=red]" + info[4]+"[/color][/b][/u]"
+	$crosshair/text.bbcode_text = text

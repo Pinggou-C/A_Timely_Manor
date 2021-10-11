@@ -16,7 +16,7 @@ var updated_components = 0
 
 var first_node
 var errors = []
-var errorsid = []
+var errorid = []
 var starting_point 
 
 var connecteds = []
@@ -48,10 +48,10 @@ func update_all_electrical_components():
 	var specialnodestuf
 	var allnode
 	for i in scene_tree.get_nodes_in_group("electrical_components"):
-		if i.is_in_group("battery") || i.is_in_group("appliance")
+		if i.is_in_group("battery") || i.is_in_group("appliance"):
 			specialnodestuf.append(i.conecteds())
 		else:
-			nodestuf.append(i.conecteds())
+			nodestuff.append(i.conecteds())
 		allnode.append(i)
 	#checks batteries, appliances and one way things
 	
@@ -62,10 +62,10 @@ func update_all_electrical_components():
 			var nodes = p[1]
 			if !errorid.has(p[0]):
 				for node in nodes:
-					if allnode.has(node)
-						var front = node.getfront()
-						var rear = node.getrear()
+					if allnode.has(node):
 						if node.is_in_group("battery") || node.is_in_group("appliance"):
+							var front = nodestuff[allnode.find(node)][1][0]
+							var rear = nodestuff[allnode.find(node)][1][1]
 							var side
 							if p[0] == front:
 								side = "front"
@@ -73,18 +73,18 @@ func update_all_electrical_components():
 								side = "rear"
 							if p[1][0] == node && side == "front":
 								errors.append([i, node, "facing towards"])
-								errorsid.append(node)
+								errorid.append(node)
 								err = true
 							elif p[1][1] == node && side == "rear":
 								errors.append([i, node, "facing towards"])
-								errorsid.append(node)
+								errorid.append(node)
 								err = true
 					else:
 						errors.append([i, node, "non existant"])
-						errorsid.append(i)
+						errorid.append(i)
 						err = true
-			if err = "false":
-				connecteds.append([p[0], p[1], p[2], p[3]], [])
+			if err == "false":
+				connecteds.append([p[0], [p[1][0]], p[2], p[3]], p[1])
 				nodes.append(p[0])
 				if p[0].is_in_group("batteries"):
 					conned_batteries.append([p[0]])
@@ -94,7 +94,7 @@ func update_all_electrical_components():
 				yield(scene_tree, "physics_frame") 
 				# Or "idle_frame", depending on which suits your game better
 				components_updated_this_frame = 0
-	for i in nodestuf:
+	for i in nodestuff:
 		var p = i
 		var err = false
 		var points = []
@@ -102,22 +102,19 @@ func update_all_electrical_components():
 		if p[2] != "error":
 			var nodes = p[1]
 			for node in nodes:
-				if allnode.has(node)
-					var front = node.getfront()
-					var rear = node.getrear()
-					ver err = false
+				if allnode.has(node):
 					if node.is_in_group("battery") || node.is_in_group("appliance"):
+						var front = nodestuff[allnode.find(node)][1][0]
+						var rear = nodestuff[allnode.find(node)][1][1]
 						if errorid.has(node) || errorid.has(front) || errorid.has(rear):
 							err = true
-					if err == false:
-						if p[0] == node.front:
-							pass
-						else:
-							points.append(node)
-						all_points.append(node)
+						if err == false:
+							if p[0] != front:
+								points.append(node)
+							all_points.append(node)
 				else:
 					errors.append([i, node, "non existant"])
-					errorsid.append(i)
+					errorid.append(i)
 			if all_points.size > 1:
 				connecteds.append([p[0], points, p[2], p[3]], all_points)
 				nodes.append(p[0])
@@ -140,7 +137,6 @@ func find_paths():
 	
 
 func path(current, previous,prev_proper, path, res, old_res, node_ord, splits):
-	print("hii")
 	var current_node = current
 	var previous_node = previous
 	var next_nodes = connecteds[nodes.find(current_node)][1]
@@ -154,26 +150,28 @@ func path(current, previous,prev_proper, path, res, old_res, node_ord, splits):
 	current_path.append(current_node)
 	for i in next_nodes:
 		if !path.has(i):
+			var id = connecteds[nodes.find(i)]
 			var curpath = current_path
-			if connecteds[nodes.find(i)][2] == "battery":
+			if id[2] == "battery":
 				node_order.append("battery")
 				if i == connecteds[nodes.find(starting_point)][1][1]:
 					end_path(i,current_path, node_order, old_res, resistance)
+				new_paths.append(i, curpath.append(i), "battery", 0, old_res)
 			elif !connecteds[nodes.find(prev_normal_node)][1].has(i):
 				var nod_or = node_order
 				var cur_path = path
 				if !connecteds[nodes.find(first_node)][1].has(i):
-					if connecteds[nodes.find(i)][2] == "node":
+					if id[2] == "node":
 						new_paths.append(i, curpath.append(i), "node", 0, old_res)
-					if connecteds[nodes.find(i)][2] == "appliance":
+					if id[2] == "appliance":
 						var old_resistance = old_res
-						var ress = connecteds[nodes.find(i)][3]
+						var ress = id[3]
 						old_resistance.append(ress)
-						if current == connecteds[nodes.find(i)][1][0]:
+						if current == id[1][0]:
 							new_paths.append(i, curpath.append(i), "appliance", ress, old_resistance)
 						else:
 							errors.append([current_node, i, "wrong entrance"])
-					if connecteds[nodes.find(i)][2] == "non_appliance":
+					if id[2] == "non_appliance":
 						new_paths.append(i, curpath.append(i), "non_appliance", 0, old_res)
 				else:
 					errors.append([current_node, i, "to first node"])
@@ -193,7 +191,7 @@ func end_path(node, path, node_ord, old_res, res):
 		for i in paths:
 			if i["resistance"] == 0 && res != 0:
 				pass
-			elif ["resistance"] != 0 && res == 0:
+			elif i["resistance"] != 0 && res == 0:
 				paths.append(tot_path)
 				paths.remove(paths.find(i))
 			else:
