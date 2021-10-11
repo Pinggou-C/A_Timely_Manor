@@ -190,4 +190,11 @@ func path(current, previous,prev_proper, path, res, old_res, node_ord, splits):
 func end_path(node, path, node_ord, old_res, res):
 	var tot_path = {"path":path, "node_order":node_ord, "old_resistance":old_res, "resistance":res}
 	if !paths.has(tot_path):
-		paths.append(tot_path)
+		for i in paths:
+			if i["resistance"] == 0 && res != 0:
+				pass
+			elif ["resistance"] != 0 && res == 0:
+				paths.append(tot_path)
+				paths.remove(paths.find(i))
+			else:
+				paths.append(tot_path)
