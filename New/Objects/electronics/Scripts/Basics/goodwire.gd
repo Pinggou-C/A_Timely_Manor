@@ -51,6 +51,8 @@ func _ready():
 	mycoll1.add_child(mycol)
 	mycoll1.set_collision_layer_bit(0, false)
 	mycoll1.set_collision_layer_bit(1, true)
+	mycoll1.set_collision_layer_bit(7, true)
+	mycoll1.add_to_group("wirebit")
 	mycoll1.set_collision_layer_bit(3, true)
 	var mycoll2 = StaticBody.new()
 	mycoll2.add_to_group("wire")
@@ -61,6 +63,8 @@ func _ready():
 	mycoll2.add_child(mycol1)
 	mycoll2.set_collision_layer_bit(0, false)
 	mycoll2.set_collision_layer_bit(1, true)
+	mycoll2.set_collision_layer_bit(7, true)
+	mycoll2.add_to_group("wirebit")
 	mycoll2.set_collision_layer_bit(3, true)
 	var mycoll3 = StaticBody.new()
 	mycoll3.add_to_group("wire")
@@ -70,7 +74,9 @@ func _ready():
 	mycol2.shape.extents = Vector3(0.01, 0.01, 0.01)
 	mycoll3.add_child(mycol2)
 	mycoll3.set_collision_layer_bit(0, false)
+	mycoll3.add_to_group("wirebit")
 	mycoll3.set_collision_layer_bit(1, true)
+	mycoll3.set_collision_layer_bit(7, true)
 	mycoll3.set_collision_layer_bit(3, true) 
 	if front == null:
 		front = $front.get_global_transform().origin
@@ -434,4 +440,7 @@ func connect_start():
 	rear_not_connected = false
 
 func get_info():
-	return(["wire", volts, amps, 0, error, flowing])
+	if error == null:
+		return(["wire", false, volts, amps, 0, error, flowing])
+	else:
+		return(["wire", true, volts, amps, 0, error, flowing])

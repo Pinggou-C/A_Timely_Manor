@@ -66,7 +66,7 @@ collision_mask = 524288
 [node name="Area" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0 )
 collision_layer = 0
-collision_mask = 120
+collision_mask = 128
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5 )
@@ -87,18 +87,6 @@ position = Vector2( 683, 384 )
 texture = ExtResource( 3 )
 script = ExtResource( 5 )
 
-[node name="text" type="RichTextLabel" parent="crosshair"]
-margin_left = -120.0
-margin_top = 120.0
-margin_right = 120.0
-margin_bottom = 240.0
-bbcode_enabled = true
-bbcode_text = "~ \\n Error: [u][b][color=red]\" + info[4]+\"[/color][/b][/u]"
-text = "~ \\n Error: \" + info[4]+\""
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Timer" type="Timer" parent="."]
 
 [node name="Timer2" type="Timer" parent="."]
@@ -106,6 +94,35 @@ __meta__ = {
 [node name="PDA" type="Timer" parent="."]
 process_mode = 0
 one_shot = true
+
+[node name="PDA2" type="Control" parent="."]
+anchor_left = 0.356
+anchor_top = 0.587
+anchor_right = 0.356
+anchor_bottom = 0.587
+margin_left = -150.52
+margin_top = -249.96
+margin_right = 149.48
+margin_bottom = 250.04
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text" type="RichTextLabel" parent="PDA2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -140.0
+margin_top = -240.0
+margin_right = 140.0
+margin_bottom = -40.0
+bbcode_enabled = true
+bbcode_text = "~ \\n Error: [u][b][color=red]\" + info[4]+\"[/color][/b][/u]"
+text = "~ \\n Error: \" + info[4]+\""
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
 [connection signal="body_exited" from="Area" to="." method="_on_Area_body_exited"]

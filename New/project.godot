@@ -161,6 +161,7 @@ wiresnap={
 3d_physics/layer_5="wire_nodes"
 3d_physics/layer_6="battery"
 3d_physics/layer_7="appliances"
+3d_physics/layer_8="PDA"
 
 [rendering]
 

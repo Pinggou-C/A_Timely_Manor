@@ -19,7 +19,7 @@ albedo_color = Color( 0.839216, 0.839216, 0.839216, 0.45098 )
 "electrical_components",
 "wire_nodes",
 ]]
-collision_layer = 786448
+collision_layer = 786576
 script = ExtResource( 1 )
 
 [node name="CollisionShape2" type="CollisionShape" parent="."]

@@ -33,6 +33,7 @@ extents = Vector3( 0.05, 0.05, 0.05 )
 "batteries",
 "electrical_components",
 ]]
+collision_layer = 129
 script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]

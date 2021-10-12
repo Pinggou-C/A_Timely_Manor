@@ -236,7 +236,7 @@ func _on_Area_body_exited(body):
 		$PDA.stop()
 	if body == looking_at:
 		looking_at = null
-		$crosshair/text.bbcode_text = ""
+		$PDA2/text.bbcode_text = ""
 	if all_looks.has(body):
 		all_looks.remove(all_looks.find(body))
 	if all_looks.size() > 0:
@@ -248,22 +248,26 @@ func _on_PDA_timeout():
 	looking_at = temp_look
 	temp_look = null
 	#gets info from components, volts amps resistance, errors etc
-	var info = looking_at.get_info()
+	var info
+	if looking_at.is_in_group("wirebit"):
+		info = looking_at.get_parent().get_info()
+	else:
+		info = looking_at.get_info()
 	var text
 	if info[0] == "wire" || info[0] == "node":
 		print(String(info[2]))
 		if info[1] == false:
 			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: ~[/color][/center]"
 		else:
-			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: [/color][u][b][color=red]" + info[4]+"[/color][/b][/u][center]"
+			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: [/color][u][b][color=red]" + info[5]+"[/color][/b][/u][center]"
 	elif info[0] == "appliance":
 		if info[1] == false:
 			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: ~[/color][/center]"
 		else:
-			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: [/color][u][b][color=red]" + info[4]+"[/color][/b][/u][/center]"
+			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: [/color][u][b][color=red]" + info[5]+"[/color][/b][/u][/center]"
 	elif info[0] == "battery":
 		if info[1] == false:
 			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: ~[/color][/center]"
 		else:
-			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: [/color][u][b][color=red]" + info[4]+"[/color][/b][/u][/center]"
-	$crosshair/text.bbcode_text = text
+			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: [/color][u][b][color=red]" + info[5]+"[/color][/b][/u][/center]"
+	$PDA2/text.bbcode_text = text

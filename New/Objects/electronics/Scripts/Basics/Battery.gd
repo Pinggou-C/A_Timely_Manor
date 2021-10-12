@@ -119,4 +119,7 @@ func conecteds():
 		return [0, 0, "error"]
 
 func get_info():
-	return(["battery", volts, amps, 0, error, flowing])
+	if error == null:
+		return(["battery", false, volts, amps, 0, error, flowing])
+	else:
+		return(["battery", true, volts, amps, 0, error, flowing])
