@@ -226,7 +226,7 @@ func stat_to_kinem(stat: StaticBody) -> KinematicBody:
 func _on_Area_body_entered(body):
 	if temp_look == null && looking_at == null:
 		temp_look = body
-		$PDA.start(0.15)
+		$PDA.start(0.3)
 	all_looks.append(body)
 
 
@@ -236,6 +236,7 @@ func _on_Area_body_exited(body):
 		$PDA.stop()
 	if body == looking_at:
 		looking_at = null
+		$crosshair/text.bbcode_text = ""
 	if all_looks.has(body):
 		all_looks.remove(all_looks.find(body))
 	if all_looks.size() > 0:
@@ -250,18 +251,19 @@ func _on_PDA_timeout():
 	var info = looking_at.get_info()
 	var text
 	if info[0] == "wire" || info[0] == "node":
+		print(String(info[2]))
 		if info[1] == false:
-			text = "Volts: "+String(info[2])+"V \nStroomsterkte: "+String(info[3])+"A /nWeerstand: ~ \nError: ~"
+			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: ~[/color][/center]"
 		else:
-			text = "Volts: "+String(info[2])+"V \nStroomsterkte: "+String(info[3])+"A /nWeerstand: ~ \nError: [u][b][color=red]" + info[4]+"[/color][/b][/u]"
+			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: [/color][u][b][color=red]" + info[4]+"[/color][/b][/u][center]"
 	elif info[0] == "appliance":
 		if info[1] == false:
-			text = "Volts: "+String(info[2])+"V \nStroomsterkte: "+String(info[3])+"A /nWeerstand: ~ \nError: ~"
+			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: ~[/color][/center]"
 		else:
-			text = "Volts: "+String(info[2])+"V \nStroomsterkte: "+String(info[3])+"A /nWeerstand: ~ \nError: [u][b][color=red]" + info[4]+"[/color][/b][/u]"
+			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: [/color][u][b][color=red]" + info[4]+"[/color][/b][/u][/center]"
 	elif info[0] == "battery":
 		if info[1] == false:
-			text = "Volts: "+String(info[2])+"V \nStroomsterkte: "+String(info[3])+"A /nWeerstand: ~ \nError: ~"
+			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: ~[/color][/center]"
 		else:
-			text = "Volts: "+String(info[2])+"V \nStroomsterkte: "+String(info[3])+"A /nWeerstand: ~ \nError: [u][b][color=red]" + info[4]+"[/color][/b][/u]"
+			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: [/color][u][b][color=red]" + info[4]+"[/color][/b][/u][/center]"
 	$crosshair/text.bbcode_text = text

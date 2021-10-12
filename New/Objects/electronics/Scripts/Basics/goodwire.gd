@@ -3,6 +3,11 @@ extends Spatial
 var frontnode = null
 var rearnode = null
 
+var volts = 0
+var amps = 0
+var error = null
+var flowing = false
+
 var front_is_battery = false
 var rear_is_battery = false
 
@@ -428,4 +433,5 @@ func connect_start():
 	front_not_connected = false
 	rear_not_connected = false
 
-
+func get_info():
+	return(["wire", volts, amps, 0, error, flowing])

@@ -45,8 +45,11 @@ var pos3_battery = false
 var pos4_battery = false
 
 var powered_by = []
-var volts
-var amps
+
+var volts = 0
+var amps = 0
+var error = null
+
 var path0 =[]
 var resistance0 =0
 var oldresistance0 =[]
@@ -326,3 +329,9 @@ func conecteds():
 		return [self, connecteds, type, 0]
 	else:
 		return [0, 0, "error"]
+
+func get_info():
+	if error != null:
+		return(["node", true, volts, amps, 0, error, flowing])
+	else:
+		return(["node", false, volts, amps, 0, error, flowing])

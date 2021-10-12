@@ -7,6 +7,8 @@ var negconnect = null
 
 var flowing = false
 
+var error = null
+
 var all_paths = []
 var paths = []
 # paths = [ [id, resistance, [wires], [splits]], []]
@@ -115,3 +117,6 @@ func conecteds():
 		return [self, [posconnect, negconnect], type, 0]
 	else:
 		return [0, 0, "error"]
+
+func get_info():
+	return(["battery", volts, amps, 0, error, flowing])

@@ -13,9 +13,11 @@ export(float) var resistance
 export(float, 0.1, 100, 0.1) var volts
 export(float, 0.01, 100, 0.1) var watts
 
-var wire_amps = null
-var wire_volts = null
+var wire_amps = 0
+var wire_volts = 0
 var wire_path = null
+var error = null
+var flowing = false
 
 var electricity_flowing = false
 var connected = false
@@ -37,3 +39,6 @@ func conecteds():
 		return [self, [positiveconnect, negativeconnect], type, resistance]
 	else:
 		return "error"
+
+func get_info():
+	return(["appliance", wire_volts, wire_amps, resistance, error, flowing, volts, watts])
