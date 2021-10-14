@@ -37,7 +37,6 @@ func _ready():
 	pass
  
 func update_all_electrical_components():
-	print("hi")
 	# This makes sure only one electrical update can be happening at once
 	if electrical_update_in_progress:
 		return 
@@ -54,17 +53,14 @@ func update_all_electrical_components():
 			if p[2] != "error":
 				specialnodestuf.append(p)
 				allnode.append(i)
-				print(p)
 		else:
 			var p =i.conecteds()
 			if p[2] != "error":
 				nodestuff.append(p)
 				allnode.append(i)
-				print(p)
 	#checks batteries, appliances and one way things
 	
 	for i in specialnodestuf:
-		print("hellotherr")
 		var p = i
 		var err = false
 		var nodes = p[1]
@@ -93,10 +89,7 @@ func update_all_electrical_components():
 					err = true
 		if err == false:
 			connecteds.append([p[0], [p[1][0]], p[2], p[3], p[1]])
-			print(p[1][0])
-			print([p[0], [p[1][0]], p[2], p[3], p[1]])
 			nodes.append(p[0])
-			print("hiii")
 			if p[0].is_in_group("batteries"):
 				conned_batteries.append([p[0]])
 		components_updated_this_frame += 1
@@ -106,7 +99,6 @@ func update_all_electrical_components():
 			# Or "idle_frame", depending on which suits your game better
 			components_updated_this_frame = 0
 	for i in nodestuff:
-		print("hellotherr2")
 		var p = i
 		var err = false
 		var points = []
@@ -124,6 +116,7 @@ func update_all_electrical_components():
 							points.append(node)
 						all_points.append(node)
 				else:
+					points.append(node)
 					all_points.append(node)
 			else:
 				errors.append([i, node, "non existant"])
@@ -131,7 +124,6 @@ func update_all_electrical_components():
 		if all_points.size()> 1:
 			connecteds.append([p[0], points, p[2], p[3], all_points])
 			nodes.append(p[0])
-			print("hiii")
 		components_updated_this_frame += 1
 		if components_updated_this_frame == MAX_COMPONENT_UPDATES_PER_FRAME:
 			# Yield until the next physics frame, allowing other parts of your code to execute.	
@@ -145,7 +137,7 @@ func find_paths():
 	#the first the battery passes is always the positive connection point
 	print("find")
 	starting_point = conned_batteries[0][0]
-	print(conned_batteries)
+	print(conned_batteries[0][0])
 	first_node = connecteds[nodes.find(starting_point)][4][0]
 	var previous_node = starting_point
 	var current_node = connecteds[nodes.find(starting_point)][4][0]
