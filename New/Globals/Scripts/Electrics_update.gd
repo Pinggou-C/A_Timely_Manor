@@ -91,10 +91,18 @@ func update_all_electrical_components():
 					errorid.append(i)
 					err = true
 		if err == false:
-			connecteds.append([p[0], [p[1][0]], p[2], p[3], p[1]])
-			nodes.append(p[0])
-			if p[0].is_in_group("batteries"):
-				conned_batteries.append([p[0]])
+			if !nodes.has(p[0]):
+				connecteds.append([p[0], [p[1][0]], p[2], p[3], p[1]])
+				nodes.append(p[0])
+				if p[0].is_in_group("batteries"):
+					conned_batteries.append([p[0]])
+			else:
+				if connecteds.has([p[0], [p[1][0]], p[2], p[3], p[1]]):
+					pass
+				else: 
+					connecteds[nodes.find(p[0])] = [p[0], [p[1][0]], p[2], p[3], p[1]]
+				if conned_batteries.has([p[0]]):
+					pass
 		components_updated_this_frame += 1
 		if components_updated_this_frame == MAX_COMPONENT_UPDATES_PER_FRAME:
 			# Yield until the next physics frame, allowing other parts of your code to execute.	
@@ -103,7 +111,6 @@ func update_all_electrical_components():
 			components_updated_this_frame = 0
 	for i in nodestuff:
 		var p = i
-		print(i)
 		var err = false
 		var points = []
 		var all_points = []
@@ -113,14 +120,11 @@ func update_all_electrical_components():
 				if node.is_in_group("batteries") || node.is_in_group("appliance"):
 					var front = allnodestuff[allnode.find(node)][1][0]
 					var rear = allnodestuff[allnode.find(node)][1][1]
-					print(front)
-					print(node)
 					if errorid.has(node) || errorid.has(front) || errorid.has(rear):
 						err = true
 					if err == false:
 						if p[0] != front:
 							points.append(node)
-							print('hi')
 						all_points.append(node)
 				else:
 					points.append(node)
@@ -129,9 +133,14 @@ func update_all_electrical_components():
 				errors.append([i, node, "non existant"])
 				errorid.append(i)
 		if all_points.size()> 1:
-			print([p[0], points, p[2], p[3], all_points])
-			connecteds.append([p[0], points, p[2], p[3], all_points])
-			nodes.append(p[0])
+			if !nodes.has(p[0]):
+				connecteds.append([p[0], points, p[2], p[3], all_points])
+				nodes.append(p[0])
+			else:
+				if connecteds.has([p[0], points, p[2], p[3], all_points]):
+					pass
+				else: 
+					connecteds[nodes.find(p[0])] = [p[0], points, p[2], p[3], all_points]
 		components_updated_this_frame += 1
 		if components_updated_this_frame == MAX_COMPONENT_UPDATES_PER_FRAME:
 			# Yield until the next physics frame, allowing other parts of your code to execute.	
@@ -146,16 +155,15 @@ func find_paths():
 	print("find")
 	starting_point = conned_batteries[0][0]
 	print(conned_batteries[0][0])
+	print(connecteds.size())
 	first_node = connecteds[nodes.find(starting_point)][4][0]
 	var previous_node = starting_point
 	var current_node = connecteds[nodes.find(starting_point)][4][0]
 	print(connecteds[nodes.find(starting_point)])
 	path(current_node, previous_node, null, [previous_node], 0, [], ["battery"], [])
-	
 
 func path(current, previous,prev_proper, path, res, old_res, node_ord, splits):
 	print("find2")
-	print(path)
 	var current_node = current
 	var previous_node = previous
 	var next_nodes = connecteds[nodes.find(current_node)][1]
@@ -172,27 +180,22 @@ func path(current, previous,prev_proper, path, res, old_res, node_ord, splits):
 	print(current)
 	var end = false
 	for i in next_nodes:
-		print("test")
 		if !path.has(i) || i == starting_point:
-			print("test")
-			print(i)
 			var id = connecteds[nodes.find(i)]
 			var curpath = current_path
 			if id[2] == "battery":
 				print("batt")
 				node_order.append("battery")
+				current_path.append(i)
 				if i == starting_point:
-					current_path.append(i)
 					end_path(i,current_path, node_order, old_res, resistance)
-					end = true
-				curpath.append(i)
-				new_paths.append([i, curpath, "battery", 0, old_res])
+				else:
+					new_paths.append([i, curpath, "battery", 0, old_res])
 			elif prev_normal_node != null:
 				if !connecteds[nodes.find(prev_normal_node)][1].has(i):
 					var nod_or = node_order
 					var cur_path = path
 					if !connecteds[nodes.find(first_node)][1].has(i) || current == first_node:
-						print("test")
 						if id[2] == "node":
 							new_paths.append([i, curpath, "node", 0, old_res])
 						if id[2] == "appliance":
@@ -234,12 +237,15 @@ func path(current, previous,prev_proper, path, res, old_res, node_ord, splits):
 					print('err3')
 					errors.append([current_node, i, "to first node"])
 	if end == false:
-		if new_paths.size() > 1:
+		continue_path(new_paths, current_node, prev_normal_node, node_order, splits_new)
+
+func continue_path(new_paths, current_node, prev_normal_node, node_order, splits_new):
+	print('con')
+	if new_paths.size() > 1:
 			splits_new.append(current_node)
 			prev_normal_node = current_node
-		for i in new_paths:
-			path(i[0], current_node, prev_normal_node, i[1], i[3], i[4], node_order, splits_new)
-
+	for i in new_paths:
+		path(i[0], current_node, prev_normal_node, i[1], i[3], i[4], node_order, splits_new)
 
 
 func end_path(node, path, node_ord, old_res, res):
