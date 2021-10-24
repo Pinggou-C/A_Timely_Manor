@@ -67,6 +67,7 @@ func update_all_electrical_components():
 		var p = i
 		var err = false
 		var nodess = p[1]
+		var errornodes = []
 		if !errorid.has(p[0]):
 			for node in nodess:
 				if allnode.has(node):
@@ -82,14 +83,17 @@ func update_all_electrical_components():
 							errors.append([i, node, "facing towards"])
 							errorid.append(node)
 							err = true
+							errornodes.append(nodes)
 						elif p[1][1] == node && side == "rear":
 							errors.append([i, node, "facing towards"])
 							errorid.append(node)
 							err = true
+							errornodes.append(nodes)
 				else:
 					errors.append([i, node, "non existant"])
 					errorid.append(i)
 					err = true
+					errornodes.append(nodes)
 		if err == false:
 			if !nodes.has(p[0]):
 				connecteds.append([p[0], [p[1][0]], p[2], p[3], p[1]])
@@ -103,6 +107,9 @@ func update_all_electrical_components():
 					connecteds[nodes.find(p[0])] = [p[0], [p[1][0]], p[2], p[3], p[1]]
 				if conned_batteries.has([p[0]]):
 					pass
+		else:
+			for j in errornodes:
+				pass
 		components_updated_this_frame += 1
 		if components_updated_this_frame == MAX_COMPONENT_UPDATES_PER_FRAME:
 			# Yield until the next physics frame, allowing other parts of your code to execute.	
@@ -160,7 +167,7 @@ func find_paths():
 	var previous_node = starting_point
 	var current_node = connecteds[nodes.find(starting_point)][4][0]
 	print(connecteds[nodes.find(starting_point)])
-	path(current_node, previous_node, null, [previous_node], 0, [], ["battery"], [])
+	continue_path(current_node, previous_node, null, [previous_node], 0, [], ["battery"], [])
 
 func path(current, previous,prev_proper, path, res, old_res, node_ord, splits):
 	print("find2")
@@ -189,26 +196,27 @@ func path(current, previous,prev_proper, path, res, old_res, node_ord, splits):
 				current_path.append(i)
 				if i == starting_point:
 					end_path(i,current_path, node_order, old_res, resistance)
+					return [[true]]
 				else:
-					new_paths.append([i, curpath, "battery", 0, old_res])
+					new_paths.append([false, i, curpath, "battery", 0, old_res])
 			elif prev_normal_node != null:
 				if !connecteds[nodes.find(prev_normal_node)][1].has(i):
 					var nod_or = node_order
 					var cur_path = path
 					if !connecteds[nodes.find(first_node)][1].has(i) || current == first_node:
 						if id[2] == "node":
-							new_paths.append([i, curpath, "node", 0, old_res])
+							new_paths.append([false,i, curpath, "node", 0, old_res])
 						if id[2] == "appliance":
 							var old_resistance = old_res
 							var ress = id[3]
 							old_resistance.append(ress)
 							if current == id[1][0]:
-								new_paths.append([i, curpath, "appliance", ress, old_resistance])
+								new_paths.append([false,i, curpath, "appliance", ress, old_resistance])
 							else:
 								print('err')
 								errors.append([current_node, i, "wrong entrance"])
 						if id[2] == "non_appliance":
-							new_paths.append([i, curpath, "non_appliance", 0, old_res])
+							new_paths.append([false,i, curpath, "non_appliance", 0, old_res])
 					else:
 						print('err3')
 						errors.append([current_node, i, "to first node"])
@@ -221,31 +229,69 @@ func path(current, previous,prev_proper, path, res, old_res, node_ord, splits):
 				if !connecteds[nodes.find(first_node)][1].has(i) || current == first_node:
 					print("test")
 					if id[2] == "node":
-						new_paths.append([i, curpath, "node", 0, old_res])
+						new_paths.append([false,i, curpath, "node", 0, old_res])
 					if id[2] == "appliance":
 						var old_resistance = old_res
 						var ress = id[3]
 						old_resistance.append(ress)
 						if current == id[1][0]:
-							new_paths.append([i, curpath, "appliance", ress, old_resistance])
+							new_paths.append([false,i, curpath, "appliance", ress, old_resistance])
 						else:
 							print('err')
 							errors.append([current_node, i, "wrong entrance"])
 					if id[2] == "non_appliance":
-						new_paths.append([i, curpath, "non_appliance", 0, old_res])
+						new_paths.append([false, i, curpath, "non_appliance", 0, old_res])
 				else:
 					print('err3')
 					errors.append([current_node, i, "to first node"])
 	if end == false:
-		continue_path(new_paths, current_node, prev_normal_node, node_order, splits_new)
-
-func continue_path(new_paths, current_node, prev_normal_node, node_order, splits_new):
-	print('con')
-	if new_paths.size() > 1:
+		if new_paths.size() > 1:
 			splits_new.append(current_node)
 			prev_normal_node = current_node
-	for i in new_paths:
-		path(i[0], current_node, prev_normal_node, i[1], i[3], i[4], node_order, splits_new)
+		return new_paths
+
+func continue_path(current, previous,prev_proper, path, res, old_res, node_ord, splits):
+#current_path etc
+	var current_id = 0
+	var current_resistance = res
+	var current_node = current
+	var current_path = path
+	var current_splits = splits
+	var current_node_order = node_ord
+	var current_old_resistance = old_res
+	
+	var prev_normal_node = prev_proper
+	var prev_node = previous
+
+#splits
+	var splits_all = []
+	var splits_to_do = []
+	var done_splits = []
+	var current_split
+	
+	var nodes_all = []
+#logic variables
+	var end_reached = false
+	var ongoing = []
+	
+#to do
+	var to_do = []
+#permanent variable
+	var pathss = []
+	
+	while end_reached == true:
+		var info = path(current_node, prev_node, prev_normal_node, current_path, current_resistance, current_old_resistance, current_node_order, current_splits)
+		var ongoings =info.size()
+		if info[0][0] == false:
+			if ongoings > 0:
+				if ongoings.size() > 1:
+					splits_all.append(current_node)
+					splits_to_do.append(current_node)
+				for node in info:
+					if !nodes_all.has(node[1]):
+						nodes_all.append(node[1])
+				
+	print('con')
 
 
 func end_path(node, path, node_ord, old_res, res):

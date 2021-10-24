@@ -18,6 +18,8 @@ var printtt = 0
 var connecteds = []
 var wires = []
 
+var gravity = Vector3.DOWN * 9
+var velocety = Vector3()
 var battery
 
 var flowing = false
@@ -297,6 +299,9 @@ func _physics_process(delta):
 				pos = $pos4.get_global_transform().origin
 			i.change_size(self, pos)
 		oldpos = get_global_transform().origin
+	if connecteds.size() < 1:
+		velocety += gravity * delta
+		velocety = move_and_slide(velocety, Vector3.UP)
 
 func perm():
 	time = "perm"

@@ -65,6 +65,8 @@ func _physics_process(delta):
 				pos_next = Vector3(stepify(pos_next.x, 0.5),stepify(pos_next.y, 0.5),stepify(pos_next.z, 0.5))
 		var vel = (pos_next - pos_cur) / delta
 		pickvel = pick.move_and_slide(vel, Vector3.UP, false, 4, PI/4, true)
+
+
 func get_input():
 	if picked == true:
 		if Input.is_action_just_pressed("mouse_r"):
@@ -157,7 +159,7 @@ func get_input():
 						body.add_to_group(i)
 				else:
 					var body := kinem_to_rigid(pick)
-					body.linear_velocity = pickvel * 0.75
+					body.linear_velocity = pickvel / 1500
 					body.set_collision_layer_bit(19, true)
 					body.get_child(0).drop(pickvel * 0.75, wiresnap)
 					pick = null
