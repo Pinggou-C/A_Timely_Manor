@@ -18,8 +18,9 @@ var printtt = 0
 var connecteds = []
 var wires = []
 
-var gravity = Vector3.DOWN * 9
+var gravity = Vector3.DOWN * 18
 var velocety = Vector3()
+var damp = Vector3(1, 0, 1)
 var battery
 
 var flowing = false
@@ -56,6 +57,8 @@ var path0 =[]
 var resistance0 =0
 var oldresistance0 =[]
 var splits0 =[]
+
+var held = false
 
 func _ready():
 	oldpos = translation
@@ -275,10 +278,11 @@ func wire(wire, node):
 #when the player pickes the node up
 
 func pickup():
-	pass
-func drop(hi1, hi2):
-	pass
-
+	held = true
+func drop(vel, hi2):
+	velocety = vel
+	held =false
+	
 func enter(which):
 	#when i wire gets connected
 	pass
@@ -299,9 +303,16 @@ func _physics_process(delta):
 				pos = $pos4.get_global_transform().origin
 			i.change_size(self, pos)
 		oldpos = get_global_transform().origin
-	if connecteds.size() < 1:
-		velocety += gravity * delta
-		velocety = move_and_slide(velocety, Vector3.UP)
+	if wires.size() < 1:
+		if held == false:
+			velocety += gravity * delta
+			if is_on_floor() || is_on_ceiling():
+				velocety -= 10*(velocety*(damp*Vector3(delta, delta, delta)))
+			elif is_on_wall():
+				velocety -= 5*(velocety*(damp*Vector3(delta, delta, delta)))
+			else: 
+				velocety -= (velocety*(damp*Vector3(delta, delta, delta)))
+			velocety = move_and_slide(velocety, Vector3.UP)
 
 func perm():
 	time = "perm"

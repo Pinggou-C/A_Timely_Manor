@@ -144,7 +144,7 @@ func get_input():
 		elif picked == true:
 			if pickgroups.has("wire_nodes"):
 				picked = false
-				pick.drop(pickvel * 0.75, wiresnap)
+				pick.drop(pickvel * 0.5, wiresnap)
 				pick = null
 			else:
 				if wiresnap == true:
