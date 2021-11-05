@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Objects/3D_Objects/Camera/Spatial.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Audio_Assets/zoom1.wav" type="AudioStream" id=2]
 
 [sub_resource type="CylinderMesh" id=1]
 top_radius = 0.1
@@ -37,5 +38,8 @@ material/0 = null
 
 [node name="notifier" type="VisibilityNotifier" parent="."]
 aabb = AABB( -0.0995767, -0.102957, -0.307308, 0.199153, 0.205914, 0.415397 )
+
+[node name="zoom" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 2 )
 
 [connection signal="visibility_changed" from="." to="." method="_on_Spatial_visibility_changed"]

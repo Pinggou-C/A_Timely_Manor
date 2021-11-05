@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Objects/Player/chearecter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/menu/Pause.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Objects/electronics/Items/Basics/wirenode.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Objects/electronics/Items/Basics/goodwire.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Objects/3D_Objects/pickable/cubereverse.gd" type="Script" id=7]
+[ext_resource path="res://Objects/3D_Objects/Doors/Door.tscn" type="PackedScene" id=8]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.717647, 0.701961, 0.737255, 1 )
@@ -41,24 +42,28 @@ sun_longitude = 93.25
 [sub_resource type="Environment" id=7]
 background_mode = 2
 background_sky = SubResource( 6 )
+tonemap_mode = 4
 glow_enabled = true
 glow_bloom = 0.08
 glow_blend_mode = 0
 glow_bicubic_upscale = true
 
-[sub_resource type="PhysicsMaterial" id=10]
+[sub_resource type="PhysicsMaterial" id=8]
 rough = true
 absorbent = true
 
-[sub_resource type="BoxShape" id=8]
+[sub_resource type="BoxShape" id=9]
 extents = Vector3( 0.5, 0.5, 0.5 )
 
-[sub_resource type="CubeMesh" id=9]
+[sub_resource type="CubeMesh" id=10]
 size = Vector3( 1, 1, 1 )
 
 [node name="Level1" type="Spatial"]
 
 [node name="Pause" parent="." instance=ExtResource( 2 )]
+
+[node name="Door" parent="." instance=ExtResource( 8 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.6555, 1.64344, 5.18555 )
 
 [node name="CSGCombiner" type="CSGCombiner" parent="."]
 use_collision = true
@@ -89,7 +94,7 @@ depth = 20.0
 material = SubResource( 1 )
 
 [node name="CSGBox10" type="CSGBox" parent="CSGCombiner"]
-transform = Transform( 1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, -1.706, 3.0973, 8.70713 )
+transform = Transform( 1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, -1.706, 3.0973, 9.47519 )
 width = 10.0
 height = 0.2
 depth = 20.0
@@ -129,9 +134,9 @@ height = 10.0
 material = SubResource( 2 )
 
 [node name="CSGBox12" type="CSGBox" parent="CSGCombiner"]
-transform = Transform( 1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, -2.71493, 6.2419, -0.597328 )
+transform = Transform( 1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, -2.71915, 6.22431, -0.0881899 )
 width = 0.5
-height = 18.5309
+height = 18.9522
 depth = 0.5
 material = SubResource( 2 )
 
@@ -320,6 +325,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.89358, 1.17361, -5.12819 )
 [node name="wire" parent="ELECTRONICS" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.4304, -0.0689241, 4.72785 )
 
+[node name="wire3" parent="ELECTRONICS" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.09898, -0.0689241, 4.71968 )
+
+[node name="wire2" parent="ELECTRONICS" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5674, -0.0689241, 4.72785 )
+
 [node name="battery" parent="ELECTRONICS" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4734, -0.684999, 2.52589 )
 
@@ -336,14 +347,14 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.88105, -1.03436, -0.756417 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.28771, 0 )
 collision_layer = 786433
 mass = 65535.0
-physics_material_override = SubResource( 10 )
+physics_material_override = SubResource( 8 )
 gravity_scale = 1.2
 
 [node name="CollisionShape" type="CollisionShape" parent="RigidBody"]
-shape = SubResource( 8 )
+shape = SubResource( 9 )
 script = ExtResource( 7 )
 weight = 1000
 
 [node name="MeshInstance" type="MeshInstance" parent="RigidBody"]
-mesh = SubResource( 9 )
+mesh = SubResource( 10 )
 material/0 = null

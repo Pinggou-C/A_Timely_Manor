@@ -123,3 +123,9 @@ func get_info():
 		return(["battery", false, volts, amps, 0, error, flowing])
 	else:
 		return(["battery", true, volts, amps, 0, error, flowing])
+
+func diconnect_node(node):
+	pass
+
+func conn():
+	pass

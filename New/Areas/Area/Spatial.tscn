@@ -17,9 +17,7 @@ size = Vector3( 10, 1, 10 )
 margin = 0.03
 extents = Vector3( 10, 0.499, 10 )
 
-[node name="Spatial" type="Spatial" groups=[
-"effected",
-]]
+[node name="Spatial" type="Spatial" groups=["effected"]]
 pause_mode = 2
 
 [node name="Pause" parent="." instance=ExtResource( 5 )]
@@ -54,22 +52,16 @@ __meta__ = {
 "volumetric": 0.0
 }
 
-[node name="Timer" type="Timer" parent="." groups=[
-"globaltimer",
-]]
+[node name="Timer" type="Timer" parent="." groups=["globaltimer"]]
 pause_mode = 1
 wait_time = 0.2
 one_shot = true
 
-[node name="StaticBody" type="StaticBody" parent="." groups=[
-"floor",
-]]
+[node name="StaticBody" type="StaticBody" parent="." groups=["floor"]]
 pause_mode = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.76542, 41.8173, 0 )
 
-[node name="MeshInstance" type="MeshInstance" parent="StaticBody" groups=[
-"floor",
-]]
+[node name="MeshInstance" type="MeshInstance" parent="StaticBody" groups=["floor"]]
 layers = 1048575
 mesh = SubResource( 1 )
 material/0 = ExtResource( 7 )

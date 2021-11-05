@@ -21,6 +21,7 @@ func _on_screen_exited():
 	print('bye')
 func _on_screen_entered():
 	onscreen = true
+	yield(get_tree().create_timer(0.33), "timeout")
 	$Tween.interpolate_property($e1, "rotation_degrees", $e1.rotation_degrees, baseangle, returnspeed, Tween.TRANS_LINEAR, Tween.EASE_OUT)
 	$Tween.start()
 	print('hi')

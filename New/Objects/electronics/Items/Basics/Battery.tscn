@@ -13,21 +13,21 @@ size = Vector3( 0.8, 0.8, 0.8 )
 [sub_resource type="BoxShape" id=4]
 extents = Vector3( 0.065, 0.065, 0.065 )
 
+[sub_resource type="BoxShape" id=8]
+extents = Vector3( 0.065, 0.065, 0.065 )
+
 [sub_resource type="CubeMesh" id=5]
 size = Vector3( 0.1, 0.1, 0.1 )
-
-[sub_resource type="SpatialMaterial" id=6]
-resource_local_to_scene = true
-albedo_color = Color( 1, 0, 0, 1 )
 
 [sub_resource type="SpatialMaterial" id=7]
 albedo_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="BoxShape" id=8]
-extents = Vector3( 0.065, 0.065, 0.065 )
-
 [sub_resource type="BoxShape" id=9]
 extents = Vector3( 0.05, 0.05, 0.05 )
+
+[sub_resource type="SpatialMaterial" id=6]
+resource_local_to_scene = true
+albedo_color = Color( 1, 0, 0, 1 )
 
 [node name="battery" type="StaticBody" groups=[
 "batteries",
@@ -52,20 +52,10 @@ collision_mask = 24
 [node name="CollisionShape" type="CollisionShape" parent="Pos"]
 shape = SubResource( 4 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Pos"]
-use_in_baked_light = true
-mesh = SubResource( 5 )
-material/0 = SubResource( 6 )
-
 [node name="Neg" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, -0.35, 0 )
 collision_layer = 0
 collision_mask = 24
-
-[node name="MeshInstance2" type="MeshInstance" parent="Neg"]
-use_in_baked_light = true
-mesh = SubResource( 5 )
-material/0 = SubResource( 7 )
 
 [node name="CollisionShape2" type="CollisionShape" parent="Neg"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000796318, 0.00278926, -0.00616896 )
@@ -84,6 +74,11 @@ one_shot = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, -0.35, 0 )
 collision_layer = 32
 
+[node name="MeshInstance2" type="MeshInstance" parent="StaticBody"]
+use_in_baked_light = true
+mesh = SubResource( 5 )
+material/0 = SubResource( 7 )
+
 [node name="CollisionShape3" type="CollisionShape" parent="StaticBody" groups=[
 "bat",
 ]]
@@ -95,6 +90,11 @@ shape = SubResource( 9 )
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, -0.35, 0 )
 collision_layer = 32
+
+[node name="MeshInstance" type="MeshInstance" parent="StaticBody2"]
+use_in_baked_light = true
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
 
 [node name="CollisionShape2" type="CollisionShape" parent="StaticBody2" groups=[
 "bat",

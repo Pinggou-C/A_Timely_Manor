@@ -177,9 +177,9 @@ func _input(event):
 		##$Camera.rotation_degrees.z  += event.relative.z
 
 func _process(_delta):
-	$Camera.rotation_degrees.x = lerp($Camera.rotation_degrees.x, $Camera.rotation_degrees.x - mouseDelta.y*2, 0.0333)
+	$Camera.rotation_degrees.x = lerp($Camera.rotation_degrees.x, $Camera.rotation_degrees.x - mouseDelta.y, 0.33)
 	$Camera.rotation_degrees.x = clamp($Camera.rotation_degrees.x, -89, 89) 
-	rotation_degrees.y = lerp(rotation_degrees.y, rotation_degrees.y - mouseDelta.x*3, 0.0333)
+	rotation_degrees.y = lerp(rotation_degrees.y, rotation_degrees.y - mouseDelta.x, 0.33)
 	mouseDelta = Vector2()
 	$Head.rotation_degrees.x = lerp($Head.rotation_degrees.x, $Camera.rotation_degrees.x, 0.33)
 	$RayCast.rotation_degrees.x = lerp($RayCast.rotation_degrees.x, $Camera.rotation_degrees.x, 0.33)
@@ -253,6 +253,8 @@ func _on_PDA_timeout():
 	var info
 	if looking_at.is_in_group("wirebit"):
 		info = looking_at.get_parent().get_info()
+	elif looking_at.is_in_group("door"):
+		info = looking_at.get_parent().get_parent().get_info()
 	else:
 		info = looking_at.get_info()
 	var text

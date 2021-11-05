@@ -5,10 +5,23 @@ var power = 0
 var state = "closed"
 var indiepow = 0
 var wassped = 1
-var poscon = false
-var negcon = false
+var poscon = null
+var negcon = null
+var posconwire = null
+var negconwire = null
 var flowable = false
 var flowing = false
+
+var time = "perm"
+
+var amps = 0
+var volts = 0
+var resistance
+
+export(int,1, 100) var volt_needs = 1
+export(int,1, 1000) var watt_needs = 1
+
+var error = null
 
 func _on_AnimationPlayer_animation_finished(_anim_name):
 	if doing == 2:
@@ -54,35 +67,54 @@ func unpowe():
 
 
 func positive_connect(body):
-	poscon = body
-	if negcon != null:
-		var pos = poscon.check()
-		var neg = negcon.check()
-		if pos == true && neg == true:
-			flowable == true
+	posconwire = body
+	print("poscon")
 
 
 func positive_disconnect(body):
-	poscon = null
-	if flowable == true:
-		flowable = false
-	if flowing == true:
-		flowing = false
-		unpowe()
+	posconwire = null
+	print("posdiscon")
 
 func negative_connect(body):
-	negcon =  body
-	if poscon != null:
-		var pos = poscon.check()
-		var neg = negcon.check()
-		if pos == true && neg == true:
-			flowable == true
+	negconwire =  body
+	print("negcon")
 
 
 func negative_disconnect(body):
-	negcon = null
-	if flowable == true:
-		flowable = false
-	if flowing == true:
-		flowing = false
-		unpowe()
+	negconwire = null
+	print("negdiscon")
+
+func get_info():
+	if error == null:
+		return(["appliance", false, volts, amps, 0, error, flowing, volt_needs, watt_needs])
+	else:
+		return(["appliance", true, volts, amps, 0, error, flowing, volt_needs, watt_needs])
+
+func conecteds():
+	if negcon != null && poscon != null:
+		return [self, [poscon, negcon], "appliance", 1]
+	else:
+		return [0, 0, "error"]
+
+
+func conn(wire, newnode, frontback, auto = false):
+	var posss
+	#get closest
+	var posarr = []
+	if auto != true:
+		if frontback == "front":
+			posss = wire.rear
+		elif frontback == "rear":
+			posss = wire.front
+	else:
+		if frontback == "front":
+			posss = wire.front
+		elif frontback == "rear":
+			posss = wire.rear
+	var pos
+	var stop = false
+	if wire == posconwire:
+		return [$pos1.get_global_transform().origin, 0]
+	if newnode != null:
+		if !connecteds.has(newnode):
+			connecteds.append(newnode)

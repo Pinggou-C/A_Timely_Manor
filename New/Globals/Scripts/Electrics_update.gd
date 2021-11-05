@@ -49,18 +49,14 @@ func update_all_electrical_components():
 	var specialnodestuf = []
 	var allnode = []
 	for i in scene_tree.get_nodes_in_group("electrical_components"):
-		if i.is_in_group("batteries") || i.is_in_group("appliance"):
-			var p =i.conecteds()
-			if p[2] != "error":
+		var p =i.conecteds()
+		if p[2] != "error":
+			if i.is_in_group("batteries") || i.is_in_group("appliance"):
 				specialnodestuf.append(p)
-				allnode.append(i)
-				allnodestuff.append(p)
-		else:
-			var p =i.conecteds()
-			if p[2] != "error":
+			else:
 				nodestuff.append(p)
-				allnode.append(i)
-				allnodestuff.append(p)
+			allnode.append(i)
+			allnodestuff.append(p)
 	#checks batteries, appliances and one way things
 	
 	for i in specialnodestuf:
@@ -260,6 +256,8 @@ func continue_path(current, previous,prev_proper, path, res, old_res, node_ord, 
 	var current_node_order = node_ord
 	var current_old_resistance = old_res
 	
+	var next_node
+	
 	var prev_normal_node = prev_proper
 	var prev_node = previous
 
@@ -269,7 +267,9 @@ func continue_path(current, previous,prev_proper, path, res, old_res, node_ord, 
 	var done_splits = []
 	var current_split
 	
+	var nodes_to_do = []
 	var nodes_all = []
+	var checked_nodes
 #logic variables
 	var end_reached = false
 	var ongoing = []
@@ -290,7 +290,8 @@ func continue_path(current, previous,prev_proper, path, res, old_res, node_ord, 
 				for node in info:
 					if !nodes_all.has(node[1]):
 						nodes_all.append(node[1])
-				
+		elif info[0][0] == true:
+			end_path(current_node, current_path, current_node_order, current_old_resistance, current_resistance)
 	print('con')
 
 
