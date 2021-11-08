@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Objects/Player/chearecter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/menu/Pause.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Objects/electronics/Items/Basics/goodwire.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Objects/3D_Objects/pickable/cubereverse.gd" type="Script" id=7]
 [ext_resource path="res://Objects/3D_Objects/Doors/Door.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Objects/electronics/Items/Complex/lamp.tscn" type="PackedScene" id=9]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.717647, 0.701961, 0.737255, 1 )
@@ -195,6 +196,14 @@ shadow_reverse_cull_face = true
 omni_range = 12.0
 omni_attenuation = 2.0
 
+[node name="OmniLight4" type="OmniLight" parent="CSGCombiner/CSGBox14"]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -7.3006, 1.29745, 0.103176 )
+light_energy = 0.2
+shadow_enabled = true
+shadow_reverse_cull_face = true
+omni_range = 0.585
+omni_attenuation = 2.0
+
 [node name="OmniLight2" type="OmniLight" parent="CSGCombiner/CSGBox14"]
 transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -0.436851, -2.45496, -0.0288796 )
 light_color = Color( 1, 0.996078, 0.956863, 1 )
@@ -358,3 +367,6 @@ weight = 1000
 [node name="MeshInstance" type="MeshInstance" parent="RigidBody"]
 mesh = SubResource( 10 )
 material/0 = null
+
+[node name="lamp" parent="." instance=ExtResource( 9 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 4.85639, 0.601134, 2.00203 )
