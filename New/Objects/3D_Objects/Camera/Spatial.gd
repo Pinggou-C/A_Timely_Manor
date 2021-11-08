@@ -1,7 +1,7 @@
 extends Spatial
 var onscreen = true
 export(Vector3) var baseangle = Vector3(90, 0, 0)
-export(float) var returnspeed = 0.25
+export(float) var returnspeed = 360
 export(String, "gimp_ball", "under_arm", "over_arm") var standtype
 export(bool) var camera = false
 export(NodePath) var node 
@@ -21,8 +21,15 @@ func _on_screen_exited():
 	print('bye')
 func _on_screen_entered():
 	onscreen = true
+	var time = (abs(baseangle.x - $e1.rotation_degrees.x) + abs(baseangle.y - $e1.rotation_degrees.y) + abs(baseangle.z - $e1.rotation_degrees.z)) /returnspeed
+	print(time)
+	if time > 0.33 && time < 1:
+		$zoom3.play()
+	elif time > 1:
+		$zoom.play()
 	yield(get_tree().create_timer(0.33), "timeout")
-	$Tween.interpolate_property($e1, "rotation_degrees", $e1.rotation_degrees, baseangle, returnspeed, Tween.TRANS_LINEAR, Tween.EASE_OUT)
+	$Tween.interpolate_property($e1, "rotation_degrees", $e1.rotation_degrees, baseangle, time, Tween.TRANS_LINEAR, Tween.EASE_OUT)
+	
 	$Tween.start()
 	print('hi')
 
@@ -49,3 +56,15 @@ func _physics_process(delta):
 			$e1.rotation_degrees.x = rad2deg(angle2)+ 90
 
 
+
+
+func _on_zoom2_finished():
+	$zoom2.playing = false
+
+
+func _on_zoom_finished():
+	$zoom.playing = false
+
+
+func _on_zoom3_finished():
+	$zoom3.playing = false

@@ -166,9 +166,15 @@ wiresnap={
 
 [rendering]
 
+quality/filters/sharpen_intensity=1.0
 2d/options/use_nvidia_rect_flicker_workaround=true
 threads/thread_model=2
+quality/filters/anisotropic_filter_level=16
+quality/filters/use_nearest_mipmap_filter=true
 quality/spatial_partitioning/render_tree_balance=1.0
+quality/filters/msaa=4
+quality/filters/use_fxaa=true
+quality/filters/use_debanding=true
 environment/default_environment="res://Assets/Environment/default_env.tres"
 quality/godrays/sample_number=50
 quality/godrays/use_pcf5=false

@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Objects/electronics/Scripts/Basics/Battery.gd" type="Script" id=1]
+[ext_resource path="res://Objects/extra's/part2.tscn" type="PackedScene" id=3]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.4, 0.4, 0.4 )
@@ -29,10 +30,19 @@ extents = Vector3( 0.05, 0.05, 0.05 )
 resource_local_to_scene = true
 albedo_color = Color( 1, 0, 0, 1 )
 
-[node name="battery" type="StaticBody" groups=[
-"batteries",
-"electrical_components",
-]]
+[sub_resource type="QuadMesh" id=10]
+size = Vector2( 0.5, 0.2 )
+
+[sub_resource type="SpatialMaterial" id=11]
+albedo_color = Color( 0.627451, 0.627451, 0.627451, 1 )
+
+[sub_resource type="ViewportTexture" id=12]
+viewport_path = NodePath("MeshInstance2/Sprite3D/view")
+
+[sub_resource type="ViewportTexture" id=13]
+viewport_path = NodePath("MeshInstance2/Sprite3D2/view")
+
+[node name="battery" type="StaticBody" groups=["batteries", "electrical_components"]]
 collision_layer = 129
 script = ExtResource( 1 )
 
@@ -67,10 +77,7 @@ one_shot = true
 [node name="Timer2" type="Timer" parent="."]
 one_shot = true
 
-[node name="StaticBody" type="StaticBody" parent="." groups=[
-"battery",
-"wires2",
-]]
+[node name="StaticBody" type="StaticBody" parent="." groups=["battery", "wires2"]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, -0.35, 0 )
 collision_layer = 32
 
@@ -79,15 +86,10 @@ use_in_baked_light = true
 mesh = SubResource( 5 )
 material/0 = SubResource( 7 )
 
-[node name="CollisionShape3" type="CollisionShape" parent="StaticBody" groups=[
-"bat",
-]]
+[node name="CollisionShape3" type="CollisionShape" parent="StaticBody" groups=["bat"]]
 shape = SubResource( 9 )
 
-[node name="StaticBody2" type="StaticBody" parent="." groups=[
-"battery",
-"wires2",
-]]
+[node name="StaticBody2" type="StaticBody" parent="." groups=["battery", "wires2"]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, -0.35, 0 )
 collision_layer = 32
 
@@ -96,10 +98,32 @@ use_in_baked_light = true
 mesh = SubResource( 5 )
 material/0 = SubResource( 6 )
 
-[node name="CollisionShape2" type="CollisionShape" parent="StaticBody2" groups=[
-"bat",
-]]
+[node name="CollisionShape2" type="CollisionShape" parent="StaticBody2" groups=["bat"]]
 shape = SubResource( 9 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="."]
+process_priority = 2503
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.401 )
+mesh = SubResource( 10 )
+material/0 = SubResource( 11 )
+
+[node name="Sprite3D" type="Sprite3D" parent="MeshInstance2"]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -0.0872739, 0.0105369, 0.000999987 )
+texture = SubResource( 12 )
+
+[node name="view" parent="MeshInstance2/Sprite3D" instance=ExtResource( 3 )]
+sizee = Vector2( 0, 0 )
+text = "I = 5
+V = 3"
+
+[node name="Sprite3D2" type="Sprite3D" parent="MeshInstance2"]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0.0717251, 0.0141187, 0.000999987 )
+texture = SubResource( 13 )
+
+[node name="view" parent="MeshInstance2/Sprite3D2" instance=ExtResource( 3 )]
+sizee = Vector2( 159, 16 )
+text = "state = 
+unconnected"
 
 [connection signal="body_entered" from="Pos" to="." method="poscon"]
 [connection signal="body_exited" from="Pos" to="." method="posdiscon"]

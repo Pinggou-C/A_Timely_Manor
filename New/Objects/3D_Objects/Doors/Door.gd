@@ -14,6 +14,8 @@ var flowing = false
 
 var time = "perm"
 
+
+
 var amps = 0
 var volts = 0
 var resistance
@@ -116,5 +118,7 @@ func conn(wire, newnode, frontback, auto = false):
 	if wire == posconwire:
 		return [$pos1.get_global_transform().origin, 0]
 	if newnode != null:
-		if !connecteds.has(newnode):
-			connecteds.append(newnode)
+		if !poscon == newnode:
+			poscon = newnode
+		if !negcon == newnode:
+			negcon = newnode
