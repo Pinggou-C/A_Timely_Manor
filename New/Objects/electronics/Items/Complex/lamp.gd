@@ -47,7 +47,7 @@ func _on_rear_body_entered(body):
 func _on_rear_body_exited(body):
 	if body == neg_connect:
 		neg_connect = null
-
+ 
 
 func _on_front_body_entered(body):
 	if pos_connect == null:
