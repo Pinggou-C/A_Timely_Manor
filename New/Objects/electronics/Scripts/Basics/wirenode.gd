@@ -11,7 +11,7 @@ const MAX_COMPONENT_UPDATES_PER_FRAME = 10
 var electrical_update_in_progress = false
 
 var time = "perm"
-
+export(bool) var onstart = false
 export(String, "node", "appliance", "non_appliance") var type = "node"
 
 var printtt = 0
@@ -62,6 +62,8 @@ var held = false
 
 func _ready():
 	oldpos = translation
+	if onstart == true:
+		$plug.get_surface_material(0).albedo_color.a = 1
 
 #adds wire to the wirestack and adds the other node connected to thats wire to self
 func conn(wire, newnode, frontback, auto = false):

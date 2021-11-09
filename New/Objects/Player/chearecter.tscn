@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Objects/Player/chearecter.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Audio_Assets/step.mp3" type="AudioStream" id=2]
 [ext_resource path="res://Untitled.png" type="Texture" id=3]
 [ext_resource path="res://Objects/Player/PlayerCam.gd" type="Script" id=4]
 [ext_resource path="res://Objects/Player/device_astralis_preview.gd" type="Script" id=5]
+[ext_resource path="res://Assets/Audio_Assets/background_noise/fan.mp3" type="AudioStream" id=6]
 
 [sub_resource type="CylinderShape" id=1]
 radius = 0.4
@@ -18,10 +19,7 @@ radius = 0.4
 radial_segments = 10
 rings = 2
 
-[node name="KinematicBody" type="KinematicBody" groups=[
-"player",
-"weighted",
-]]
+[node name="KinematicBody" type="KinematicBody" groups=["player", "weighted"]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.05, 0 )
 collision_layer = 2
 collision_mask = 3
@@ -33,9 +31,7 @@ __meta__ = {
 [node name="Head" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 
-[node name="CollisionShape" type="CollisionShape" parent="." groups=[
-"player",
-]]
+[node name="CollisionShape" type="CollisionShape" parent="." groups=["player"]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, 0 )
 shape = SubResource( 1 )
 
@@ -124,6 +120,12 @@ text = "~ \\n Error: \" + info[4]+\""
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="background_noise" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -20.0
+pitch_scale = 0.6
+autoplay = true
 
 [connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
 [connection signal="body_exited" from="Area" to="." method="_on_Area_body_exited"]

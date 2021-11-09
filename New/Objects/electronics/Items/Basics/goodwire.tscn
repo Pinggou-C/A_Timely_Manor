@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Objects/electronics/Scripts/Basics/goodwire.gd" type="Script" id=1]
 [ext_resource path="res://Objects/electronics/Scripts/Basics/wirerear.gd" type="Script" id=2]
@@ -6,6 +6,9 @@
 [ext_resource path="res://Objects/electronics/Items/Basics/goodwire.tres" type="Material" id=4]
 
 [sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.06, 0.06, 0.06 )
+
+[sub_resource type="BoxShape" id=4]
 extents = Vector3( 0.05, 0.05, 0.05 )
 
 [sub_resource type="CubeMesh" id=2]
@@ -13,6 +16,9 @@ size = Vector3( 0.1, 0.1, 0.1 )
 
 [sub_resource type="SpatialMaterial" id=3]
 albedo_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 0.05, 0.05, 0.05 )
 
 [node name="wire" type="Spatial"]
 script = ExtResource( 1 )
@@ -28,10 +34,11 @@ shape = SubResource( 1 )
 [node name="front" type="KinematicBody" parent="." groups=["wire_end", "wire_front_end", "wire_nodes"]]
 process_priority = 1
 collision_layer = 786440
+collision_mask = 33
 script = ExtResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="front"]
-shape = SubResource( 1 )
+shape = SubResource( 4 )
 
 [node name="MeshInstance" type="MeshInstance" parent="front"]
 mesh = SubResource( 2 )
@@ -49,6 +56,7 @@ shape = SubResource( 1 )
 process_priority = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.111213, 0, 0 )
 collision_layer = 786440
+collision_mask = 33
 script = ExtResource( 2 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="rear"]
@@ -56,7 +64,7 @@ mesh = SubResource( 2 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="rear"]
-shape = SubResource( 1 )
+shape = SubResource( 5 )
 
 [connection signal="body_entered" from="frontarea" to="front" method="_on_frontarea_body_entered"]
 [connection signal="body_exited" from="frontarea" to="front" method="_on_frontarea_body_exited"]

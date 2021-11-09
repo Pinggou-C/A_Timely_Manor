@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/fan.mp3-2b61ce9efbb4eeaf72299a016d922381.mp3str"
+
+[deps]
+
+source_file="res://Assets/Audio_Assets/background_noise/fan.mp3"
+dest_files=[ "res://.import/fan.mp3-2b61ce9efbb4eeaf72299a016d922381.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

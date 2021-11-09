@@ -85,10 +85,7 @@ surfaces/4 = {
 "vertex_count": 20
 }
 
-[node name="lamp" type="StaticBody" groups=[
-"appliance",
-"lamp",
-]]
+[node name="lamp" type="StaticBody" groups=["appliance", "lamp"]]
 script = ExtResource( 6 )
 
 [node name="frontpos" type="Position3D" parent="."]
@@ -113,14 +110,10 @@ collision_mask = 16
 [node name="CollisionShape" type="CollisionShape" parent="rear"]
 shape = SubResource( 1 )
 
-[node name="CollisionShape5" type="CollisionShape" parent="." groups=[
-"neg",
-]]
+[node name="CollisionShape5" type="CollisionShape" parent="." groups=["neg"]]
 shape = SubResource( 2 )
 
-[node name="CollisionShape4" type="CollisionShape" parent="." groups=[
-"pos",
-]]
+[node name="CollisionShape4" type="CollisionShape" parent="." groups=["pos"]]
 shape = SubResource( 3 )
 
 [node name="CollisionShape3" type="CollisionShape" parent="."]

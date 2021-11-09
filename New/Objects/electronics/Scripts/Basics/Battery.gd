@@ -124,17 +124,28 @@ func get_info():
 	else:
 		return(["battery", true, volts, amps, 0, error, flowing])
 
-func diconnect_node(node):
-	pass
+func disconnect_node(node):
+	if posconnect == node:
+		posconnect = null
+	elif negconnect == node:
+		negconnect = null
+
+func disconnect_wire(node):
+	if posconnectwire == node:
+		posconnectwire = null
+		if posconnect !=  null:
+			posconnect = null
+	elif negconnectwire == node:
+		negconnectwire = null
+		if negconnect !=  null:
+			negconnect = null
 
 func conn(wire, node, dir, onof = false):
-	print("hii")
-	yield(get_tree().create_timer(0.05), "timeout")
-	if wire == posconnectwire:
-		print(1)
+	if dir == 'front':
+		posconnectwire = wire
 		posconnect = node
-		return [$pos.global_transform.origin, 0]
-	elif wire == negconnectwire:
-		print(2)
+		return [$pos.global_transform.origin, 0, amps, volts]
+	elif dir == 'rear':
+		negconnectwire = wire
 		negconnect = node
 		return [$neg.global_transform.origin, 1]

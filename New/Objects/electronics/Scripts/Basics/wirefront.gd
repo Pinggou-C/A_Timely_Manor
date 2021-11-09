@@ -131,14 +131,17 @@ func _on_frontarea_body_entered(body, bypas = false):
 							snapnode = body
 			elif body.is_in_group("appliance") || body.is_in_group("battery"):
 				var nod = body
+				var dirr = "front"
 				if body.is_in_group("battery"):
 					parent.battery(body.get_parent(), "front")
 					nod = body.get_parent()
+					if body.is_in_group("neg"):
+						dirr = "rear"
 				print("hiiii")
 				if body.is_in_group("door"):
 					nod = body.get_parent()
 				if parent.frontnode == null:
-					var go = nod.conn(parent, parent.frontnode, 'front', true)
+					var go = nod.conn(parent, parent.frontnode, dirr, true)
 					parent.connect_node_front(body, go[0])
 					targetpos = go[0]
 					snap_to_node = true
@@ -146,10 +149,13 @@ func _on_frontarea_body_entered(body, bypas = false):
 				else:
 					con = body
 					conpickup = 'node'
-					var go = nod.conn(parent, parent.frontnode, 'front', true)
+					var go = nod.conn(parent, parent.frontnode, dirr, true)
 					targetpos = go[0] 
 					snap_to_node = true
 					snapnode = nod
+					if body.is_in_group("battery") && dirr == "front":
+						parent.volts = go[3]
+						parent.amps = go[2]
 
 
 func _on_frontarea_body_exited(body):
@@ -161,19 +167,22 @@ func _on_frontarea_body_exited(body):
 				which = null
 				whichbody = null
 		elif body.is_in_group("wire_nodes")||body.is_in_group('appliance')||body.is_in_group('battery'):
+			var one = body
+			if body.is_in_group("battery"):
+				one = body.get_parent()
 			if body.is_in_group("wire_end"):
 				pass
 			else:
-				if body.time != "temp":
-					if body == snapnode:
+				if one.time != "temp":
+					if one == snapnode:
 						snapnode =null
 						snap_to_node = false
 						targetpos = Vector3()
 						snappos = Vector3(0, 0, 0)
-					get_parent().removenode(body, 'front')
+					get_parent().removenode(one, 'front')
 				else:
-					if body == get_parent().frontnode:
-						get_parent().removenode(body, 'front', true)
+					if one == get_parent().frontnode:
+						get_parent().removenode(one, 'front', true)
 					snapnode =null
 					snap_to_node = false
 					targetpos = Vector3()

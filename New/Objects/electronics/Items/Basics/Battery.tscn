@@ -79,12 +79,12 @@ one_shot = true
 one_shot = true
 
 [node name="pos" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, -0.35, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.56, -0.35, 0 )
 
 [node name="neg" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, -0.35, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.56, -0.35, 0 )
 
-[node name="StaticBody" type="StaticBody" parent="." groups=["battery", "wires2"]]
+[node name="StaticBody" type="StaticBody" parent="." groups=["battery", "neg", "wires2"]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, -0.35, 0 )
 collision_layer = 32
 
@@ -96,7 +96,7 @@ material/0 = SubResource( 7 )
 [node name="CollisionShape3" type="CollisionShape" parent="StaticBody" groups=["bat"]]
 shape = SubResource( 9 )
 
-[node name="StaticBody2" type="StaticBody" parent="." groups=["battery", "wires2"]]
+[node name="StaticBody2" type="StaticBody" parent="." groups=["battery", "pos", "wires2"]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, -0.35, 0 )
 collision_layer = 32
 

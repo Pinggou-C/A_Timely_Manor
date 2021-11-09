@@ -4,7 +4,7 @@ var has_save = false
 var saves = []
 # Declare member variables here. Examples:
 # var a = 2
-var level = preload("res://Areas/Area/Spatial.tscn")
+var level = preload("res://Areas/completed_levels/Level1.tscn")
 var returned = false
 
 # Called when the node enters the scene tree for the first time.
@@ -20,7 +20,7 @@ func _on_Quit_pressed():
 
 func _on_start_pressed():
 	pause(true)
-	BackgroundLoad.load_scene("res://Areas/Area/Spatial.tscn", 0.01, true, self)
+	BackgroundLoad.load_scene("res://Areas/completed_levels/Level1.tscn", 0.01, true, self)
 
 func pause(which):
 	if which == true:
