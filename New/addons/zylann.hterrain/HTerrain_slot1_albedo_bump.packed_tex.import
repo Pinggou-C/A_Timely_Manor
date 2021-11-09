@@ -2,14 +2,11 @@
 
 importer="hterrain_packed_texture_importer"
 type="StreamTexture"
-path.s3tc="res://.import/HTerrain_slot1_albedo_bump.packed_tex-b4919656c52facf2a51828d0261b8e96.s3tc.stex"
-path.etc2="res://.import/HTerrain_slot1_albedo_bump.packed_tex-b4919656c52facf2a51828d0261b8e96.etc2.stex"
+valid=false
 
 [deps]
 
 source_file="res://addons/zylann.hterrain/HTerrain_slot1_albedo_bump.packed_tex"
-dest_files=[ "res://.import/HTerrain_slot1_albedo_bump.packed_tex-b4919656c52facf2a51828d0261b8e96.s3tc.stex", "res://.import/HTerrain_slot1_albedo_bump.packed_tex-b4919656c52facf2a51828d0261b8e96.etc2.stex" ]
-
 [params]
 
 compress/mode=2

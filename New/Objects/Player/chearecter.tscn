@@ -18,7 +18,10 @@ radius = 0.4
 radial_segments = 10
 rings = 2
 
-[node name="KinematicBody" type="KinematicBody" groups=["player", "weighted"]]
+[node name="KinematicBody" type="KinematicBody" groups=[
+"player",
+"weighted",
+]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.05, 0 )
 collision_layer = 2
 collision_mask = 3
@@ -30,7 +33,9 @@ __meta__ = {
 [node name="Head" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 
-[node name="CollisionShape" type="CollisionShape" parent="." groups=["player"]]
+[node name="CollisionShape" type="CollisionShape" parent="." groups=[
+"player",
+]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, 0 )
 shape = SubResource( 1 )
 

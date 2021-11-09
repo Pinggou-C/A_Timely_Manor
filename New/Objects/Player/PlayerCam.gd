@@ -7,6 +7,7 @@ func _process(_delta):
 func _ready():
 	set_process(false)
 	if Global_Settings.motionblur == true:
-		var bb = blur.instance()
-		add_child(bb)
+		#var bb = blur.instance()
+		#add_child(bb)
+		pass
 	
