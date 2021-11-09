@@ -129,11 +129,12 @@ func _on_frontarea_body_entered(body, bypas = false):
 							targetpos = go[0] 
 							snap_to_node = true
 							snapnode = body
-			elif body.is_in_group("battery"):
-				parent.battery(body.get_parent(), "front")
-			elif body.is_in_group("appliance"):
-				print("hiiii")
+			elif body.is_in_group("appliance") || body.is_in_group("battery"):
 				var nod = body
+				if body.is_in_group("battery"):
+					parent.battery(body.get_parent(), "front")
+					nod = body.get_parent()
+				print("hiiii")
 				if body.is_in_group("door"):
 					nod = body.get_parent()
 				if parent.frontnode == null:
@@ -149,7 +150,6 @@ func _on_frontarea_body_entered(body, bypas = false):
 					targetpos = go[0] 
 					snap_to_node = true
 					snapnode = nod
-					
 
 
 func _on_frontarea_body_exited(body):
@@ -160,7 +160,7 @@ func _on_frontarea_body_exited(body):
 		if body.is_in_group("wire"):
 				which = null
 				whichbody = null
-		elif body.is_in_group("wire_nodes")||body.is_in_group('appliance'):
+		elif body.is_in_group("wire_nodes")||body.is_in_group('appliance')||body.is_in_group('battery'):
 			if body.is_in_group("wire_end"):
 				pass
 			else:

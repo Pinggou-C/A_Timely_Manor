@@ -43,6 +43,7 @@ viewport_path = NodePath("MeshInstance2/Sprite3D/view")
 viewport_path = NodePath("MeshInstance2/Sprite3D2/view")
 
 [node name="battery" type="StaticBody" groups=["batteries", "electrical_components"]]
+process_priority = -10000
 collision_layer = 129
 script = ExtResource( 1 )
 
@@ -76,6 +77,12 @@ one_shot = true
 
 [node name="Timer2" type="Timer" parent="."]
 one_shot = true
+
+[node name="pos" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, -0.35, 0 )
+
+[node name="neg" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, -0.35, 0 )
 
 [node name="StaticBody" type="StaticBody" parent="." groups=["battery", "wires2"]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, -0.35, 0 )
@@ -121,7 +128,7 @@ transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0.0717251, 0.0141187, 0.
 texture = SubResource( 13 )
 
 [node name="view" parent="MeshInstance2/Sprite3D2" instance=ExtResource( 3 )]
-sizee = Vector2( 159, 16 )
+sizee = Vector2( 0, 0 )
 text = "state = 
 unconnected"
 

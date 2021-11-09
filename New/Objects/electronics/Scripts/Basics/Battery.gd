@@ -4,9 +4,11 @@ var type = "battery"
 
 var posconnect = null
 var negconnect = null
+var posconnectwire = null
+var negconnectwire = null
 
 var flowing = false
-
+var time = "perm"
 var error = null
 
 var all_paths = []
@@ -78,13 +80,12 @@ func posdiscon(body):
 		posconnect = null
 		if flowing == true:
 			flowing = false
+		posconnect = null
 
 func negcon(body):
 	if body.is_in_group('wire_end'):
-		if body.is_in_group("wire_front_end"):
-			negconnect = body.get_parent().rearnode
-		else:
-			negconnect = body.get_parent().frontnode
+		print("hi")
+		negconnectwire = body
 
 
 func negdiscon(body):
@@ -92,14 +93,13 @@ func negdiscon(body):
 		negconnect = null
 		if flowing == true:
 			flowing = false
+		negconnect = null
 
 
 func poscon(body):
 	if body.is_in_group('wire_end'):
-		if body.is_in_group("wire_front_end"):
-			posconnect = body.get_parent().rearnode
-		else:
-			posconnect = body.get_parent().frontnode
+		print("hi")
+		posconnectwire = body
 
 
 func _on_Timer_timeout():
@@ -127,5 +127,14 @@ func get_info():
 func diconnect_node(node):
 	pass
 
-func conn():
-	pass
+func conn(wire, node, dir, onof = false):
+	print("hii")
+	yield(get_tree().create_timer(0.05), "timeout")
+	if wire == posconnectwire:
+		print(1)
+		posconnect = node
+		return [$pos.global_transform.origin, 0]
+	elif wire == negconnectwire:
+		print(2)
+		negconnect = node
+		return [$neg.global_transform.origin, 1]

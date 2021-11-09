@@ -146,6 +146,7 @@ func get_input():
 				picked = false
 				pick.drop(pickvel * 0.5, wiresnap)
 				pick = null
+				pickgroups = []
 			else:
 				if wiresnap == true:
 					var body := kinem_to_stat(pick)
@@ -168,6 +169,7 @@ func get_input():
 						if i == "wires":
 							body.set_collision_layer_bit(3, true)
 						body.add_to_group(i)
+				pickgroups = []
 
 
 func _input(event):
