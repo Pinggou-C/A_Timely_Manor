@@ -3,6 +3,10 @@ extends Spatial
 var frontnode = null
 var rearnode = null
 
+
+var connected_to_battery = "not"
+
+
 var volts = 0
 var amps = 0
 var error = null
@@ -412,6 +416,7 @@ func battery(battery, frontback):
 		rearnode = battery
 		rear_is_battery= true
 		if frontnode != null:
+			print(frontnode)
 			frontnode.con_node(battery, self, true)
 			battery.start_connecting()
 

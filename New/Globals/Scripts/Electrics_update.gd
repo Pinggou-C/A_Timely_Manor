@@ -1,5 +1,9 @@
 extends Node
 
+var battery_closed = false
+var closed_batteries = []
+
+
 class MyCustomSorter:
 	static func sort_ascending(a, b):
 		if a[0] < b[0]:
@@ -11,7 +15,7 @@ const MAX_COMPONENT_UPDATES_PER_FRAME = 20
 var electrical_update_in_progress = false
 
 var batteries = []
-
+var main_battery
 var updated_components = 0
 
 var first_node

@@ -7,6 +7,9 @@ var negconnect = null
 var posconnectwire = null
 var negconnectwire = null
 
+var posconnectbattery = false
+var negconnectbattery = false
+
 var flowing = false
 var time = "perm"
 var error = null
@@ -77,10 +80,10 @@ func connecting(path, splits, resistance, body, oldresistance, batteries):
 
 func posdiscon(body):
 	if body.is_in_group('wire_end'):
-		posconnect = null
+		posconnectwire = null
 		if flowing == true:
 			flowing = false
-		posconnect = null
+		posconnectwire = null
 
 func negcon(body):
 	if body.is_in_group('wire_end'):
@@ -90,10 +93,10 @@ func negcon(body):
 
 func negdiscon(body):
 	if body.is_in_group('wire_end'):
-		negconnect = null
+		negconnectwire = null
 		if flowing == true:
 			flowing = false
-		negconnect = null
+		negconnectwire = null
 
 
 func poscon(body):
@@ -127,25 +130,61 @@ func get_info():
 func disconnect_node(node):
 	if posconnect == node:
 		posconnect = null
+		ElectricsUpdate.closed_batteries.erase(self)
+		if ElectricsUpdate.closed_batteries.size() <1:
+			ElectricsUpdate.battery_closed = false
+		posconnectbattery = false
 	elif negconnect == node:
+		ElectricsUpdate.closed_batteries.erase(self)
+		if ElectricsUpdate.closed_batteries.size() <1:
+			ElectricsUpdate.battery_closed = false
 		negconnect = null
+		negconnectbattery = false
 
 func disconnect_wire(node):
 	if posconnectwire == node:
 		posconnectwire = null
 		if posconnect !=  null:
 			posconnect = null
+			posconnectbattery = false
 	elif negconnectwire == node:
 		negconnectwire = null
 		if negconnect !=  null:
 			negconnect = null
+			negconnectbattery = false
 
 func conn(wire, node, dir, onof = false):
 	if dir == 'front':
 		posconnectwire = wire
 		posconnect = node
+		if negconnect != null:
+			start_connecting()
+			ElectricsUpdate.battery_closed = true
+			ElectricsUpdate.closed_batteries.append(self)
 		return [$pos.global_transform.origin, 0, amps, volts]
 	elif dir == 'rear':
 		negconnectwire = wire
 		negconnect = node
+		if posconnect != null:
+			start_connecting()
+			ElectricsUpdate.battery_closed = true
+			ElectricsUpdate.closed_batteries.append(self)
 		return [$neg.global_transform.origin, 1]
+
+func con_node(node, wire, is_battery = null):
+	if wire == posconnectwire:
+		posconnect = node
+		if is_battery == true:
+			posconnectbattery = true
+		if negconnect != null:
+			start_connecting()
+			ElectricsUpdate.battery_closed = true
+			ElectricsUpdate.closed_batteries.append(self)
+	elif wire == negconnectwire:
+		negconnect = node
+		if is_battery == true:
+			negconnectbattery = true
+		if posconnect != null:
+			start_connecting()
+			ElectricsUpdate.battery_closed = true
+			ElectricsUpdate.closed_batteries.append(self)

@@ -144,7 +144,7 @@ func _on_frontarea_body_entered(body, bypas = false):
 					nod = body.get_parent()
 				if parent.frontnode == null:
 					var go = nod.conn(parent, parent.frontnode, dirr, true)
-					parent.connect_node_front(body, go[0])
+					parent.connect_node_front(nod, go[0])
 					targetpos = go[0]
 					snap_to_node = true
 					snapnode = nod

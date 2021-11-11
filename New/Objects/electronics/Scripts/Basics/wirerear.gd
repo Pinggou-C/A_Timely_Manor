@@ -143,7 +143,7 @@ func _on_reararea_body_entered(body, bypas = false):
 					nod = body.get_parent()
 				if parent.rearnode == null:
 					var go = nod.conn(parent, parent.rearnode, dirr, true)
-					parent.connect_node_rear(body, go[0])
+					parent.connect_node_rear(nod, go[0])
 					targetpos = go[0]
 					snap_to_node = true
 					snapnode = nod

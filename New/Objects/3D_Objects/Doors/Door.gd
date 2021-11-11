@@ -11,10 +11,13 @@ var posconwire = null
 var negconwire = null
 var flowable = false
 var flowing = false
-
+var posconbattery = false
+var negconbattery = false
 var time = "perm"
 
+var closed = false
 
+var connected_to_battery = "not"
 
 var amps = 0
 var volts = 0
@@ -126,5 +129,54 @@ func conn(wire, newnode, frontback, auto = false):
 	if newnode != null:
 		if !poscon == newnode:
 			poscon = newnode
+			if negcon != null:
+				closed = true
+				if ElectricsUpdate.battery_closed == true:
+					ElectricsUpdate.closed_batteries(0).start_connecting()
 		if !negcon == newnode:
 			negcon = newnode
+			if poscon != null:
+				closed = true
+				if ElectricsUpdate.battery_closed == true:
+					ElectricsUpdate.closed_batteries(0).start_connecting()
+
+func disconnect_wire(wire):
+	if wire == posconwire:
+		posconwire = null
+		if poscon != null:
+			poscon = null
+			posconbattery = false
+	elif wire == negconwire:
+		negconwire = null
+		if negcon != null:
+			negcon = null
+			negconbattery = false
+
+func disconnect_node(node):
+	if node == poscon:
+		poscon = null
+		closed = false
+		posconbattery = false
+	elif node == negcon:
+		negcon = null
+		closed = false
+		negconbattery = false
+
+func con_node(node, wire, is_battery = null):
+	if wire == posconwire:
+		poscon = node
+		if is_battery == true:
+			posconbattery = true
+		if negcon != null:
+				closed = true
+				if ElectricsUpdate.battery_closed == true:
+					ElectricsUpdate.closed_batteries(0).start_connecting()
+	elif wire == negconwire:
+		negcon = node
+		if is_battery == true:
+			negconbattery = true
+		if poscon != null:
+			closed = true
+			if ElectricsUpdate.battery_closed == true:
+				ElectricsUpdate.closed_batteries(0).start_connecting()
+#

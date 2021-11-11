@@ -182,7 +182,7 @@ extents = Vector3( 0.2, 0.2, 0.6 )
 [sub_resource type="BoxShape" id=14]
 extents = Vector3( 0.15, 0.15, 0.1 )
 
-[node name="Door" type="Spatial" groups=["effected"]]
+[node name="Door" type="Spatial" groups=["appliance", "door", "effected"]]
 process_priority = -5
 script = ExtResource( 7 )
 

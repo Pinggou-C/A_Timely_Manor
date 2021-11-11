@@ -6,6 +6,7 @@ class MyCustomSorter:
 			return true
 		return false
 
+
 const MAX_COMPONENT_UPDATES_PER_FRAME = 10
 
 var electrical_update_in_progress = false
@@ -13,6 +14,9 @@ var electrical_update_in_progress = false
 var time = "perm"
 export(bool) var onstart = false
 export(String, "node", "appliance", "non_appliance") var type = "node"
+
+var connected_to_battery = "not"
+
 
 var printtt = 0
 var connecteds = []
