@@ -16,7 +16,7 @@ var negconbattery = false
 var time = "perm"
 
 var closed = false
-
+var closed_connecteds = []
 var connected_to_battery = "not"
 
 var amps = 0
@@ -131,14 +131,20 @@ func conn(wire, newnode, frontback, auto = false):
 			poscon = newnode
 			if negcon != null:
 				closed = true
-				if ElectricsUpdate.battery_closed == true:
-					ElectricsUpdate.closed_batteries(0).start_connecting()
+				negcon.con_close(true, self)
+				poscon.con_close(true, self)
+				if closed_connecteds.size() > 1:
+					if ElectricsUpdate.battery_closed == true:
+						ElectricsUpdate.closed_batteries(0).start_connecting()
 		if !negcon == newnode:
 			negcon = newnode
 			if poscon != null:
 				closed = true
-				if ElectricsUpdate.battery_closed == true:
-					ElectricsUpdate.closed_batteries(0).start_connecting()
+				negcon.con_close(true, self)
+				poscon.con_close(true, self)
+				if closed_connecteds.size() > 1:
+					if ElectricsUpdate.battery_closed == true:
+						ElectricsUpdate.closed_batteries(0).start_connecting()
 
 func disconnect_wire(wire):
 	if wire == posconwire:
@@ -156,10 +162,14 @@ func disconnect_node(node):
 	if node == poscon:
 		poscon = null
 		closed = false
+		negcon.con_close(false, self)
+		poscon.con_close(false, self)
 		posconbattery = false
 	elif node == negcon:
 		negcon = null
 		closed = false
+		negcon.con_close(false, self)
+		poscon.con_close(false, self)
 		negconbattery = false
 
 func con_node(node, wire, is_battery = null):
@@ -168,7 +178,10 @@ func con_node(node, wire, is_battery = null):
 		if is_battery == true:
 			posconbattery = true
 		if negcon != null:
-				closed = true
+			closed = true
+			negcon.con_close(true, self)
+			poscon.con_close(true, self)
+			if closed_connecteds.size() > 1:
 				if ElectricsUpdate.battery_closed == true:
 					ElectricsUpdate.closed_batteries(0).start_connecting()
 	elif wire == negconwire:
@@ -177,6 +190,14 @@ func con_node(node, wire, is_battery = null):
 			negconbattery = true
 		if poscon != null:
 			closed = true
-			if ElectricsUpdate.battery_closed == true:
-				ElectricsUpdate.closed_batteries(0).start_connecting()
-#
+			negcon.con_close(true, self)
+			poscon.con_close(true, self)
+			if closed_connecteds.size() > 1:
+				if ElectricsUpdate.battery_closed == true:
+					ElectricsUpdate.closed_batteries(0).start_connecting()
+
+func con_close(truefalse, node):
+	if truefalse == true:
+		closed_connecteds.append(node)
+	else:
+		closed_connecteds.erase(node)

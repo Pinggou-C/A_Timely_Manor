@@ -16,7 +16,8 @@ export(bool) var onstart = false
 export(String, "node", "appliance", "non_appliance") var type = "node"
 
 var connected_to_battery = "not"
-
+var closed = false
+var closed_connecteds = []
 
 var printtt = 0
 var connecteds = []
@@ -106,6 +107,10 @@ func conn(wire, newnode, frontback, auto = false):
 	if newnode != null:
 		if !connecteds.has(newnode):
 			connecteds.append(newnode)
+			if connecteds.size() > 1 && closed == false:
+				closed = true
+				for i  in connecteds:
+					i.con_close(true, self)
 
 func onnode(node, position, contype):
 	if contype == "connect":
@@ -122,6 +127,10 @@ func onnode(node, position, contype):
 func con_node(node, wire, is_battery = null):
 	if !connecteds.has(node):
 		connecteds.append(node)
+		if connecteds.size() > 1 && closed == false:
+			closed = true
+			for i  in connecteds:
+				i.con_close(true, self)
 	if wire == pos1:
 		pos_node1 = node
 		if is_battery == true:
@@ -272,6 +281,12 @@ func disconnect_wire(wire, special = false):
 func disconnect_node(node):
 	if connecteds.has(node):
 		connecteds.remove(connecteds.find(node))
+		if closed == true:
+			node.con_close(false, self)
+			if connecteds.size() < 2:
+				closed = true
+				for i  in connecteds:
+					i.con_close(false, self)
 		#battery.start_connecting()
 
 
@@ -357,3 +372,9 @@ func get_info():
 		return(["node", true, volts, amps, 0, error, flowing])
 	else:
 		return(["node", false, volts, amps, 0, error, flowing])
+
+func con_close(truefalse, node):
+	if truefalse == true:
+		closed_connecteds.append(node)
+	else:
+		closed_connecteds.erase(node)

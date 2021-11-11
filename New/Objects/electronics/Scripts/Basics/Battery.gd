@@ -23,6 +23,8 @@ var splits = []
 export(float) var volts = 1
 export(float) var amps = 1
 
+var closed = false
+var closed_connecteds = []
 
 func _ready():
 	Global_Variables.batteries.append(self)
@@ -134,12 +136,20 @@ func disconnect_node(node):
 		if ElectricsUpdate.closed_batteries.size() <1:
 			ElectricsUpdate.battery_closed = false
 		posconnectbattery = false
+		if closed == true:
+			node.con_close(false, self)
+			negconnect.con_close(false, self)
+		closed_connecteds.erase(node)
 	elif negconnect == node:
 		ElectricsUpdate.closed_batteries.erase(self)
 		if ElectricsUpdate.closed_batteries.size() <1:
 			ElectricsUpdate.battery_closed = false
 		negconnect = null
 		negconnectbattery = false
+		if closed == true:
+			node.con_close(false, self)
+			posconnect.con_close(false, self)
+		closed_connecteds.erase(node)
 
 func disconnect_wire(node):
 	if posconnectwire == node:
@@ -188,3 +198,9 @@ func con_node(node, wire, is_battery = null):
 			start_connecting()
 			ElectricsUpdate.battery_closed = true
 			ElectricsUpdate.closed_batteries.append(self)
+
+func con_close(truefalse, node):
+	if truefalse == true:
+		closed_connecteds.append(node)
+	else:
+		closed_connecteds.erase(node)
