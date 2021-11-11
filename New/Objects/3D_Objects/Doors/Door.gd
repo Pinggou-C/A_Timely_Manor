@@ -69,22 +69,25 @@ func unpowe():
 
 
 func positive_connect(body):
-	posconwire = body
+	posconwire = body.get_parent()
 	print("poscon")
 
 
 func positive_disconnect(body):
-	posconwire = null
-	print("posdiscon")
+	if posconwire == body.get_parent():
+		posconwire = null
+		print("posdiscon")
 
 func negative_connect(body):
-	negconwire =  body
+	negconwire =  body.get_parent()
 	print("negcon")
+	print(body)
 
 
 func negative_disconnect(body):
-	negconwire = null
-	print("negdiscon")
+	if negconwire == body.get_parent():
+		negconwire = null
+		print("posdiscon")
 
 func get_info():
 	if error == null:
@@ -101,6 +104,7 @@ func conecteds():
 
 func conn(wire, newnode, frontback, auto = false):
 	var posss
+	print("hi")
 	#get closest
 	var posarr = []
 	if auto != true:
@@ -117,6 +121,8 @@ func conn(wire, newnode, frontback, auto = false):
 	var stop = false
 	if wire == posconwire:
 		return [$pos1.get_global_transform().origin, 0]
+	elif wire == negconwire:
+		return [$pos2.get_global_transform().origin, 1]
 	if newnode != null:
 		if !poscon == newnode:
 			poscon = newnode

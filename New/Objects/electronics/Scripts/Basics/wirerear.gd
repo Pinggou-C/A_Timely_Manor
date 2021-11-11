@@ -37,10 +37,12 @@ func _physics_process(delta):
 func pickup():
 	pickedup = true
 	get_parent().pickeduprear = true
+	get_parent().pickedup(true)
 
 
 func drop(w1, w2):
 	var parent = get_parent()
+	get_parent().pickedup(false)
 	if discon != null:
 		if disconpickup == "end":
 			pass
@@ -141,7 +143,7 @@ func _on_reararea_body_entered(body, bypas = false):
 					nod = body.get_parent()
 				if parent.rearnode == null:
 					var go = nod.conn(parent, parent.rearnode, dirr, true)
-					parent.connect_node_front(body, go[0])
+					parent.connect_node_rear(body, go[0])
 					targetpos = go[0]
 					snap_to_node = true
 					snapnode = nod
@@ -167,7 +169,7 @@ func _on_reararea_body_exited(body):
 				whichbody = null
 		elif body.is_in_group("wire_nodes")|| body.is_in_group("appliance")|| body.is_in_group("battery"):
 			var one = body
-			if body.is_in_group("battery"):
+			if body.is_in_group("battery") || body.is_in_group("door"):
 				one = body.get_parent()
 			if body.is_in_group("wire_end"):
 				pass

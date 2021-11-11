@@ -21,9 +21,11 @@ extents = Vector3( 10, 0.499, 10 )
 pause_mode = 2
 
 [node name="Pause" parent="." instance=ExtResource( 5 )]
+visible = true
 
 [node name="Spatial" type="Spatial" parent="."]
 pause_mode = 2
+visible = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 pause_mode = 1
@@ -39,15 +41,16 @@ pause_mode = 1
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 pause_mode = 1
-transform = Transform( -0.866026, -0.25, 0.433012, 0, 0.866025, 0.5, -0.5, 0.433013, -0.75, 0.119, 0, 0 )
-light_color = Color( 1, 0.992157, 0.854902, 1 )
-light_energy = 0.9
+transform = Transform( -0.866026, -0.25, 0.433012, -0.246219, 0.966975, 0.0658448, -0.435173, -0.0495927, -0.89898, 0.119, 0, 0 )
+light_color = Color( 1, 0.992157, 0.866667, 1 )
+light_energy = 0.4
 shadow_enabled = true
-directional_shadow_split_1 = 0.025
-directional_shadow_split_2 = 0.05
-directional_shadow_split_3 = 0.125
+directional_shadow_split_1 = 0.013
+directional_shadow_split_2 = 0.025
+directional_shadow_split_3 = 0.063
 directional_shadow_blend_splits = true
 directional_shadow_depth_range = 1
+directional_shadow_max_distance = 1295.4
 __meta__ = {
 "volumetric": 0.0
 }

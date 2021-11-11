@@ -444,3 +444,13 @@ func get_info():
 		return(["wire", false, volts, amps, 0, error, flowing])
 	else:
 		return(["wire", true, volts, amps, 0, error, flowing])
+
+func pickedup(picked):
+	if picked == true:
+		get_child(7).get_child(0).disabled = true
+		get_child(8).get_child(0).disabled = true
+		get_child(9).get_child(0).disabled = true
+	elif picked == false:
+		get_child(7).get_child(0).disabled = false
+		get_child(8).get_child(0).disabled = false
+		get_child(9).get_child(0).disabled = false

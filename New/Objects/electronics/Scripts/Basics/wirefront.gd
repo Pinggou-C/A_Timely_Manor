@@ -37,10 +37,12 @@ func _physics_process(delta):
 func pickup():
 	pickedup = true
 	get_parent().pickedupfront = true
+	get_parent().pickedup(true)
 
 
 func drop(w1, w2):
 	var parent = get_parent()
+	get_parent().pickedup(false)
 	if discon != null:
 		if disconpickup == "end":
 			pass
@@ -168,7 +170,7 @@ func _on_frontarea_body_exited(body):
 				whichbody = null
 		elif body.is_in_group("wire_nodes")||body.is_in_group('appliance')||body.is_in_group('battery'):
 			var one = body
-			if body.is_in_group("battery"):
+			if body.is_in_group("battery")|| body.is_in_group("door"):
 				one = body.get_parent()
 			if body.is_in_group("wire_end"):
 				pass
