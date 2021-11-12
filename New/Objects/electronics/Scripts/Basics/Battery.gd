@@ -204,3 +204,14 @@ func con_close(truefalse, node):
 		closed_connecteds.append(node)
 	else:
 		closed_connecteds.erase(node)
+
+
+func voltsamps(amp, volt, wire, replace = true, clear = false):
+	volts = volt
+	amps = amp
+	if clear == false:
+		if wire != null:
+			var volt_removal
+			for i in wires:
+				if i != wire:
+					i.voltsamps(amps, volts - volt_removal, self)

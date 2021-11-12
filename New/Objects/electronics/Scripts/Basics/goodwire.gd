@@ -459,3 +459,16 @@ func pickedup(picked):
 		get_child(7).get_child(0).disabled = false
 		get_child(8).get_child(0).disabled = false
 		get_child(9).get_child(0).disabled = false
+
+func voltsamps(amp, volt, node, replace = true, clear = false):
+	if replace == false:
+		volts = ((volt*amp)+(volts*amps)) / (amps + amp)
+		amps+= amp
+	else:
+		volts = volt
+		amps = amp
+	if clear == false:
+		if node == rearnode:
+			rearnode.voltsamps(amps, volts, self)
+		elif node == frontnode:
+			frontnode.voltsamps(amps, volts, self)

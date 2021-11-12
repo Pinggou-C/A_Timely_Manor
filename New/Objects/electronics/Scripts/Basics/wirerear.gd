@@ -119,7 +119,7 @@ func _on_reararea_body_entered(body, bypas = false):
 				else:
 					if body.time != "temp":
 						if parent.rearnode == null:
-							var go = body.conn(parent, parent.rearnode, 'rear', true)
+							var go = body.conn(parent, parent.rearnode, 'rear', true, [parent.amps, parent.volts])
 							parent.connect_node_rear(body, go[0])
 							targetpos = go[0]
 							snap_to_node = true
@@ -127,7 +127,7 @@ func _on_reararea_body_entered(body, bypas = false):
 						else:
 							con = body
 							conpickup = 'node'
-							var go = body.conn(parent, parent.rearnode, 'rear', true)
+							var go = body.conn(parent, parent.rearnode, 'rear', true, [parent.amps, parent.volts])
 							targetpos = go[0] 
 							snap_to_node = true
 							snapnode = body
@@ -142,7 +142,7 @@ func _on_reararea_body_entered(body, bypas = false):
 				if body.is_in_group("door"):
 					nod = body.get_parent()
 				if parent.rearnode == null:
-					var go = nod.conn(parent, parent.rearnode, dirr, true)
+					var go = nod.conn(parent, parent.rearnode, dirr, true, [parent.amps, parent.volts])
 					parent.connect_node_rear(nod, go[0])
 					targetpos = go[0]
 					snap_to_node = true
@@ -150,7 +150,7 @@ func _on_reararea_body_entered(body, bypas = false):
 				else:
 					con = body
 					conpickup = 'node'
-					var go = nod.conn(parent, parent.rearnode, dirr, true)
+					var go = nod.conn(parent, parent.rearnode, dirr, true, [parent.amps, parent.volts])
 					targetpos = go[0] 
 					snap_to_node = true
 					snapnode = nod

@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Objects/electronics/Scripts/Basics/Battery.gd" type="Script" id=1]
-[ext_resource path="res://Objects/extra's/part2.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/SIsilicon.3d.text/label_3d.gd" type="Script" id=2]
+[ext_resource path="res://addons/SIsilicon.3d.text/default_font2.tres" type="DynamicFont" id=3]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.4, 0.4, 0.4 )
@@ -35,12 +36,6 @@ size = Vector2( 0.5, 0.2 )
 
 [sub_resource type="SpatialMaterial" id=11]
 albedo_color = Color( 0.627451, 0.627451, 0.627451, 1 )
-
-[sub_resource type="ViewportTexture" id=12]
-viewport_path = NodePath("MeshInstance2/Sprite3D/view")
-
-[sub_resource type="ViewportTexture" id=13]
-viewport_path = NodePath("MeshInstance2/Sprite3D2/view")
 
 [node name="battery" type="StaticBody" groups=["batteries", "electrical_components"]]
 process_priority = -10000
@@ -114,23 +109,39 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.401 )
 mesh = SubResource( 10 )
 material/0 = SubResource( 11 )
 
-[node name="Sprite3D" type="Sprite3D" parent="MeshInstance2"]
-transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -0.0872739, 0.0105369, 0.000999987 )
-texture = SubResource( 12 )
-
-[node name="view" parent="MeshInstance2/Sprite3D" instance=ExtResource( 3 )]
-sizee = Vector2( 0, 0 )
+[node name="Label3D" type="Spatial" parent="MeshInstance2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.180577, 0.037782, 0.00139451 )
+script = ExtResource( 2 )
 text = "I = 5
 V = 3"
+text_size = 0.05
+font = ExtResource( 3 )
+align = 0
+color = Color( 1, 1, 1, 1 )
+metallic = 0.0
+roughness = 1.0
+emission_color = Color( 1, 1, 1, 1 )
+emission_strength = 1.0
+extrude = 0.0
+max_steps = 256
+step_size = 1.0
 
-[node name="Sprite3D2" type="Sprite3D" parent="MeshInstance2"]
-transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0.0717251, 0.0141187, 0.000999987 )
-texture = SubResource( 13 )
-
-[node name="view" parent="MeshInstance2/Sprite3D2" instance=ExtResource( 3 )]
-sizee = Vector2( 0, 0 )
-text = "state = 
+[node name="Label3D2" type="Spatial" parent="MeshInstance2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0724725, 0.0412875, 0.00139451 )
+script = ExtResource( 2 )
+text = "State = 
 unconnected"
+text_size = 0.05
+font = ExtResource( 3 )
+align = 2
+color = Color( 1, 1, 1, 1 )
+metallic = 0.0
+roughness = 1.0
+emission_color = Color( 1, 1, 1, 1 )
+emission_strength = 1.0
+extrude = 0.0
+max_steps = 256
+step_size = 1.0
 
 [connection signal="body_entered" from="Pos" to="." method="poscon"]
 [connection signal="body_exited" from="Pos" to="." method="posdiscon"]

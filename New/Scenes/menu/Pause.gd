@@ -4,7 +4,7 @@ var paused = false
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	OS.set_window_size(Global_Settings.Resolution)
+	#OS.set_window_size(Global_Settings.Resolution)
 	
 
 func _input(event):

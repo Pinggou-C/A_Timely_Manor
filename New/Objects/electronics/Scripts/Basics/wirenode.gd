@@ -6,6 +6,13 @@ class MyCustomSorter:
 			return true
 		return false
 
+#if the node is connected to the battery in some way
+var negbattery
+var negbattery_paths
+var negconns
+var posbattery
+var posbattery_paths
+var posconns
 
 const MAX_COMPONENT_UPDATES_PER_FRAME = 10
 
@@ -71,8 +78,11 @@ func _ready():
 		$plug.get_surface_material(0).albedo_color.a = 1
 
 #adds wire to the wirestack and adds the other node connected to thats wire to self
-func conn(wire, newnode, frontback, auto = false):
+func conn(wire, newnode, frontback, auto = false, volamp = []):
 	var posss
+	if volamp.size()>0:
+		volts = volamp[1]
+		amps = volamp[0]
 	#get closest
 	var posarr = []
 	if auto != true:
@@ -378,3 +388,51 @@ func con_close(truefalse, node):
 		closed_connecteds.append(node)
 	else:
 		closed_connecteds.erase(node)
+
+func negbattery(onof, path = []):
+	negbattery = onof
+	if onof == false:
+		if negbattery_paths.has(path):
+			negbattery_paths.erase(path)
+	elif !negbattery.has(path):
+		negbattery.append(path)
+
+func posbattery(onof, node, paths = [[]]):
+	posbattery = onof
+	var paf = paths
+	if onof == false:
+		if posbattery_paths.has(paths):
+			posbattery_paths.erase(paths)
+		if posconns.has(node):
+			posconns.erase(node)
+			if posconns.size() == 0:
+				for i in connecteds:
+					if i != node:
+						i.posbattery(false, self)
+	if !paf.has(self):
+		paf.append(node)
+		if onof == true:
+			if !posconns.has(node):
+				if posconns.size() == 0:
+					for i in connecteds:
+						if i != node:
+							i.posbattery(true, self, paf)
+				posconns.append(node)
+			if !posbattery.has(paths):
+				posbattery.append(paths)
+
+func voltsamps(amp, volt, wire, replace = true, clear = false):
+	if replace == true:
+		volts = volt
+		amps = amp
+	else:
+		volts = ((volt*amp)+(volts*amps)) / (amps + amp)
+		amps+= amp
+	if clear  == false:
+		if wire != null:
+			var amp_multiplier = 1
+			if wires.size() > 1:
+				amp_multiplier = 1 / (wires.size() - 1)
+			for i in wires:
+				if i != wire:
+					i.voltsamps(amps* amp_multiplier, volts, self)
