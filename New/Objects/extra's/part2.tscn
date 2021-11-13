@@ -4,6 +4,7 @@
 [ext_resource path="res://Objects/extra's/Viewport.gd" type="Script" id=2]
 
 [sub_resource type="DynamicFont" id=2]
+size = 32
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 1 )
@@ -12,7 +13,7 @@ font_data = ExtResource( 1 )
 default_font = SubResource( 2 )
 
 [node name="view" type="Viewport"]
-size = Vector2( 102, 54 )
+size = Vector2( 208, 104 )
 transparent_bg = true
 render_target_v_flip = true
 gui_disable_input = true
@@ -20,4 +21,5 @@ script = ExtResource( 2 )
 sizee = Vector2( 79, 54 )
 
 [node name="Label" type="Label" parent="."]
+margin_bottom = 24.0
 theme = SubResource( 3 )

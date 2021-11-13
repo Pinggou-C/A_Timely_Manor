@@ -39,9 +39,7 @@ shape = SubResource( 1 )
 process_priority = -921
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -0.192089 )
 current = true
-fov = 81.5
 size = 1.28
-far = 8192.0
 script = ExtResource( 4 )
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
