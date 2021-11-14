@@ -68,6 +68,7 @@ custom_styles/pressed = ExtResource( 4 )
 custom_styles/focus = ExtResource( 3 )
 custom_styles/disabled = ExtResource( 2 )
 custom_styles/normal = ExtResource( 3 )
+disabled = true
 text = "Load Game"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -82,6 +83,7 @@ custom_styles/pressed = ExtResource( 4 )
 custom_styles/focus = ExtResource( 3 )
 custom_styles/disabled = ExtResource( 2 )
 custom_styles/normal = ExtResource( 3 )
+disabled = true
 text = "Settings"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -96,6 +98,7 @@ custom_styles/pressed = ExtResource( 4 )
 custom_styles/focus = ExtResource( 3 )
 custom_styles/disabled = ExtResource( 2 )
 custom_styles/normal = ExtResource( 3 )
+disabled = true
 text = "Extra's"
 __meta__ = {
 "_edit_use_anchors_": false
