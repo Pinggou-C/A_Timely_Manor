@@ -105,7 +105,7 @@ func conecteds():
 		return [0, 0, "error"]
 
 
-func conn(wire, newnode, frontback, auto = false):
+func conn(wire, newnode, frontback, auto = false, voltamp = []):
 	var posss
 	print("hi")
 	#get closest

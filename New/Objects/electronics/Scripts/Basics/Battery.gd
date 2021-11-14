@@ -163,7 +163,7 @@ func disconnect_wire(node):
 			negconnect = null
 			negconnectbattery = false
 
-func conn(wire, node, dir, onof = false):
+func conn(wire, node, dir, onof = false, ampvolt = []):
 	if dir == 'front':
 		posconnectwire = wire
 		posconnect = node
@@ -206,9 +206,14 @@ func con_close(truefalse, node):
 		closed_connecteds.erase(node)
 
 
-func voltsamps(amp, volt, wire, replace = true, clear = false):
-	volts = volt
-	amps = amp
+func voltsamps(amp, volt, wire, replace = true, clear = false):\
+
+	if replace == true:
+		volts = volt
+		amps = amp
+	elif replace == false:
+		volts = (((volts * amps) + (volt * amp))/(amps+amp))
+		amps += amp
 	if clear == false:
 		if wire != null:
 			var volt_removal

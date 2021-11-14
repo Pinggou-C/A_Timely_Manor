@@ -48,10 +48,16 @@ func _physics_process(delta):
 	if pick == null:
 		return
 	var pos_cur = pick.get_global_transform().origin
+	var angle = Vector3($Head.rotation_degrees.x, rotation_degrees.y, 0)*PI/180
+	print(rel_pos)
+	print(angle)
+	print($Head.get_global_transform().origin)
+	#print((Vector3(rel_pos * sin(angle.y) * cos(angle.x), rel_pos * sin(angle.y) * sin(angle.x), rel_pos * cos(angle.y))))
+	#var pos_next = ($Head.get_global_transform().origin + (Vector3(rel_pos * sin(angle.y) * cos(angle.x), rel_pos * sin(angle.y) * sin(angle.x), rel_pos * cos(angle.y))))
 	var pos_next = ($Head.get_global_transform() * rel_pos).origin
+	#print(rel_pos.origin)
 	if pick.is_in_group("wire_end"):
 		if pick.snap_to_node == true:
-			print(pick.targetpos)
 			var p = pick.targetpos - pos_next
 			if sqrt(pow(p.x, 2)+pow(p.y, 2)+pow(p.z, 2)) > 0.25:
 				var vel = (pos_next - pos_cur) / delta
@@ -189,7 +195,12 @@ func _process(_delta):
 
 # Get the `Transform` of a `PhysicsBody` relative to the player position
 func get_rel_pos(body):
+	var pos = $Head.get_global_transform().origin - body.get_global_transform().origin
+	var pos3 = (sqrt(pow(pos.x, 2)+pow(pos.y, 2)+pow(pos.z, 2)))
+	var angle = Vector3($Head.rotation_degrees.x, rotation_degrees.y, 0)*PI/180
+	print(Vector3(pos3 * sin(angle.x) * cos(angle.y), pos3 * sin(angle.x) * sin(angle.y), pos3 * cos(angle.x)))
 	return $Head.get_global_transform().inverse() * body.get_global_transform()
+	#return pos3
 
 func trans_body(to: PhysicsBody, from: PhysicsBody) -> void:
 	to.transform = from.transform

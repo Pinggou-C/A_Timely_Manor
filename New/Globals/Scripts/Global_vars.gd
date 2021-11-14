@@ -7,7 +7,7 @@ var dead_paths = []
 var paths = []
 var all_routes = []
 var splits = []
-var menu 
+var menu = true
 var current = "menu"
 
 
