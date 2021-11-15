@@ -110,24 +110,16 @@ func conn(wire, newnode, frontback, auto = false, voltamp = []):
 	print("hi")
 	#get closest
 	var posarr = []
-	if auto != true:
-		if frontback == "front":
-			posss = wire.rear
-		elif frontback == "rear":
-			posss = wire.front
-	else:
-		if frontback == "front":
-			posss = wire.front
-		elif frontback == "rear":
-			posss = wire.rear
 	var pos
 	var stop = false
-	if wire == posconwire:
+	if frontback == "front":
+		posconwire = wire
 		return [$pos1.get_global_transform().origin, 0]
-	elif wire == negconwire:
+	elif frontback == "rear":
+		negconwire = wire
 		return [$pos2.get_global_transform().origin, 1]
 	if newnode != null:
-		if !poscon == newnode:
+		if !poscon == newnode && frontback == "front":
 			poscon = newnode
 			if negcon != null:
 				closed = true
@@ -136,7 +128,7 @@ func conn(wire, newnode, frontback, auto = false, voltamp = []):
 				if closed_connecteds.size() > 1:
 					if ElectricsUpdate.battery_closed == true:
 						ElectricsUpdate.closed_batteries(0).start_connecting()
-		if !negcon == newnode:
+		if !negcon == newnode && frontback == "rear":
 			negcon = newnode
 			if poscon != null:
 				closed = true
@@ -160,16 +152,20 @@ func disconnect_wire(wire):
 
 func disconnect_node(node):
 	if node == poscon:
-		poscon = null
 		closed = false
-		negcon.con_close(false, self)
-		poscon.con_close(false, self)
+		if negcon != null:
+			negcon.con_close(false, self)
+		if poscon != null:
+			poscon.con_close(false, self)
 		posconbattery = false
+		poscon = null
 	elif node == negcon:
-		negcon = null
 		closed = false
-		negcon.con_close(false, self)
-		poscon.con_close(false, self)
+		if negcon != null:
+			negcon.con_close(false, self)
+		if poscon != null:
+			poscon.con_close(false, self)
+		negcon = null
 		negconbattery = false
 
 func con_node(node, wire, is_battery = null):

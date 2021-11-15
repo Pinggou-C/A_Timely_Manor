@@ -240,11 +240,8 @@ func connect_node_front(node, pos):
 	frontnode = node
 	front = pos
 	if rearnode != null:
-		if !rear_is_battery:
-			rearnode.con_node(node, self, false)
-			node.con_node(rearnode, self, false)
-		else:
-			node.con_node(rearnode, self, true)
+		rearnode.con_node(node, self, false)
+		node.con_node(rearnode, self, false)
 	resize()
 
 func disconnect_node(node, frontback):
@@ -266,11 +263,8 @@ func connect_node_rear(node, pos):
 	rearnode = node
 	rear = pos
 	if frontnode != null:
-		if !front_is_battery:
-			frontnode.con_node(node, self, false)
-			node.con_node(frontnode, self, false)
-		else:
-			node.con_node(frontnode, self, true)
+		frontnode.con_node(node, self, false)
+		node.con_node(frontnode, self, false)
 	resize()
 	
 #when a node is put in the middle of the wire it splits it up

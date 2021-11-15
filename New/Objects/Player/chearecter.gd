@@ -49,9 +49,6 @@ func _physics_process(delta):
 		return
 	var pos_cur = pick.get_global_transform().origin
 	var angle = Vector3($Head.rotation_degrees.x, rotation_degrees.y, 0)*PI/180
-	print(rel_pos)
-	print(angle)
-	print($Head.get_global_transform().origin)
 	#print((Vector3(rel_pos * sin(angle.y) * cos(angle.x), rel_pos * sin(angle.y) * sin(angle.x), rel_pos * cos(angle.y))))
 	#var pos_next = ($Head.get_global_transform().origin + (Vector3(rel_pos * sin(angle.y) * cos(angle.x), rel_pos * sin(angle.y) * sin(angle.x), rel_pos * cos(angle.y))))
 	var pos_next = ($Head.get_global_transform() * rel_pos).origin
