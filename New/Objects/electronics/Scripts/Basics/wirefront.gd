@@ -143,7 +143,7 @@ func _on_frontarea_body_entered(body, bypas = false):
 				if body.is_in_group("door"):
 					nod = body.get_parent()
 				if parent.frontnode == null:
-					var go = nod.conn(parent, parent.frontnode, dirr, true, [parent.amps, parent.volts])
+					var go = nod.conn(parent, parent.rearnode, dirr, true, [parent.amps, parent.volts])
 					parent.connect_node_front(nod, go[0])
 					targetpos = go[0]
 					snap_to_node = true
@@ -151,7 +151,7 @@ func _on_frontarea_body_entered(body, bypas = false):
 				else:
 					con = body
 					conpickup = 'node'
-					var go = nod.conn(parent, parent.frontnode, dirr, true, [parent.amps, parent.volts])
+					var go = nod.conn(parent, parent.rearnode, dirr, true, [parent.amps, parent.volts])
 					targetpos = go[0] 
 					snap_to_node = true
 					snapnode = nod

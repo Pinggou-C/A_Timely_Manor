@@ -57,6 +57,7 @@ func update_all_electrical_components():
 		if p[2] != "error":
 			if i.is_in_group("batteries") || i.is_in_group("appliance"):
 				specialnodestuf.append(p)
+				print(p)
 			else:
 				nodestuff.append(p)
 			allnode.append(i)
@@ -94,7 +95,9 @@ func update_all_electrical_components():
 					errorid.append(i)
 					err = true
 					errornodes.append(nodes)
+		print(err)
 		if err == false:
+			print("noeer")
 			if !nodes.has(p[0]):
 				connecteds.append([p[0], [p[1][0]], p[2], p[3], p[1]])
 				nodes.append(p[0])

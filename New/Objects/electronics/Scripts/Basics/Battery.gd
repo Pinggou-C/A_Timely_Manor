@@ -166,19 +166,21 @@ func disconnect_wire(node):
 func conn(wire, node, dir, onof = false, ampvolt = []):
 	if dir == 'front':
 		posconnectwire = wire
-		posconnect = node
-		if negconnect != null:
-			start_connecting()
-			ElectricsUpdate.battery_closed = true
-			ElectricsUpdate.closed_batteries.append(self)
+		if node != null:
+			posconnect = node
+			if negconnect != null:
+				start_connecting()
+				ElectricsUpdate.battery_closed = true
+				ElectricsUpdate.closed_batteries.append(self)
 		return [$pos.global_transform.origin, 0, amps, volts]
 	elif dir == 'rear':
 		negconnectwire = wire
-		negconnect = node
-		if posconnect != null:
-			start_connecting()
-			ElectricsUpdate.battery_closed = true
-			ElectricsUpdate.closed_batteries.append(self)
+		if node != null:
+			negconnect = node
+			if posconnect != null:
+				start_connecting()
+				ElectricsUpdate.battery_closed = true
+				ElectricsUpdate.closed_batteries.append(self)
 		return [$neg.global_transform.origin, 1]
 
 func con_node(node, wire, is_battery = null):
