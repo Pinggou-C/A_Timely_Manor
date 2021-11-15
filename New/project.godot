@@ -99,18 +99,16 @@ settings/stdout/print_fps=true
 
 [display]
 
-window/size/width=2560
-window/size/height=1600
+window/size/width=1920
+window/size/height=1080
 window/size/resizable=false
 window/size/fullscreen=true
-window/size/test_width=2560
-window/size/test_height=1600
-window/dpi/allow_hidpi=true
+window/vsync/use_vsync=false
 window/per_pixel_transparency/enabled=true
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/SIsilicon.3d.text/plugin.cfg", "res://addons/decals/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/decals/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg" )
 
 [input]
 
@@ -174,14 +172,8 @@ wiresnap={
 
 [rendering]
 
-quality/filters/sharpen_intensity=0.5
+quality/filters/sharpen_intensity=1.0
 2d/options/use_nvidia_rect_flicker_workaround=true
-threads/thread_model=2
-quality/spatial_partitioning/render_tree_balance=1.0
-quality/subsurface_scattering/quality=2
-quality/subsurface_scattering/follow_surface=true
-quality/voxel_cone_tracing/high_quality=true
-quality/filters/msaa=4
 quality/filters/use_debanding=true
 environment/default_environment="res://Assets/Environment/default_env.tres"
 quality/godrays/sample_number=50
