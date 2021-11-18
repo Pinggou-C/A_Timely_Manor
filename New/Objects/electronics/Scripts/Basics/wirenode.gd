@@ -9,10 +9,10 @@ class MyCustomSorter:
 #if the node is connected to the battery in some way
 var negbattery
 var negbattery_paths
-var negconns
+var negconns = []
 var posbattery
 var posbattery_paths
-var posconns
+var posconns = []
 
 const MAX_COMPONENT_UPDATES_PER_FRAME = 10
 
@@ -53,6 +53,11 @@ var pos_node1 = null
 var pos_node2 = null
 var pos_node3 = null
 var pos_node4 = null
+
+var pos_wire1 = null
+var pos_wire2 = null
+var pos_wire3 = null
+var pos_wire4 = null
 
 var pos1_battery = false
 var pos2_battery = false
@@ -389,7 +394,7 @@ func con_close(truefalse, node):
 	else:
 		closed_connecteds.erase(node)
 
-func negbattery(onof, path = []):
+func negbattery(onof,node, wire, path = []):
 	negbattery = onof
 	if onof == false:
 		if negbattery_paths.has(path):
@@ -397,7 +402,7 @@ func negbattery(onof, path = []):
 	elif !negbattery.has(path):
 		negbattery.append(path)
 
-func posbattery(onof, node, paths = [[]]):
+func posbattery(onof, node, wire, paths = [[]]):
 	posbattery = onof
 	var paf = paths
 	if onof == false:
@@ -408,7 +413,20 @@ func posbattery(onof, node, paths = [[]]):
 			if posconns.size() == 0:
 				for i in connecteds:
 					if i != node:
-						i.posbattery(false, self)
+						var poss
+						if i == pos_node1:
+							pos1.posbattery(false, self, paf)
+							poss = pos1
+						elif i == pos_node2:
+							pos2.posbattery(false, self, paf)
+							poss = pos2
+						elif i == pos_node3:
+							pos3.posbattery(false, self, paf)
+							poss = pos3
+						elif i == pos_node4:
+							pos4.posbattery(false, self, paf)
+							poss = pos4
+						i.posbattery(false, self, poss)
 	if !paf.has(self):
 		paf.append(node)
 		if onof == true:
@@ -416,7 +434,20 @@ func posbattery(onof, node, paths = [[]]):
 				if posconns.size() == 0:
 					for i in connecteds:
 						if i != node:
-							i.posbattery(true, self, paf)
+							var poss
+							if i == pos_node1:
+								pos1.posbattery(true, self, paf)
+								poss = pos1
+							elif i == pos_node2:
+								pos2.posbattery(true, self, paf)
+								poss = pos2
+							elif i == pos_node3:
+								pos3.posbattery(true, self, paf)
+								poss = pos3
+							elif i == pos_node4:
+								pos4.posbattery(true, self, paf)
+								poss = pos4
+							i.posbattery(false, self, poss)
 				posconns.append(node)
 			if !posbattery.has(paths):
 				posbattery.append(paths)

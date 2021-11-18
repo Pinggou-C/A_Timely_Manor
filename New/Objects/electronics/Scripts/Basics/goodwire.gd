@@ -6,6 +6,8 @@ var rearnode = null
 
 var connected_to_battery = "not"
 
+var posbattery = false
+var negbattery = false
 
 var volts = 0
 var amps = 0
@@ -466,3 +468,21 @@ func voltsamps(amp, volt, node, replace = true, clear = false):
 			rearnode.voltsamps(amps, volts, self)
 		elif node == frontnode:
 			frontnode.voltsamps(amps, volts, self)
+
+func negbattery(onof, node, path = []):
+	if onof == true:
+		if node == rearnode:
+			negbattery = rearnode
+		elif node == frontnode:
+			negbattery = frontnode
+	else:
+		negbattery = null
+
+func posbattery(onof, node, paths = [[]]):
+	if onof == true:
+		if node == rearnode:
+			posbattery = rearnode
+		elif node == frontnode:
+			negbattery = frontnode
+	else:
+		posbattery = null
