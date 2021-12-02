@@ -1,6 +1,50 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Objects/electronics/Scripts/Complex/Resistance.gd" type="Script" id=1]
 
-[node name="resistance" type="Spatial"]
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.065, 0.065, 0.065 )
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 0.05, 0.05, 0.05 )
+
+[sub_resource type="CubeMesh" id=3]
+size = Vector3( 0.05, 0.05, 0.05 )
+
+[node name="resistance" type="Spatial" groups=["appliance", "resistance"]]
 script = ExtResource( 1 )
+
+[node name="StaticBody" type="StaticBody" parent="."]
+
+[node name="negcon" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.391189 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="negcon"]
+shape = SubResource( 1 )
+
+[node name="frontcon" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.263843 )
+
+[node name="CollisionShape" type="CollisionShape" parent="frontcon"]
+shape = SubResource( 1 )
+
+[node name="front" type="StaticBody" parent="." groups=["appliance", "pos", "resistance"]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.286757 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="front"]
+shape = SubResource( 2 )
+
+[node name="MeshInstance" type="MeshInstance" parent="front"]
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="neg" type="StaticBody" parent="." groups=["appliance", "neg", "resistance"]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.381311 )
+
+[node name="CollisionShape" type="CollisionShape" parent="neg"]
+shape = SubResource( 2 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="neg"]
+mesh = SubResource( 3 )
+skeleton = NodePath("../../front")
+material/0 = null

@@ -5,7 +5,7 @@
 [ext_resource path="res://Assets/Material_002.material" type="Material" id=3]
 [ext_resource path="res://Assets/Material_004.material" type="Material" id=4]
 [ext_resource path="res://Assets/Material_003.material" type="Material" id=5]
-[ext_resource path="res://Objects/electronics/Items/Complex/lamp.gd" type="Script" id=6]
+[ext_resource path="res://Objects/electronics/Scripts/Complex/lamp.gd" type="Script" id=6]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.2, 0.2, 0.2 )
