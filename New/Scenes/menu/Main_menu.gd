@@ -4,7 +4,8 @@ var has_save = false
 var saves = []
 # Declare member variables here. Examples:
 # var a = 2
-var level = preload("res://Areas/completed_levels/Level1.tscn")
+export(Resource) var lev 
+#var level = preload("res://Areas/completed_levels/Level1.tscn")
 var returned = false
 
 # Called when the node enters the scene tree for the first time.

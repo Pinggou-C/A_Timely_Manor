@@ -4,11 +4,12 @@
 [ext_resource path="res://terrain/HTerrain.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Objects/electronics/Items/Basics/Battery.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Areas/Area/Spatial.tres" type="Environment" id=4]
-[ext_resource path="res://Scenes/menu/Pause.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/pause/Pause.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Objects/3D_Objects/Camera/cam.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Assets/Materials/truepillar.tres" type="Material" id=7]
 [ext_resource path="res://Objects/electronics/Items/Basics/wirenode.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Objects/Player/chearecter.tscn" type="PackedScene" id=9]
+
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 10, 1, 10 )

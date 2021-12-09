@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Scenes/menu/Pause.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/pause/Pause.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/menu/new_styleboxflat.tres" type="StyleBox" id=2]
-[ext_resource path="res://Scenes/menu/new_styleboxflat2.tres" type="StyleBox" id=3]
-[ext_resource path="res://Scenes/menu/new_styleboxflat3.tres" type="StyleBox" id=4]
+[ext_resource path="res://Scenes/menu/new_styleboxflat3.tres" type="StyleBox" id=3]
+[ext_resource path="res://Scenes/menu/new_styleboxflat2.tres" type="StyleBox" id=4]
 
 [sub_resource type="Theme" id=1]
 
@@ -45,9 +45,9 @@ margin_top = 21.651
 margin_right = 200.0
 margin_bottom = 96.651
 custom_styles/hover = ExtResource( 2 )
-custom_styles/pressed = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 4 )
 custom_styles/focus = ExtResource( 2 )
-custom_styles/disabled = ExtResource( 4 )
+custom_styles/disabled = ExtResource( 3 )
 custom_styles/normal = ExtResource( 2 )
 text = "Resume"
 __meta__ = {
@@ -64,9 +64,9 @@ margin_top = 102.42
 margin_right = 200.0
 margin_bottom = 177.42
 custom_styles/hover = ExtResource( 2 )
-custom_styles/pressed = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 4 )
 custom_styles/focus = ExtResource( 2 )
-custom_styles/disabled = ExtResource( 4 )
+custom_styles/disabled = ExtResource( 3 )
 custom_styles/normal = ExtResource( 2 )
 text = "Main Menu"
 __meta__ = {
@@ -83,9 +83,9 @@ margin_top = 184.339
 margin_right = 200.0
 margin_bottom = 259.339
 custom_styles/hover = ExtResource( 2 )
-custom_styles/pressed = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 4 )
 custom_styles/focus = ExtResource( 2 )
-custom_styles/disabled = ExtResource( 4 )
+custom_styles/disabled = ExtResource( 3 )
 custom_styles/normal = ExtResource( 2 )
 text = "Save and Quit"
 __meta__ = {
