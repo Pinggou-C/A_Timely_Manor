@@ -212,11 +212,7 @@ func con_close(truefalse, node):
 		closed_connecteds.erase(node)
 
 
-func voltsamps(amp, volt, wire, replace = true, clear = false):
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
+func voltsamps(amp, volt, wire, replace = true, clear = false): 
 	if replace == true:
 		volts = volt
 		amps = amp
