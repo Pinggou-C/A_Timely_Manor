@@ -2,6 +2,9 @@ extends StaticBody
 
 var type = "battery"
 
+
+var temppaths = []
+
 var posconnect = null
 var negconnect = null
 var posconnectwire = null
@@ -131,6 +134,7 @@ func get_info():
 
 func disconnect_node(node):
 	if posconnect == node:
+		posconnect.batterydisconn(self)
 		posconnect = null
 		ElectricsUpdate.closed_batteries.erase(self)
 		if ElectricsUpdate.closed_batteries.size() <1:
@@ -155,6 +159,7 @@ func disconnect_wire(node):
 	if posconnectwire == node:
 		posconnectwire = null
 		if posconnect !=  null:
+			posconnect.batterydisconn(self)
 			posconnect = null
 			posconnectbattery = false
 	elif negconnectwire == node:
@@ -168,8 +173,8 @@ func conn(wire, node, dir, onof = false, ampvolt = []):
 		posconnectwire = wire
 		if node != null:
 			posconnect = node
+			posconnect.batteryconn([self, "battery", 0, 0, 0, false], volts, amps)
 			if negconnect != null:
-				start_connecting()
 				ElectricsUpdate.battery_closed = true
 				ElectricsUpdate.closed_batteries.append(self)
 		return [$pos.global_transform.origin, 0, amps, volts]
@@ -178,7 +183,6 @@ func conn(wire, node, dir, onof = false, ampvolt = []):
 		if node != null:
 			negconnect = node
 			if posconnect != null:
-				start_connecting()
 				ElectricsUpdate.battery_closed = true
 				ElectricsUpdate.closed_batteries.append(self)
 		return [$neg.global_transform.origin, 1]
@@ -186,10 +190,11 @@ func conn(wire, node, dir, onof = false, ampvolt = []):
 func con_node(node, wire, is_battery = null):
 	if wire == posconnectwire:
 		posconnect = node
+		posconnect.batteryconn([self, "battery", 0, 0, 0, false], volts, amps)
 		if is_battery == true:
 			posconnectbattery = true
 		if negconnect != null:
-			start_connecting()
+			
 			ElectricsUpdate.battery_closed = true
 			ElectricsUpdate.closed_batteries.append(self)
 	elif wire == negconnectwire:
@@ -197,7 +202,6 @@ func con_node(node, wire, is_battery = null):
 		if is_battery == true:
 			negconnectbattery = true
 		if posconnect != null:
-			start_connecting()
 			ElectricsUpdate.battery_closed = true
 			ElectricsUpdate.closed_batteries.append(self)
 
@@ -209,6 +213,10 @@ func con_close(truefalse, node):
 
 
 func voltsamps(amp, volt, wire, replace = true, clear = false):
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 	if replace == true:
 		volts = volt
 		amps = amp
@@ -221,3 +229,18 @@ func voltsamps(amp, volt, wire, replace = true, clear = false):
 			for i in wires:
 				if i != wire:
 					i.voltsamps(amps, volts - volt_removal, self)
+
+
+func batteryconn(path, amp, volt):
+	if temppaths.size() != 0:
+		$Timer3.start(0.1666)
+	temppaths.append(path)
+
+
+
+func _on_Timer3_timeout():
+	#find paths do smthing i guess
+	pass
+
+func changed():
+	start_connecting()

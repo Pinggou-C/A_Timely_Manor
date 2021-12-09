@@ -143,9 +143,13 @@ extrude = 0.0
 max_steps = 256
 step_size = 1.0
 
+[node name="Timer3" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="body_entered" from="Pos" to="." method="poscon"]
 [connection signal="body_exited" from="Pos" to="." method="posdiscon"]
 [connection signal="body_entered" from="Neg" to="." method="negcon"]
 [connection signal="body_exited" from="Neg" to="." method="negdiscon"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="Timer2" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="Timer3" to="." method="_on_Timer3_timeout"]
