@@ -190,7 +190,8 @@ func conn(wire, node, dir, onof = false, ampvolt = []):
 func con_node(node, wire, is_battery = null):
 	if wire == posconnectwire:
 		posconnect = node
-		posconnect.batteryconn([self, "battery", 0, 0, 0, false], volts, amps)
+		posconnect.batteryconn(self,[self],[[self, "battery", 0, 0, 0, false]], volts, amps)
+		#(originnode,nodes, [[node, nodetype, volt, amp, resistance, ], other pathbits]voltflow, ampflow)
 		if is_battery == true:
 			posconnectbattery = true
 		if negconnect != null:
@@ -227,12 +228,13 @@ func voltsamps(amp, volt, wire, replace = true, clear = false):
 					i.voltsamps(amps, volts - volt_removal, self)
 
 
-func batteryconn(path, amp, volt):
+func batteryconn(node,nodes, path, amp, volt):
 	if temppaths.size() != 0:
 		$Timer3.start(0.1666)
 	temppaths.append(path)
 
-
+func batterydisconn(node,nodes, path):
+	pass
 
 func _on_Timer3_timeout():
 	#find paths do smthing i guess

@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/menu/background.jpg" type="Texture" id=1]
 [ext_resource path="res://Scenes/menu/new_styleboxflat3.tres" type="StyleBox" id=2]
 [ext_resource path="res://Scenes/menu/new_styleboxflat.tres" type="StyleBox" id=3]
 [ext_resource path="res://Scenes/menu/new_styleboxflat2.tres" type="StyleBox" id=4]
 [ext_resource path="res://Scenes/menu/Main_menu.gd" type="Script" id=5]
+[ext_resource path="res://Areas/completed_levels/demo.tscn" type="PackedScene" id=6]
 
 [sub_resource type="StyleBoxFlat" id=1]
 resource_local_to_scene = true
@@ -28,6 +29,7 @@ script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+lev = ExtResource( 6 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( -214.081, -8.97974 )

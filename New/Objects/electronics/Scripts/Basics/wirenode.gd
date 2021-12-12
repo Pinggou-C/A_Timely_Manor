@@ -77,6 +77,13 @@ var splits0 =[]
 
 var held = false
 
+#variables connmected to batteryconn & batterydisconn
+var temp_path = []
+var temp_nodes = []
+#by which nodes is it connected to the positive end of the battery
+var frombats = []
+var con_to_batt = false
+
 func _ready():
 	oldpos = translation
 	if onstart == true:
@@ -467,3 +474,39 @@ func voltsamps(amp, volt, wire, replace = true, clear = false):
 			for i in wires:
 				if i != wire:
 					i.voltsamps(amps* amp_multiplier, volts, self)
+
+func batteryconn(node, nodes, path, amp, volt):
+	var nodess = nodes
+	var paths = path
+	if !nodess.has(self):
+		nodess.append(self)
+		paths.append(self, "node", 0, 0, 0, false)
+		if !temp_path.has(paths):
+			temp_path.append(paths)
+		if connecteds.has(node):
+			if !frombats.has(node):
+				frombats.append(node)
+			if con_to_batt != true:
+				con_to_batt = true
+		for i in connecteds:
+			if i != node && !nodess.has(i):
+				i.batteryconn(self, nodess, paths, amp, volt)
+		
+
+func batterydisconn(node, nodes, path):
+	var paths = path
+	var nodess = nodes
+	nodes.append(self)
+	paths.append([self, "node", 0, 0, 0, false])
+	if temp_path.has(path):
+		temp_path.erase(path)
+		if temp_nodes.has(node):
+			temp_nodes.erase(node)
+			for i in connecteds:
+				if i != node:
+					i.batterydisconn(self,nodess, paths)
+			if !temp_nodes.has(node):
+				if frombats.has(node):
+					frombats.erase(node)
+					if frombats.size() == 0:
+						con_to_batt = false
