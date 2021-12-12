@@ -127,7 +127,7 @@ func conn(wire, newnode, frontback, auto = false, voltamp = []):
 				poscon.con_close(true, self)
 				if closed_connecteds.size() > 1:
 					if ElectricsUpdate.battery_closed == true:
-						ElectricsUpdate.closed_batteries(0).start_connecting()
+						ElectricsUpdate.closed_batteries[0].start_connecting()
 		if !negcon == newnode && frontback == "rear":
 			negcon = newnode
 			if poscon != null:
@@ -136,7 +136,7 @@ func conn(wire, newnode, frontback, auto = false, voltamp = []):
 				poscon.con_close(true, self)
 				if closed_connecteds.size() > 1:
 					if ElectricsUpdate.battery_closed == true:
-						ElectricsUpdate.closed_batteries(0).start_connecting()
+						ElectricsUpdate.closed_batteries[0].start_connecting()
 
 func disconnect_wire(wire):
 	if wire == posconwire:

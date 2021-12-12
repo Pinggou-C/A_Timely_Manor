@@ -134,7 +134,7 @@ func get_info():
 
 func disconnect_node(node):
 	if posconnect == node:
-		posconnect.batterydisconn(self)
+		posconnect.batterydisconn(self, [self], [self, "battery", 0, 0, 0, false])
 		posconnect = null
 		ElectricsUpdate.closed_batteries.erase(self)
 		if ElectricsUpdate.closed_batteries.size() <1:
@@ -173,7 +173,7 @@ func conn(wire, node, dir, onof = false, ampvolt = []):
 		posconnectwire = wire
 		if node != null:
 			posconnect = node
-			posconnect.batteryconn([self, "battery", 0, 0, 0, false], volts, amps)
+			posconnect.batteryconn(self, [self],[self, "battery", 0, 0, 0, false], volts, amps)
 			if negconnect != null:
 				ElectricsUpdate.battery_closed = true
 				ElectricsUpdate.closed_batteries.append(self)

@@ -238,6 +238,7 @@ func split(node):
 
 #connects a node to the wire
 #front
+
 func connect_node_front(node, pos):
 	frontnode = node
 	front = pos

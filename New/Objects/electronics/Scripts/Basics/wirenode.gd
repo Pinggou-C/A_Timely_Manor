@@ -79,6 +79,8 @@ var held = false
 
 #variables connmected to batteryconn & batterydisconn
 var temp_path = []
+
+var temp_node = []
 var temp_nodes = []
 #by which nodes is it connected to the positive end of the battery
 var frombats = []
@@ -93,8 +95,9 @@ func _ready():
 func conn(wire, newnode, frontback, auto = false, volamp = []):
 	var posss
 	if volamp.size()>0:
-		volts = volamp[1]
-		amps = volamp[0]
+		if con_to_batt == false:
+			volts = volamp[1]
+			amps = volamp[0]
 	#get closest
 	var posarr = []
 	if auto != true:
@@ -126,9 +129,15 @@ func conn(wire, newnode, frontback, auto = false, volamp = []):
 		pos = posarr[0][2]
 		set("pos" + String(posarr[0][1]), wire)
 		return [pos, posarr[0][1]]
+	print(newnode)
+	print(wire)
 	if newnode != null:
 		if !connecteds.has(newnode):
 			connecteds.append(newnode)
+			if con_to_batt == true:
+				for i in temp_nodes:
+					if !i.has(newnode):
+						newnode.batteryconn(self,i, temp_path[temp_nodes.find(i)], volts, amps)
 			if connecteds.size() > 1 && closed == false:
 				closed = true
 				for i  in connecteds:
@@ -476,17 +485,31 @@ func voltsamps(amp, volt, wire, replace = true, clear = false):
 					i.voltsamps(amps* amp_multiplier, volts, self)
 
 func batteryconn(node, nodes, path, amp, volt):
+	print('con')
+	amps = amp
+	volts = volt
+	print(amp)
+	print(volt)
+	print(node)
 	var nodess = nodes
 	var paths = path
 	if !nodess.has(self):
+		print("con2")
 		nodess.append(self)
-		paths.append(self, "node", 0, 0, 0, false)
+		paths.append([self, "node", 0, 0, 0, false])
 		if !temp_path.has(paths):
 			temp_path.append(paths)
+		if !temp_nodes.has(nodess):
+			temp_nodes.append(nodess)
+		print(connecteds)
 		if connecteds.has(node):
+			temp_node.append(node)
+			
+			print("con3")
 			if !frombats.has(node):
 				frombats.append(node)
 			if con_to_batt != true:
+				print("con4")
 				con_to_batt = true
 		for i in connecteds:
 			if i != node && !nodess.has(i):
@@ -494,18 +517,22 @@ func batteryconn(node, nodes, path, amp, volt):
 		
 
 func batterydisconn(node, nodes, path):
+	print('discon')
 	var paths = path
 	var nodess = nodes
-	nodes.append(self)
+	nodess.append(self)
 	paths.append([self, "node", 0, 0, 0, false])
 	if temp_path.has(path):
 		temp_path.erase(path)
-		if temp_nodes.has(node):
-			temp_nodes.erase(node)
+		volts = 0
+		amps = 0
+		temp_nodes.erase(nodess)
+		if temp_node.has(node):
+			temp_node.erase(node)
 			for i in connecteds:
 				if i != node:
 					i.batterydisconn(self,nodess, paths)
-			if !temp_nodes.has(node):
+			if !temp_node.has(node):
 				if frombats.has(node):
 					frombats.erase(node)
 					if frombats.size() == 0:
