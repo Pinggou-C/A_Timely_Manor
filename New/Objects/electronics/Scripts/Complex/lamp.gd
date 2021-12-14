@@ -30,6 +30,15 @@ var connected_to_battery = "not"
 var amps = 0
 var volts = 0
 
+#variables connmected to batteryconn & batterydisconn
+var temp_path = []
+
+var temp_node = []
+var temp_nodes = []
+#by which nodes is it connected to the positive end of the battery
+var frombats = []
+var con_to_batt = false
+
 func _ready():
 	pass 
 
@@ -161,3 +170,64 @@ func con_close(truefalse, node):
 	else:
 		closed_connecteds.erase(node)
 
+func batteryconn(node, nodes, path, amp, volt):
+	amps = amp
+	volts = volt
+	var nodess = nodes
+	var paths = path
+	if !nodess.has(self):
+		nodess.append(self)
+		paths.append([self, "node", 0, 0, 0, false])
+		if !temp_path.has(paths):
+			temp_path.append(paths)
+		if !temp_nodes.has(nodess):
+			temp_nodes.append(nodess)
+		if node == negcon || node == poscon:
+			print('hi')
+			temp_node.append(node)
+			if !frombats.has(node):
+				frombats.append(node)
+			if con_to_batt != true:
+				print("hi3")
+				con_to_batt = true
+		var nod 
+		if node == negcon:
+			nod = poscon
+			if nod != node && !nodess.has(nod):
+				nod.batteryconn(self, nodess, paths, amp, volt)
+		elif node == poscon:
+			nod = negcon
+			if nod != node && !nodess.has(nod):
+				nod.batteryconn(self, nodess, paths, amp, volt)
+		else:
+			pass
+		
+
+func batterydisconn(node, nodes, path):
+	var paths = path
+	var nodess = nodes
+	nodess.append(self)
+	paths.append([self, "node", 0, 0, 0, false])
+	if temp_path.has(path):
+		temp_path.erase(path)
+		volts = 0
+		amps = 0
+		temp_nodes.erase(nodess)
+		if temp_node.has(node):
+			temp_node.erase(node)
+			var nod
+			if node == negcon:
+				nod = poscon
+				if nod != node:
+					nod.batterydisconn(self,nodess, paths)
+			elif node == poscon:
+				nod = poscon
+				if nod != node:
+					nod.batterydisconn(self,nodess, paths)
+			else:
+				pass
+			if !temp_node.has(node):
+				if frombats.has(node):
+					frombats.erase(node)
+					if frombats.size() == 0:
+						con_to_batt = false
