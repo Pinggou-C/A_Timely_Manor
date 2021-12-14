@@ -214,7 +214,7 @@ func batteryconn(node, nodes, path, amp, volt):
 	var paths = path
 	if !nodess.has(self):
 		nodess.append(self)
-		paths.append([self, "node", 0, 0, 0, false])
+		paths.append([self, "appliance", volt_needs, watt_needs, 0, false])
 		if !temp_path.has(paths):
 			temp_path.append(paths)
 		if !temp_nodes.has(nodess):
@@ -244,7 +244,7 @@ func batterydisconn(node, nodes, path):
 	var paths = path
 	var nodess = nodes
 	nodess.append(self)
-	paths.append([self, "node", 0, 0, 0, false])
+	paths.append([self, "appliance", volt_needs, watt_needs, 0, false])
 	if temp_path.has(path):
 		temp_path.erase(path)
 		volts = 0
