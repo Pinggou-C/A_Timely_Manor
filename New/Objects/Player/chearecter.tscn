@@ -12,7 +12,7 @@ radius = 0.4
 height = 1.5
 
 [sub_resource type="BoxShape" id=2]
-extents = Vector3( 0.05, 0.05, 1.4 )
+extents = Vector3( 0.05, 0.05, 1.75 )
 
 [sub_resource type="CapsuleMesh" id=3]
 radius = 0.4
@@ -53,7 +53,7 @@ stream_paused = true
 [node name="RayCast" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -0.192 )
 enabled = true
-cast_to = Vector3( 0, 0, -2 )
+cast_to = Vector3( 0, 0, -3 )
 collision_mask = 524288
 
 [node name="Position3D" type="Position3D" parent="RayCast"]
@@ -64,7 +64,7 @@ collision_layer = 0
 collision_mask = 128
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.65 )
 shape = SubResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
