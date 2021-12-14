@@ -124,13 +124,6 @@ func conn(wire, newnode, frontback, auto = false, volamp = []):
 		posarr.append([sqrt(pow(posss.x - $pos4.get_global_transform().origin.x, 2) + pow(posss.z - $pos4.get_global_transform().origin.z, 2) + pow(posss.y - $pos4.get_global_transform().origin.y, 2)), 4, $pos4.get_global_transform().origin])
 	if pos4 != null && pos3 != null && pos2 != null && pos1 != null :
 		stop = true
-	if stop == false:
-		posarr.sort_custom(MyCustomSorter, "sort_ascending")
-		pos = posarr[0][2]
-		set("pos" + String(posarr[0][1]), wire)
-		return [pos, posarr[0][1]]
-	print(newnode)
-	print(wire)
 	if newnode != null:
 		if !connecteds.has(newnode):
 			connecteds.append(newnode)
@@ -142,6 +135,11 @@ func conn(wire, newnode, frontback, auto = false, volamp = []):
 				closed = true
 				for i  in connecteds:
 					i.con_close(true, self)
+	if stop == false:
+		posarr.sort_custom(MyCustomSorter, "sort_ascending")
+		pos = posarr[0][2]
+		set("pos" + String(posarr[0][1]), wire)
+		return [pos, posarr[0][1]]
 
 func onnode(node, position, contype):
 	if contype == "connect":
@@ -235,12 +233,6 @@ func power(paths, splits, volt, amp):
 			pass
 
 #when a wire or node enters th area
-
-
-
-
-
-
 
 
 func connect_wire(body):
@@ -485,39 +477,32 @@ func voltsamps(amp, volt, wire, replace = true, clear = false):
 					i.voltsamps(amps* amp_multiplier, volts, self)
 
 func batteryconn(node, nodes, path, amp, volt):
-	print('con')
 	amps = amp
 	volts = volt
-	print(amp)
-	print(volt)
-	print(node)
 	var nodess = nodes
 	var paths = path
 	if !nodess.has(self):
-		print("con2")
 		nodess.append(self)
 		paths.append([self, "node", 0, 0, 0, false])
 		if !temp_path.has(paths):
 			temp_path.append(paths)
 		if !temp_nodes.has(nodess):
 			temp_nodes.append(nodess)
-		print(connecteds)
 		if connecteds.has(node):
+			print('hi')
 			temp_node.append(node)
-			
-			print("con3")
 			if !frombats.has(node):
 				frombats.append(node)
 			if con_to_batt != true:
-				print("con4")
+				print("hi3")
 				con_to_batt = true
 		for i in connecteds:
 			if i != node && !nodess.has(i):
+				print("hi2")
 				i.batteryconn(self, nodess, paths, amp, volt)
 		
 
 func batterydisconn(node, nodes, path):
-	print('discon')
 	var paths = path
 	var nodess = nodes
 	nodess.append(self)
