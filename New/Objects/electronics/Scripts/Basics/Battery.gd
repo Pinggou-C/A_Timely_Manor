@@ -29,6 +29,14 @@ export(float) var amps = 1
 var closed = false
 var closed_connecteds = []
 
+#variables connmected to batteryconn & batterydisconn
+var temp_path = []
+
+var temp_node = []
+var temp_nodes = []
+#by which nodes is it connected to the positive end of the battery
+var frombats = []
+
 func _ready():
 	Global_Variables.batteries.append(self)
 
