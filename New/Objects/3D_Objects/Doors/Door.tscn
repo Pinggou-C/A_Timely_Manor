@@ -200,7 +200,7 @@ collision_layer = 129
 shape = SubResource( 2 )
 
 [node name="Cube001" type="MeshInstance" parent="."]
-transform = Transform( 1.5, 0, 0, 0, 3, 0, 0, 0, 0.1, 1.5, 0, -0.103 )
+transform = Transform( 1.5, 0, 0, 0, 3, 0, 0, 0, 0.1, 1.5, 0, -0.101 )
 use_in_baked_light = true
 mesh = SubResource( 3 )
 material/0 = ExtResource( 4 )
@@ -226,7 +226,7 @@ collision_layer = 129
 shape = SubResource( 6 )
 
 [node name="Sphere001" type="MeshInstance" parent="."]
-transform = Transform( 0.59842, 0.043516, 0, -0.043516, 0.59842, 0, 0, 0, 0.15, 0, 0, 0 )
+transform = Transform( 0.599939, 0.00858962, 0, -0.00858962, 0.599939, 0, 0, 0, 0.15, 0, 0, 0 )
 use_in_baked_light = true
 mesh = SubResource( 7 )
 material/0 = ExtResource( 3 )
@@ -238,7 +238,7 @@ collision_layer = 129
 shape = SubResource( 8 )
 
 [node name="Sphere" type="MeshInstance" parent="."]
-transform = Transform( 0.59842, 0.043516, 0, -0.043516, 0.59842, 0, 0, 0, 0.15, 0, 0, -0.05 )
+transform = Transform( 0.599939, 0.00858962, 0, -0.00858962, 0.599939, 0, 0, 0, 0.15, 0, 0, -0.05 )
 use_in_baked_light = true
 mesh = SubResource( 9 )
 material/0 = ExtResource( 5 )

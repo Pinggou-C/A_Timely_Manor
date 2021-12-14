@@ -84,6 +84,8 @@ config/name="A Timely Manor"
 run/main_scene="res://Scenes/menu/Splash.tscn"
 config/use_custom_user_dir=true
 run/low_processor_mode=true
+boot_splash/image="res://logos/godot_logo_angry - Copy.png"
+config/icon="res://logos/godot_logo_angry - Copy.png"
 
 [autoload]
 
