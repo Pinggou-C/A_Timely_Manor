@@ -134,13 +134,10 @@ func _on_frontarea_body_entered(body, bypas = false):
 			elif body.is_in_group("appliance") || body.is_in_group("battery"):
 				var nod = body
 				var dirr = "front"
-				if body.is_in_group("battery"):
-					parent.battery(body.get_parent(), "front")
+				if body.is_in_group("battery") || body.is_in_group("door"):
 					nod = body.get_parent()
 					if body.is_in_group("neg"):
 						dirr = "rear"
-				if body.is_in_group("door"):
-					nod = body.get_parent()
 				if parent.frontnode == null:
 					var go = nod.conn(parent, parent.rearnode, dirr, true, [parent.amps, parent.volts])
 					parent.connect_node_front(nod, go[0])
@@ -148,7 +145,7 @@ func _on_frontarea_body_entered(body, bypas = false):
 					snap_to_node = true
 					snapnode = nod
 				else:
-					con = body
+					con = nod
 					conpickup = 'node'
 					var go = nod.conn(parent, parent.rearnode, dirr, true, [parent.amps, parent.volts])
 					targetpos = go[0] 
@@ -157,6 +154,8 @@ func _on_frontarea_body_entered(body, bypas = false):
 					if body.is_in_group("battery") && dirr == "front":
 						parent.volts = go[3]
 						parent.amps = go[2]
+				if body.is_in_group("battery"):
+						parent.battery(body.get_parent(), "front")
 
 
 func _on_frontarea_body_exited(body):

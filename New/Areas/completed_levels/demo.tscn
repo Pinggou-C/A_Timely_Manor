@@ -337,6 +337,9 @@ returnspeed = 30.0
 [node name="ELECTRONICS" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.89358, 1.17361, -5.12819 )
 
+[node name="battery" parent="ELECTRONICS" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.639, -0.675, 2.501 )
+
 [node name="wire" parent="ELECTRONICS" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.8586, -0.43785, 4.72785 )
 
@@ -354,9 +357,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.7028, -0.43785, 4.0947 )
 
 [node name="wire6" parent="ELECTRONICS" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.2509, -0.43785, 4.10287 )
-
-[node name="battery" parent="ELECTRONICS" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4734, -0.684999, 2.52589 )
 
 [node name="KinematicBody" parent="ELECTRONICS" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.737, -0.324122, 0.953997 )

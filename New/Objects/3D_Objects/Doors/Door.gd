@@ -121,12 +121,6 @@ func conn(wire, newnode, frontback, auto = false, voltamp = []):
 	var posarr = []
 	var pos
 	var stop = false
-	if frontback == "front":
-		posconwire = wire
-		return [$pos1.get_global_transform().origin, 0]
-	elif frontback == "rear":
-		negconwire = wire
-		return [$pos2.get_global_transform().origin, 1]
 	if newnode != null:
 		if !poscon == newnode && frontback == "front":
 			poscon = newnode
@@ -146,6 +140,12 @@ func conn(wire, newnode, frontback, auto = false, voltamp = []):
 				if closed_connecteds.size() > 1:
 					if ElectricsUpdate.battery_closed == true:
 						ElectricsUpdate.closed_batteries[0].start_connecting()
+	if frontback == "front":
+		posconwire = wire
+		return [$pos1.get_global_transform().origin, 0]
+	elif frontback == "rear":
+		negconwire = wire
+		return [$pos2.get_global_transform().origin, 1]
 
 func disconnect_wire(wire):
 	if wire == posconwire:
@@ -229,13 +229,15 @@ func batteryconn(node, nodes, path, amp, volt):
 				con_to_batt = true
 		var nod 
 		if node == negcon:
-			nod = poscon
-			if nod != node && !nodess.has(nod):
-				nod.batteryconn(self, nodess, paths, amp, volt)
+			if poscon !=null:
+				nod = poscon
+				if nod != node && !nodess.has(nod):
+					nod.batteryconn(self, nodess, paths, amp, volt)
 		elif node == poscon:
-			nod = negcon
-			if nod != node && !nodess.has(nod):
-				nod.batteryconn(self, nodess, paths, amp, volt)
+			if negcon !=null:
+				nod = negcon
+				if nod != node && !nodess.has(nod):
+					nod.batteryconn(self, nodess, paths, amp, volt)
 		else:
 			pass
 		

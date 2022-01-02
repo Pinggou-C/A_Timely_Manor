@@ -237,6 +237,7 @@ func voltsamps(amp, volt, wire, replace = true, clear = false):
 
 
 func batteryconn(node,nodes, path, amp, volt):
+	print("jhi")
 	if temppaths.size() != 0:
 		$Timer3.start(0.1666)
 	temppaths.append(path)

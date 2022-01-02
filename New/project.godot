@@ -108,10 +108,6 @@ window/size/fullscreen=true
 window/vsync/use_vsync=false
 window/per_pixel_transparency/enabled=true
 
-[editor_plugins]
-
-enabled=PoolStringArray( "res://addons/decals/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg" )
-
 [input]
 
 ui_left={
