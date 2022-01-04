@@ -176,8 +176,14 @@ func disconnect_wire(node):
 			negconnect = null
 			negconnectbattery = false
 
-func conn(wire, node, dir, onof = false, ampvolt = []):
-	if dir == 'front':
+func conn(wire, node, dir= null, onof = false, ampvolt = []):
+	var dirr = dir
+	if dir == null:
+		if wire == posconnectwire:
+			dirr = "front"
+		if wire == negconnectwire:
+			dirr= "rear"
+	if dirr == 'front':
 		posconnectwire = wire
 		if node != null:
 			posconnect = node
@@ -186,7 +192,7 @@ func conn(wire, node, dir, onof = false, ampvolt = []):
 				ElectricsUpdate.battery_closed = true
 				ElectricsUpdate.closed_batteries.append(self)
 		return [$pos.global_transform.origin, 0, amps, volts]
-	elif dir == 'rear':
+	elif dirr == 'rear':
 		negconnectwire = wire
 		if node != null:
 			negconnect = node

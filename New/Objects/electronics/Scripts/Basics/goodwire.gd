@@ -202,7 +202,7 @@ func split(node):
 	if frontnode != null:
 		newwire2.frontnode = frontnode
 		if front_is_battery:
-			frontnode.conn( node, self)
+			frontnode.conn(self, node)
 		else:
 			frontnode.conn(newwire2, node, "front")
 		poss = node.conn(newwire2, frontnode, "rear")
@@ -211,7 +211,7 @@ func split(node):
 	#gets the rearnode if it has that and gets the position the fron should have
 	if rearnode != null:
 		if front_is_battery:
-			rearnode.conn(node, self)
+			rearnode.conn(self, node)
 		else:
 			rearnode.conn(self, node, "rear")
 		poss2 = node.conn(self, frontnode, "front")
@@ -282,17 +282,26 @@ func combine(otherwire, which, which2):
 	var rearnode1 = otherwire.rearnode
 	if which2 == "rear":
 		if which == "back":
+			print("i")
 			rear = otherwire.front
 			rearnode = frontnodee
 			if frontnodee != null:
+				print("i2")
 				frontnodee.disconnect_wire(otherwire)
 				pos = frontnodee.conn(self, frontnode, "rear")
 		elif which == "front":
+			print("y")
 			rear = otherwire.rear
 			rearnode = rearnode1
 			if rearnode1 != null:
+				print("y2")
 				rearnode1.disconnect_wire(otherwire)
 				pos = rearnode1.conn(self, frontnode, "rear")
+		print(pos)
+		print(i)
+		print(otherwire)
+		print(otherwire.frontnode)
+		print(otherwire.rearnode)
 		var truepos = pos[0]
 		#$rear.targetpos = truepos
 		#$rear.snap_to_node = true

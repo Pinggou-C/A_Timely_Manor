@@ -21,6 +21,16 @@ var rel_pos
 var pickvel = Vector3(0, 0, 0)
 var pickgroups = []
 
+#info
+var wires
+var nodes
+var resistances
+
+func _ready():
+	var info = get_parent().info()
+	wires = info[0]
+	nodes = info[1]
+	resistances = info[2]
 
 func _physics_process(delta):
 	if (velocety.y >= -0.01 && velocety.y <= 0.01 )&& oldvelocety.y <-12:
