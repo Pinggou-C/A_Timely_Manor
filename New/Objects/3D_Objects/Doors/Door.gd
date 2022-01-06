@@ -21,7 +21,7 @@ var connected_to_battery = "not"
 
 var amps = 0
 var volts = 0
-var resistance
+var resistance = 0
 
 export(int,1, 100) var volt_needs = 1
 export(int,1, 1000) var watt_needs = 1

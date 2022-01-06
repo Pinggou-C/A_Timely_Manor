@@ -26,6 +26,7 @@ var wires
 var nodes
 var resistances
 
+
 func _ready():
 	var info = get_parent().info()
 	wires = info[0]
@@ -117,6 +118,9 @@ func get_input():
 			wiresnap = false
 		elif wiresnap == false:
 			wiresnap = true
+		if looking_at != null:
+			looking_at.delete()
+			_on_Area_body_exited(looking_at)
 		
 	velocety.y = vc
 	jump = false

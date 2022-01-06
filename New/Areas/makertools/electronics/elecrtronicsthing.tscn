@@ -4,3 +4,8 @@
 
 [node name="elecrtronicsthing" type="Spatial"]
 script = ExtResource( 1 )
+what = 1
+amp = 0.9
+volt = 0.8
+res = 34
+watt = 0.8
