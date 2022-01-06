@@ -120,10 +120,43 @@ func get_input():
 		elif wiresnap == false:
 			wiresnap = true
 		if looking_at != null:
-			if looking_at.is_in_group("wires") || looking_at.is_in_group("wire_nodes"):
-				looking_at.delete()
-				print(looking_at)
+			if looking_at.is_in_group("wire_nodes"):
+				if !looking_at.is_in_group("wire_end"):
+					looking_at.delete()
+					print(looking_at)
+					if looking_at == pick:
+						pick = null
+						picked = false
+					_on_Area_body_exited(looking_at)
+			elif looking_at.is_in_group('wire'):
+				looking_at.get_parent().delete()
+				print(looking_at.get_parent())
+				if looking_at == pick:
+					pick = null
+					picked = false
 				_on_Area_body_exited(looking_at)
+			elif pick != null:
+				if pick.is_in_group("wire_nodes")&& !pick.is_in_group("wire_end"):
+					pick.delete()
+					print(pick)
+					pick = null
+					picked = false
+				elif pick.is_in_group("wire_end"):
+					pick.get_parent().delete()
+					print(pick.get_parent())
+					pick = null
+					picked = false
+		elif pick != null:
+			if pick.is_in_group("wire_nodes") && !pick.is_in_group("wire_end"):
+				pick.delete()
+				print(pick)
+				pick = null
+				picked = false
+			elif pick.is_in_group("wire_end"):
+				pick.get_parent().delete()
+				print(pick.get_parent())
+				pick = null
+				picked = false
 		
 	velocety.y = vc
 	jump = false

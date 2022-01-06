@@ -501,6 +501,7 @@ func posbattery(onof, node, paths = [[]]):
 		posbattery = null
 
 func delete():
+	print("i")
 	if rearnode != null:
 		rearnode.disconnect_wire(self)
 		if frontnode != null:
