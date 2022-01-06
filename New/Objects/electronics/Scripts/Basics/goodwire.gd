@@ -109,39 +109,49 @@ func connect_to_node(newnode, oldnode):
 #also splits the wire the node gets put on
 func newnode(pos, otherwire,frontback, time = "perm"):
 	#loads and adds new node to scene
-	var newnode = load("res://Objects/electronics/Items/Basics/wirenode.tscn")
-	var newnode2 = newnode.instance()
-	newnode2.time = "temp"
-	get_parent().add_child(newnode2)
-	if time == "temp":
-		newnode2.temp()
-	else: 
-		newnode2.perm()
-	newnode2.global_transform.origin = pos
-	var node
-	if frontback == "front":
-		node = rearnode
-		frontnode = newnode2
+	if get_parent().nodes > 0 && get_parent().wires > 0:
+		get_parent().nodes -= 1
+		get_parent().wires -= 1
+		get_tree().call_group("player","nod",1, "rem")
+		get_tree().call_group("player","wir",1, "rem")
+		var newnode = load("res://Objects/electronics/Items/Basics/wirenode.tscn")
+		var newnode2 = newnode.instance()
+		newnode2.time = "temp"
+		get_parent().add_child(newnode2)
+		if time == "temp":
+			newnode2.temp()
+		else: 
+			newnode2.perm()
+		newnode2.global_transform.origin = pos
+		var node
+		if frontback == "front":
+			node = rearnode
+			frontnode = newnode2
+		else:
+			node = frontnode
+			rearnode = newnode2
+		var newpos = newnode2.conn(self, node, frontback)
+		var newpostrue = newpos[0]
+		if frontback == "front":
+			front = newpostrue
+			$front.snappos = newpostrue
+			nodesidefront = newpos[1]
+			$front.targetpos = newpos[0]
+			$front.snap_to_node = true
+			$front.snapnode = newnode2
+		else:
+			rear = newpostrue
+			$rear.snappos = newpostrue
+			nodesiderear = newpos[1]
+			$rear.targetpos = newpos[0]
+			$rear.snap_to_node = true
+			$rear.snapnode = newnode2
+		otherwire.get_parent().split(newnode2)
 	else:
-		node = frontnode
-		rearnode = newnode2
-	var newpos = newnode2.conn(self, node, frontback)
-	var newpostrue = newpos[0]
-	if frontback == "front":
-		front = newpostrue
-		$front.snappos = newpostrue
-		nodesidefront = newpos[1]
-		$front.targetpos = newpos[0]
-		$front.snap_to_node = true
-		$front.snapnode = newnode2
-	else:
-		rear = newpostrue
-		$rear.snappos = newpostrue
-		nodesiderear = newpos[1]
-		$rear.targetpos = newpos[0]
-		$rear.snap_to_node = true
-		$rear.snapnode = newnode2
-	otherwire.get_parent().split(newnode2)
+		if get_parent().nodes < 1:
+			get_tree().call_group("createui","blink",'nodes')
+		if get_parent().wires < 1:
+			get_tree().call_group("createui","blink",'wires')
 
 func discon_node(node):
 	if node == frontnode:

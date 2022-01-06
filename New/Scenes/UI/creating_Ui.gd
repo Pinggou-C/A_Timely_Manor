@@ -39,3 +39,9 @@ func update_text(wires = null, nodes = null):
 		else:
 			wir = String(wir)
 		$Corner/wires.text = wir
+
+func blink(which):
+	if which == "nodes":
+		$AnimationPlayer.play('wir')
+	if which == "wires":
+		$AnimationPlayer.play('nod')

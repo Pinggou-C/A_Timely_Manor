@@ -299,6 +299,8 @@ func disconnect_wire(wire, special = false):
 				which1 = "rear"
 			wires[0].combine(wires[1], which2, which1)
 			queue_free()
+			get_parent().nodes += 1
+			get_tree().call_group("player","nod",1, "add")
 			#wires[1].combine(wires[0])
 
 

@@ -33,6 +33,7 @@ func _ready():
 	nodes = info[1]
 	resistances = info[2]
 	$creating_Ui.ready(OS.get_screen_size(), wires, nodes)
+	get_tree().call_group("playerinfo","update",[wires, nodes])
 	print(wires)
 	print(nodes)
 
@@ -153,6 +154,7 @@ func get_input():
 					picked = false
 					wires = wires + 1
 					$creating_Ui.update_text(wires, null)
+			get_tree().call_group("playerinfo","update",[wires, nodes])
 		elif pick != null:
 			if pick.is_in_group("wire_nodes") && !pick.is_in_group("wire_end"):
 				pick.delete()
@@ -166,6 +168,7 @@ func get_input():
 				picked = false
 				wires = wires + 1
 				$creating_Ui.update_text(wires, null)
+			get_tree().call_group("playerinfo","update",[wires, nodes])
 	if Input.is_action_just_pressed("mouse_r"):
 		select_menu_up
 	velocety.y = vc
@@ -346,4 +349,20 @@ func _on_PDA_timeout():
 			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: [/color][u][b][color=red]" + info[5]+"[/color][/b][/u][/center]"
 	$PDA2/text.bbcode_text = text
 
+func wir(new, mode):
+	if mode == "replace":
+		wires = new
+	elif mode == "rem":
+		wires -= new
+	else:
+		wires += new
+	$creating_Ui.update_text(wires, null)
 
+func nod(new, mode):
+	if mode == "replace":
+		nodes = new
+	elif mode == "rem":
+		nodes -= new
+	else:
+		nodes += new
+	$creating_Ui.update_text(null, nodes)

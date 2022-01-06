@@ -101,8 +101,8 @@ settings/stdout/print_fps=true
 
 [display]
 
-window/size/width=1920
-window/size/height=1080
+window/size/width=2560
+window/size/height=1600
 window/size/resizable=false
 window/size/fullscreen=true
 window/vsync/use_vsync=false

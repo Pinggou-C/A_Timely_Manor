@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Objects/Player/chearecter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/pause/Pause.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Objects/electronics/Items/Lamp.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Objects/3D_Objects/Doors/Door.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Areas/completed_levels/levels.gd" type="Script" id=9]
+[ext_resource path="res://Areas/completed_levels/ELECTRONICS.gd" type="Script" id=10]
 
 [sub_resource type="SpatialMaterial" id=11]
 
@@ -72,6 +73,9 @@ nodes = 7
 
 [node name="Door" parent="." instance=ExtResource( 8 )]
 transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.6555, 1.64344, 5.18555 )
+
+[node name="KinematicBody" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.90476, 1.065, -0.781268 )
 
 [node name="CSGCombiner" type="CSGCombiner" parent="."]
 use_collision = true
@@ -327,9 +331,6 @@ material = SubResource( 5 )
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 7 )
 
-[node name="KinematicBody" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.90476, 1.065, -0.781268 )
-
 [node name="camera2" parent="." instance=ExtResource( 3 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.0693, 6.96234, 6.74423 )
 returnspeed = 30.0
@@ -338,8 +339,9 @@ returnspeed = 30.0
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.605471, 4.92051, -8.99297 )
 returnspeed = 30.0
 
-[node name="ELECTRONICS" type="Spatial" parent="."]
+[node name="ELECTRONICS" type="Spatial" parent="." groups=["playerinfo"]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.89358, 1.17361, -5.12819 )
+script = ExtResource( 10 )
 
 [node name="battery" parent="ELECTRONICS" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.42315, -0.675, 2.501 )
