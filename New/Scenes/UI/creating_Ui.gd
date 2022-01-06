@@ -41,7 +41,8 @@ func update_text(wires = null, nodes = null):
 		$Corner/wires.text = wir
 
 func blink(which):
+	print(which)
 	if which == "nodes":
 		$AnimationPlayer.play('wir')
 	if which == "wires":
-		$AnimationPlayer.play('nod')
+		$AnimationPlayer2.play('nod')

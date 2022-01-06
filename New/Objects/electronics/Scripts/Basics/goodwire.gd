@@ -164,7 +164,7 @@ func discon_node(node):
 		$front.snap_to_node = false
 		$front.snapnode = null
 		if rearnode != null:
-			rearnode.disconenct_node(node)
+			rearnode.disconnect_node(node)
 	elif node == rearnode:
 		rearnode = null
 		nodesiderear = null
@@ -175,7 +175,7 @@ func discon_node(node):
 		$rear.snap_to_node = false
 		$rear.snapnode = null
 		if frontnode != null:
-			frontnode.disconenct_node(node)
+			frontnode.disconnect_node(node)
 
 func removenode(node, rearfront, delete = false):
 	if delete == false:
