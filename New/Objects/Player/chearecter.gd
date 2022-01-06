@@ -114,13 +114,16 @@ func get_input():
 	elif Input.is_action_pressed("ui_up"):
 		velocety = lerp(velocety, -transform.basis.z * speed, 0.15)
 	if Input.is_action_just_pressed("wiresnap"):
+		print('gg')
 		if wiresnap == true:
 			wiresnap = false
 		elif wiresnap == false:
 			wiresnap = true
 		if looking_at != null:
-			looking_at.delete()
-			_on_Area_body_exited(looking_at)
+			if looking_at.is_in_group("wires") || looking_at.is_in_group("wire_nodes"):
+				looking_at.delete()
+				print(looking_at)
+				_on_Area_body_exited(looking_at)
 		
 	velocety.y = vc
 	jump = false

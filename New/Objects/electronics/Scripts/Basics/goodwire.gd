@@ -153,6 +153,8 @@ func discon_node(node):
 		$front.targetpos = Vector3()
 		$front.snap_to_node = false
 		$front.snapnode = null
+		if rearnode != null:
+			rearnode.disconenct_node(node)
 	elif node == rearnode:
 		rearnode = null
 		nodesiderear = null
@@ -162,6 +164,8 @@ func discon_node(node):
 		$rear.targetpos = Vector3()
 		$rear.snap_to_node = false
 		$rear.snapnode = null
+		if frontnode != null:
+			frontnode.disconenct_node(node)
 
 func removenode(node, rearfront, delete = false):
 	if delete == false:
@@ -298,7 +302,6 @@ func combine(otherwire, which, which2):
 				rearnode1.disconnect_wire(otherwire)
 				pos = rearnode1.conn(self, frontnode, "rear")
 		print(pos)
-		print(i)
 		print(otherwire)
 		print(otherwire.frontnode)
 		print(otherwire.rearnode)
@@ -496,3 +499,16 @@ func posbattery(onof, node, paths = [[]]):
 			negbattery = frontnode
 	else:
 		posbattery = null
+
+func delete():
+	if rearnode != null:
+		rearnode.disconnect_wire(self)
+		if frontnode != null:
+			rearnode.disconnect_node(frontnode)
+	if frontnode != null:
+		frontnode.disconnect_wire(self)
+		if frontnode != null:
+			frontnode.disconnect_node(rearnode)
+	rearnode = null
+	frontnode = null
+	queue_free()

@@ -522,3 +522,11 @@ func batterydisconn(node, nodes, path):
 					frombats.erase(node)
 					if frombats.size() == 0:
 						con_to_batt = false
+
+func delete():
+	print('i')
+	for i in wires:
+		i.discon_node(self)
+	wires = []
+	connecteds = []
+	queue_free()
