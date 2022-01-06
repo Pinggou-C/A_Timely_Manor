@@ -22,16 +22,19 @@ var pickvel = Vector3(0, 0, 0)
 var pickgroups = []
 
 #info
-var wires
-var nodes
+var wires = 0
+var nodes = 0
 var resistances
-
+var select_menu_up = false
 
 func _ready():
 	var info = get_parent().info()
 	wires = info[0]
 	nodes = info[1]
 	resistances = info[2]
+	$creating_Ui.ready(OS.get_screen_size(), wires, nodes)
+	print(wires)
+	print(nodes)
 
 func _physics_process(delta):
 	if (velocety.y >= -0.01 && velocety.y <= 0.01 )&& oldvelocety.y <-12:
@@ -123,41 +126,48 @@ func get_input():
 			if looking_at.is_in_group("wire_nodes"):
 				if !looking_at.is_in_group("wire_end"):
 					looking_at.delete()
-					print(looking_at)
 					if looking_at == pick:
 						pick = null
 						picked = false
 					_on_Area_body_exited(looking_at)
+					nodes = nodes + 1
+					$creating_Ui.update_text(null, nodes)
 			elif looking_at.is_in_group('wire'):
 				looking_at.get_parent().delete()
-				print(looking_at.get_parent())
 				if looking_at == pick:
 					pick = null
 					picked = false
 				_on_Area_body_exited(looking_at)
+				wires = wires + 1
+				$creating_Ui.update_text(wires, null)
 			elif pick != null:
 				if pick.is_in_group("wire_nodes")&& !pick.is_in_group("wire_end"):
 					pick.delete()
-					print(pick)
 					pick = null
 					picked = false
+					nodes = nodes + 1
+					$creating_Ui.update_text(null, nodes)
 				elif pick.is_in_group("wire_end"):
 					pick.get_parent().delete()
-					print(pick.get_parent())
 					pick = null
 					picked = false
+					wires = wires + 1
+					$creating_Ui.update_text(wires, null)
 		elif pick != null:
 			if pick.is_in_group("wire_nodes") && !pick.is_in_group("wire_end"):
 				pick.delete()
-				print(pick)
 				pick = null
 				picked = false
+				nodes = nodes + 1
+				$creating_Ui.update_text(null, nodes)
 			elif pick.is_in_group("wire_end"):
 				pick.get_parent().delete()
-				print(pick.get_parent())
 				pick = null
 				picked = false
-		
+				wires = wires + 1
+				$creating_Ui.update_text(wires, null)
+	if Input.is_action_just_pressed("mouse_r"):
+		select_menu_up
 	velocety.y = vc
 	jump = false
 	if Input.is_action_just_pressed("jump"):
@@ -335,3 +345,5 @@ func _on_PDA_timeout():
 		else:
 			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: [/color][u][b][color=red]" + info[5]+"[/color][/b][/u][/center]"
 	$PDA2/text.bbcode_text = text
+
+

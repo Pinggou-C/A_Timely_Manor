@@ -65,6 +65,8 @@ glow_high_quality = true
 
 [node name="Level1" type="Spatial"]
 script = ExtResource( 9 )
+wires = 0
+nodes = 7
 
 [node name="Pause" parent="." instance=ExtResource( 2 )]
 

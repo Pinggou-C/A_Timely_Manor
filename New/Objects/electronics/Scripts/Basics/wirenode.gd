@@ -265,7 +265,8 @@ func connect_wire(body):
 #when the wire get picked up and disconnected
 func disconnect_wire(wire, special = false):
 	if wires.has(wire):
-		wires.remove(wires.find(wire))
+		while wires.has(wire):
+			wires.erase(wire)
 	if pos1 == wire:
 		pos1 = null
 		pos1_battery = false

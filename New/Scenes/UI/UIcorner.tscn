@@ -1,32 +1,21 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Objects/extra's/part2.tres" type="Theme" id=1]
 [ext_resource path="res://Assets/menu/corner.png" type="Texture" id=2]
-[ext_resource path="res://Scenes/UI/creating_Ui.gd" type="Script" id=3]
 
-[node name="creating_Ui" type="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -591.0
-margin_top = -153.0
-margin_right = -1921.0
-margin_bottom = -1081.0
-rect_pivot_offset = Vector2( -414.984, 0 )
-script = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Node2D" type="Node2D"]
 
 [node name="Corner" type="Sprite" parent="."]
-self_modulate = Color( 0.588235, 0, 1, 0.882353 )
+modulate = Color( 0.592157, 0, 1, 0.784314 )
+self_modulate = Color( 0.592157, 0, 1, 0.784314 )
 texture = ExtResource( 2 )
 centered = false
 
-[node name="nodes" type="RichTextLabel" parent="Corner"]
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
 margin_left = 335.0
 margin_top = 6.0
-margin_right = 471.0
-margin_bottom = 149.0
+margin_right = 472.0
+margin_bottom = 148.0
 theme = ExtResource( 1 )
 meta_underlined = false
 text = "---"
@@ -35,7 +24,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="wires" type="RichTextLabel" parent="Corner"]
+[node name="RichTextLabel3" type="RichTextLabel" parent="."]
 margin_left = 58.0
 margin_top = 6.0
 margin_right = 194.0
