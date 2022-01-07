@@ -33,6 +33,7 @@ func _ready():
 	nodes = info[1]
 	resistances = info[2]
 	$creating_Ui.ready(OS.get_screen_size(), wires, nodes)
+	$Control.rect_position.y = OS.get_screen_size().y
 	get_tree().call_group("playerinfo","update",[wires, nodes])
 	print(wires)
 	print(nodes)
@@ -311,7 +312,7 @@ func _on_Area_body_exited(body):
 		$PDA.stop()
 	if body == looking_at:
 		looking_at = null
-		$PDA2/text.bbcode_text = ""
+		$Control.text(false)
 	if all_looks.has(body):
 		all_looks.remove(all_looks.find(body))
 	if all_looks.size() > 0:
@@ -331,23 +332,24 @@ func _on_PDA_timeout():
 	else:
 		info = looking_at.get_info()
 	var text
-	if info[0] == "wire" || info[0] == "node":
-		print(String(info[2]))
-		if info[1] == false:
-			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: ~[/color][/center]"
-		else:
-			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: [/color][u][b][color=red]" + info[5]+"[/color][/b][/u][center]"
-	elif info[0] == "appliance":
-		if info[1] == false:
-			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: ~[/color][/center]"
-		else:
-			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: [/color][u][b][color=red]" + info[5]+"[/color][/b][/u][/center]"
-	elif info[0] == "battery":
-		if info[1] == false:
-			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: ~[/color][/center]"
-		else:
-			text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: [/color][u][b][color=red]" + info[5]+"[/color][/b][/u][/center]"
-	$PDA2/text.bbcode_text = text
+	$Control.text(true, info[2], info[3], 0, 0, info[0], "False", [info[5]])
+	#if info[0] == "wire" || info[0] == "node":
+	#	print(String(info[2]))
+	#	if info[1] == false:
+	#		text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: ~[/color][/center]"
+	#	else:
+	#		text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: [/color][u][b][color=red]" + info[5]+"[/color][/b][/u][center]"
+	#elif info[0] == "appliance":
+	#	if info[1] == false:
+	#		text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: ~[/color][/center]"
+	#	else:
+	#		text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: [/color][u][b][color=red]" + info[5]+"[/color][/b][/u][/center]"
+	#elif info[0] == "battery":
+	#	if info[1] == false:
+	#		text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: ~[/color][/center]"
+	#	else:
+	#		text = "[center][color=black]Volts: "+ String(info[2]) +"V \nStroomsterkte: "+ String(info[3]) +"A \nWeerstand: ~ \nError: [/color][u][b][color=red]" + info[5]+"[/color][/b][/u][/center]"
+	#$PDA2/text.bbcode_text = text
 
 func wir(new, mode):
 	if mode == "replace":

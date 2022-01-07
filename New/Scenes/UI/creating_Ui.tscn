@@ -1,8 +1,16 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://Objects/extra's/part2.tres" type="Theme" id=1]
+[ext_resource path="res://fonts/FugazOne-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Assets/menu/corner.png" type="Texture" id=2]
 [ext_resource path="res://Scenes/UI/creating_Ui.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 100
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="Theme" id=7]
+default_font = SubResource( 1 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "nod"
@@ -21,8 +29,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 0.784314, 0.784314, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 0.784314, 0.784314, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=1]
-resource_name = "wir"
+[sub_resource type="Animation" id=6]
 length = 0.9
 step = 0.05
 tracks/0/type = "value"
@@ -95,7 +102,7 @@ margin_left = 335.0
 margin_top = 6.0
 margin_right = 471.0
 margin_bottom = 149.0
-theme = ExtResource( 1 )
+theme = SubResource( 7 )
 meta_underlined = false
 text = "---"
 scroll_active = false
@@ -108,7 +115,7 @@ margin_left = 58.0
 margin_top = 6.0
 margin_right = 194.0
 margin_bottom = 148.0
-theme = ExtResource( 1 )
+theme = SubResource( 7 )
 meta_underlined = false
 text = "---"
 scroll_active = false
@@ -118,7 +125,7 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/nod = SubResource( 2 )
-anims/wir = SubResource( 1 )
+anims/wir = SubResource( 6 )
 
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
 anims/nod = SubResource( 3 )

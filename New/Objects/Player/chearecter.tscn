@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Objects/Player/chearecter.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Audio_Assets/step.mp3" type="AudioStream" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Objects/Player/device_astralis_preview.gd" type="Script" id=5]
 [ext_resource path="res://Assets/Audio_Assets/background_noise/fan.mp3" type="AudioStream" id=6]
 [ext_resource path="res://Scenes/UI/creating_Ui.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/UI/Pda.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CylinderShape" id=1]
 radius = 0.4
@@ -93,14 +94,15 @@ process_mode = 0
 one_shot = true
 
 [node name="PDA2" type="Control" parent="."]
+visible = false
 anchor_left = 0.356
 anchor_top = 0.587
 anchor_right = 0.356
 anchor_bottom = 0.587
-margin_left = -150.52
-margin_top = -249.96
-margin_right = 149.48
-margin_bottom = 250.04
+margin_left = -911.36
+margin_top = -939.2
+margin_right = -611.36
+margin_bottom = -439.2
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -126,6 +128,9 @@ stream = ExtResource( 6 )
 volume_db = -30.351
 pitch_scale = 0.6
 autoplay = true
+
+[node name="Control" parent="." instance=ExtResource( 8 )]
+rect_scale = Vector2( 0.9, 0.9 )
 
 [node name="creating_Ui" parent="." instance=ExtResource( 7 )]
 
