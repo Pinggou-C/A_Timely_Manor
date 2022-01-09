@@ -170,12 +170,9 @@ wiresnap={
 
 [rendering]
 
-quality/filters/sharpen_intensity=1.0
 2d/options/use_nvidia_rect_flicker_workaround=true
-quality/filters/anisotropic_filter_level=8
+2d/snapping/use_gpu_pixel_snap=true
 quality/spatial_partitioning/render_tree_balance=1.0
-quality/subsurface_scattering/quality=2
-quality/filters/msaa=2
 environment/default_environment="res://Assets/Environment/default_env.tres"
 quality/godrays/sample_number=50
 quality/godrays/use_pcf5=true

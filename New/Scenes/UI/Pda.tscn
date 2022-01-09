@@ -19,7 +19,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.33 ),
 "transitions": PoolRealArray( 0.485437, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.294118 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.0980392 ) ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -36,7 +36,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.33 ),
 "transitions": PoolRealArray( 0.5, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 0.294118 ), Color( 1, 1, 1, 1 ) ]
+"values": [ Color( 1, 1, 1, 0.0980392 ), Color( 1, 1, 1, 1 ) ]
 }
 
 [node name="Control" type="Control"]
@@ -48,6 +48,7 @@ __meta__ = {
 }
 
 [node name="Pda" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.294118 )
 self_modulate = Color( 0.843137, 0.72549, 0.843137, 0.784314 )
 texture = ExtResource( 1 )
 centered = false
