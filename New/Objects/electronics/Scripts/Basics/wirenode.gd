@@ -96,8 +96,9 @@ func conn(wire, newnode, frontback, auto = false, volamp = []):
 	var posss
 	if volamp.size()>0:
 		if con_to_batt == false:
-			volts = volamp[1]
-			amps = volamp[0]
+			if !volamp[0]== 0 || !volamp[1] == 0:
+				volts = volamp[1]
+				amps = volamp[0]
 	#get closest
 	var posarr = []
 	if auto != true:
@@ -480,6 +481,7 @@ func voltsamps(amp, volt, wire, replace = true, clear = false):
 					i.voltsamps(amps* amp_multiplier, volts, self)
 
 func batteryconn(node, nodes, path, amp, volt):
+	print('received')
 	amps = amp
 	volts = volt
 	var nodess = nodes

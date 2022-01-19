@@ -166,6 +166,10 @@ collision_mask = 0
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00291729, -0.00313854, -0.0030508 )
 shape = SubResource( 12 )
 
+[node name="autosend" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
 [connection signal="body_entered" from="Pos" to="." method="poscon"]
 [connection signal="body_exited" from="Pos" to="." method="posdiscon"]
 [connection signal="body_entered" from="Neg" to="." method="negcon"]
@@ -173,3 +177,4 @@ shape = SubResource( 12 )
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="Timer2" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="Timer3" to="." method="_on_Timer3_timeout"]
+[connection signal="timeout" from="autosend" to="." method="_on_autosend_timeout"]

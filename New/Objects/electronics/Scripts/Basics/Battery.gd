@@ -101,7 +101,7 @@ func posdiscon(body):
 func negcon(body):
 	if body.is_in_group('wire_end'):
 		print("hi")
-		negconnectwire = body
+		#negconnectwire = body
 
 
 func negdiscon(body):
@@ -115,7 +115,7 @@ func negdiscon(body):
 func poscon(body):
 	if body.is_in_group('wire_end'):
 		print("hi")
-		posconnectwire = body
+		#posconnectwire = body
 
 
 func _on_Timer_timeout():
@@ -202,7 +202,9 @@ func conn(wire, node, dir= null, onof = false, ampvolt = []):
 		return [$neg.global_transform.origin, 1]
 
 func con_node(node, wire, is_battery = null):
+	print('rev2')
 	if wire == posconnectwire:
+		print('rev3.1')
 		posconnect = node
 		posconnect.batteryconn(self,[self],[[self, "battery", 0, 0, 0, false]], volts, amps)
 		#(originnode,nodes, [[node, nodetype, volt, amp, resistance, ], other pathbits]voltflow, ampflow)
@@ -213,6 +215,7 @@ func con_node(node, wire, is_battery = null):
 			ElectricsUpdate.battery_closed = true
 			ElectricsUpdate.closed_batteries.append(self)
 	elif wire == negconnectwire:
+		print('rev3.2')
 		negconnect = node
 		if is_battery == true:
 			negconnectbattery = true
@@ -257,3 +260,13 @@ func _on_Timer3_timeout():
 
 func changed():
 	start_connecting()
+
+
+func _on_autosend_timeout():
+	print('pulse')
+	print(posconnect)
+	print(negconnect)
+	print(posconnectwire)
+	print(negconnectwire)
+	if posconnect != null:
+		posconnect.batteryconn(self, [self], [[self, "battery", volts, amps, 0, false]], amps, volts)

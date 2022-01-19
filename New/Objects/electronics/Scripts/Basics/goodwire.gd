@@ -256,7 +256,10 @@ func split(node):
 func connect_node_front(node, pos):
 	frontnode = node
 	front = pos
+	print(frontnode)
+	print(rearnode)
 	if rearnode != null:
+		print('hi')
 		rearnode.con_node(node, self, false)
 		node.con_node(rearnode, self, false)
 	resize()
@@ -279,7 +282,10 @@ func disconnect_node(node, frontback):
 func connect_node_rear(node, pos):
 	rearnode = node
 	rear = pos
+	print(frontnode)
+	print(rearnode)
 	if frontnode != null:
+		print(' hi')
 		frontnode.con_node(node, self, false)
 		node.con_node(frontnode, self, false)
 	resize()
